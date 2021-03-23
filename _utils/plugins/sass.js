@@ -9,7 +9,8 @@ const compile = () => {
     .pipe(sassSync().on('error', sassSync.logError))
     .pipe(process.env.ELEVENTY_ENV ? csso({
       sourceMap: false,
-      restructure: true
+      restructure: true,
+      forceMediaMerge: true
     }) : through2.obj())
     .pipe(dest('_site/'))
 }
