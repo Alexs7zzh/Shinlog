@@ -15,7 +15,7 @@
 nav {
   list-style: none;
   padding-left: 0;
-  line-height: 1;
+  line-height: 1.2; // tricky line height to match site title
   margin: var(--spacing-half) 0;
   font-size: var(--font);
   user-select: none;
@@ -36,17 +36,20 @@ nav {
   &:hover {
     color: var(--color-default);
   }
-  & + &::before {
+  &::after {
     content: '\A';
     position: absolute;
     top: calc(50% - var(--font-xxs));
-    left: calc(0em - var(--spacing-half) + var(--font-xxs));
+    right: calc(0em - (var(--spacing-half) + var(--font-xxs))/2);
     width: var(--font-xxs);
     height: var(--font-xxs);
     border-radius: 50%;
     background: var(--color-accent-default);
     opacity: 0.7;
     display: inline-block;
+  }
+  &:last-child::after {
+    display: none;
   }
 }
 
