@@ -38,6 +38,7 @@ picture {
 }
 
 [id] {
+  scroll-snap-margin-top: var(--spacing-2);
   scroll-margin-top: var(--spacing-2);
 }
 
