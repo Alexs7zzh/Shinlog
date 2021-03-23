@@ -1,0 +1,41 @@
+body {
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--spacing) var(--spacing-half);
+  padding-bottom: var(--spacing-3);
+
+  @media screen and (min-width: #{$breakpoint-s}px) {
+    --body-max-width: calc(600px + (#{$body-max-width} - 600) * (100vw - 600px) / (#{$breakpoint-l} - 600));
+    max-width: var(--body-max-width);
+    padding-top: calc(var(--spacing) + var(--spacing-2) * (var(--width) - #{$breakpoint-s}) / (#{$breakpoint-l} - #{$breakpoint-s}));
+  }
+
+  @media screen and (min-width: #{$breakpoint-m}px) {
+    display: grid;
+    --body-padding: calc(var(--body-max-width) * (#{$aside-percentage-min} + (var(--width) - #{$breakpoint-m}) / (#{$breakpoint-l} - #{$breakpoint-m}) * (#{$aside-percentage-max} - #{$aside-percentage-min})));
+
+    grid-template:
+      'title   nav' var(--font-l)
+      'article article' 1fr /
+      var(--body-padding) 1fr;
+  }
+
+  @media screen and (min-width: #{$breakpoint-l}px) {
+    --body-max-width: #{$body-max-width}px;
+    --body-padding: calc(#{$aside-percentage-max} * var(--body-max-width));
+    padding-top: var(--spacing-3);
+  }
+}
+
+.site-title {
+  grid-area: title;
+}
+
+.nav {
+  grid-area: nav;
+}
+
+main {
+  grid-area: article;
+  margin-top: var(--spacing-3);
+}

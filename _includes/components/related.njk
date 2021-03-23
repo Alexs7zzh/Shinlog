@@ -1,0 +1,21 @@
+{% set post = collections.home | getItem(page) %}
+<ul class="related">
+  {% set nextPost = post.data.next %}
+  {% if nextPost %}
+    <li class="next">
+      <a href="{{ nextPost.url | url }}">
+        <div class="description">Next</div>
+        <div class="title">{{ nextPost.title }}</div>
+      </a>
+    </li>
+  {% endif %}
+  {% set previousPost = post.data.previous %}
+  {% if previousPost %}
+    <li class="previous">
+      <a href="{{ previousPost.url | url }}">
+        <div class="description">Previous</div>
+        <div class="title">{{ previousPost.title }}</div>
+      </a>
+    </li>
+  {% endif %}
+</ul>

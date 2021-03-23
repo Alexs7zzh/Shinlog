@@ -1,0 +1,21 @@
+---
+layout: layouts/base.njk
+---
+<sidenote-container-element class="post" lang="{{ lang }}" after-elements=".info">
+  <section class="info">
+    <h1>{{ title }}</h1>
+    {% if alternative %}
+      {% include "components/tabs.njk" %}
+    {% endif %}
+    {% if date %}
+      <time datetime="{{ date | htmlDateString }}">{{ date | readableDate }}</time>
+    {% endif %}
+    {% if description %}
+      <p class="description">{{ description | markdown | safe }}</p>
+    {% endif %}
+  </section>
+  {% if podcast %}
+    <div class="podcast"></div>
+  {% endif %}
+  {{ content | safe }}
+</sidenote-container-element>

@@ -1,0 +1,39 @@
+---
+layout: layouts/base.njk
+---
+{% if content %}
+<div>
+  {{ content | safe }}
+</div>
+{% endif %}
+
+{% for series in collections.home %}
+<section class="series">
+  <h2>{{ series.title }}</h2>
+
+  {# {% if series.title != "Fragments" %} #}
+  <ol class="postlist">
+  {% for item in series.children %}
+    <li class="postlist-item">
+      <div class="postlist-date">
+        <time datetime="{{ item.date | htmlDateString }}">{{ item.date | readableDate }}</time>
+      </div>
+      <a href="{{ item.url | url }}" class="postlist-link" lang="{{ item.data.lang }}">{{ item.data.title }}</a>
+    </li>
+  {% endfor %}
+  </ol>
+
+  {# {% else %}
+  <div class="fragments">
+    {% for item in series.children %}
+    <div id="{{ item.date | htmlDateString }}">
+      <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">{{ item.date | readableDate }}</time>
+      {{ item.templateContent | safe }}
+    </div>
+    {% if loop.last == false %}<hr />{% endif %}
+    {% endfor %}
+  </div>
+  {% endif %} #}
+
+</section>
+{% endfor %}

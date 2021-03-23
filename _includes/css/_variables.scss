@@ -1,0 +1,50 @@
+:root {
+  --font-serif: 'EB Garamond', Garamond, Georgia, 'Times New Roman', Times, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Noto Sans', 'Helvetica Neue', Helvetica, 'Nimbus Sans L', Arial, 'Liberation Sans', sans-serif;
+  --font-mono: 'iA Writer Duo', 'Menlo', 'Courier New', monospace;
+
+  --font-song: 'Source Han Serif CN', 'Nimbus Roman No9 L', 'Songti SC', 'Noto Serif CJK SC', STSong, NSimSun, SimSun, PMingLiU, MingLiU, serif;
+  --font-hei: 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Source Han Sans CN', 'Source Han Sans', 'Microsoft YaHei', 'Wenquanyi Micro Hei', 'WenQuanYi Zen Hei', 'ST Heiti', SimHei, sans-serif;
+
+  --font-mincho: 'Source Han Serif JP', 'Hiragino Mincho ProN', 'YuMincho', 'Yu Mincho', 'MS PMincho', serif;
+  --font-gothic: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'Osaka', 'メイリオ', 'Meiryo', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
+
+  --font-xxs: 0.23rem;
+  --font-xs: 0.35rem;
+  --font-s: 0.75rem;
+  --font: 1rem;
+  --font-l: 1.1rem;
+  --font-xl: 1.3rem;
+
+  --cjk-font: 0.9;
+  --cjk-line-height: 0.99;
+
+  --line-height: 1.7rem;
+  --aside-line-height: 1.3rem;
+
+  --color-bg: hsla(60, 100%, 99%, 1);
+  --color-default: hsla(240, 4%, 5%, 1);
+  --color-dim: hsla(0, 0%, 31%, 1);
+  --color-mid: hsla(0, 0%, 58%, 1);
+  --color-light: hsla(284, 29%, 10%, 0.03);
+
+  --color-accent-bg: hsla(9, 76%, 95%, 1);
+  --color-accent-default: hsla(360, 100%, 60%, 1);
+  --color-accent-light: hsla(360, 100%, 75%, 1);
+
+  --spacing-half: calc(var(--line-height) * 0.5);
+  --spacing: var(--line-height);
+  --spacing-2: calc(var(--line-height) * 2);
+  --spacing-3: calc(var(--line-height) * 3);
+  --spacing-6: calc(var(--line-height) * 6);
+}
+
+$body-percentage: 0.8;
+$body-max-width: 1200;
+
+$aside-percentage-min: 0.3;
+$aside-percentage-max: 0.35;
+
+$breakpoint-s: 600;
+$breakpoint-m: 800;
+$breakpoint-l: $body-max-width / $body-percentage;

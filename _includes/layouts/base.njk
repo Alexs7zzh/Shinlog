@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% include "components/meta.njk" %}
+    {% include "components/preload.njk" %}
+    {% include "components/style.njk" %}
+    {% include "components/js-head.njk" %}
+  </head>
+  <body>
+    {% include "components/header.njk" %}
+
+    <main>
+      {{ content | safe }}
+    </main>
+
+    {% include "components/js-body.njk" %}
+  </body>
+</html>

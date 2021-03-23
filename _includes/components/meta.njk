@@ -1,0 +1,17 @@
+{% set currentTitle = (title + " | " + meta.title) if title else meta.title %}
+
+<title>{{ currentTitle }}</title>
+<meta name="description" content="{{ (description or meta.description) | removeMarkdown }}">
+<meta name="author" content="{{ meta.author }}">
+<link rel="canonical" href="{{ meta.url }}{{ page.url }}">
+
+<meta property="og:title" content="{{ currentTitle }}">
+<meta property="og:site_name" content="{{ meta.title }}">
+<meta property="og:description" content="{{ (description or meta.description) | removeMarkdown }}">
+<meta property="og:url" content="{{ meta.url }}">
+
+<link rel="shortcut icon" href="/assets/favicon.ico?v=1">
+<link rel="mask-icon" href="/assets/safari-pinned-tab.svg?v=1" color="#0d0d0e">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=1">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png?v=1">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png?v=1">

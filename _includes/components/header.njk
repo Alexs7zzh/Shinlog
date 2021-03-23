@@ -1,0 +1,6 @@
+<h1 class="site-title"><a href="{{ '/' | url }}">{{ meta.title }}</a></h1>
+<nav>
+{%- for name, url in [["Contents","/"],["Interludes","/interludes/"],["About","/about/"]] -%}
+  <a class="nav-item{% if url == page.url %} nav-item-active{% endif %}" href="{{ url }}">{{ name }}</a>
+{%- endfor -%}
+</nav>

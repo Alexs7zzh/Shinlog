@@ -1,0 +1,120 @@
+a {
+  color: var(--color-default);
+  transition: 0.5s ease-out;
+  // text-decoration: none;
+  // @media (hover: hover) and (pointer: fine) {
+  &:hover {
+    color: var(--color-accent-default);
+  }
+}
+
+p + p {
+  text-indent: 2em;
+}
+
+ol,
+ul {
+  padding-left: 0;
+  list-style-position: inside;
+}
+
+ol {
+  list-style-type: lower-roman;
+}
+
+ol:lang(zh) {
+  list-style-type: cjk-ideographic;
+  list-style-type: simp-chinese-informal;
+}
+
+ul {
+  list-style-position: unset;
+  list-style: none;
+  li::before {
+    content: "-";
+    margin-right: 0.4em;
+  }
+}
+
+.quote {
+  margin: var(--spacing-half) 0;
+  margin-left: calc(0em - var(--spacing-half));
+  padding-left: calc(var(--spacing-half) - 3px);
+  border-left: 3px solid var(--color-accent-light);
+  @media screen and (min-width: #{$breakpoint-m}px) {
+    padding-left: var(--spacing);
+    border: none;
+    margin-left: 0;
+  }
+}
+
+.quote figcaption {
+  text-align: right;
+  font-style: normal;
+}
+
+hr {
+  border: none;
+  position: relative;
+  margin: var(--spacing) 0;
+  height: 1em;
+  text-align: center;
+  &::after {
+    content: '\00A7';
+    position: absolute;
+    font-size: var(--font-xl);
+    transform: rotate(90deg);
+    transform-origin: center;
+    color: var(--color-accent-default);
+    bottom: -0.3em;
+    margin-left: -.25em;
+  }
+}
+
+.smallcaps {
+  font-variant: small-caps;
+}
+
+.halfwidth {
+  font-feature-settings: 'palt';
+}
+
+.switcher {
+  font-family: var(--font-mono);
+  font-size: var(--font-s);
+  line-height: calc(var(--line-height) * 0.75);
+  user-select: none;
+  a {
+    font-family: var(--font-mono);
+    font-size: var(--font-s);
+    line-height: calc(var(--line-height) * 0.75);
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    margin-left: 0.1em;
+    margin-right: 0.1em;
+    transition: all 0.5s ease-out;
+    background: linear-gradient(to right, var(--color-accent-bg), var(--color-accent-bg));
+    background-size: 100% 40%;
+    background-repeat: no-repeat;
+    background-position: 0% 85%;
+    text-decoration: none;
+    &:hover {
+      border-radius: 8px;
+      background-color: var(--color-accent-bg);
+      color: var(--color-accent-default);
+      cursor: pointer;
+    }
+  }
+}
+
+@keyframes highlight {
+  0% {
+    color: var(--color-default);
+  }
+  40% {
+    color: var(--color-accent-default);
+  }
+  100% {
+    color: var(--color-default);
+  }
+}

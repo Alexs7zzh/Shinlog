@@ -1,0 +1,13 @@
+I was writing my P.E. reports (making up nonsense lol). Reflecting on one class I had in which we played different kinds of ice breaking games every week, I recalled what you have been telling me since we met, that it is possible to have easy but also sincere and meaningful communications, from talking about what idols one likes, to play systems, to having simple relationships that we talked about in the last Skype call.
+
+It used to sound like, for me, that these are after all merely means for that ultimate end, that is to say, to develop some kind of “deep and meaning” relationships. Even though it is indeed possible to widen one’s interests, it all felt to me that I, even following all these, would still not be present in the conversation. To put in more exaggerated way, which may make you frown, it felt like that one needs to be easy in order to be serious and “pushy”. It sounded purposeful. I think when you said these, you were only to show me that there were other possibilities, that it was not to say I need to give up something. So I guess you didn’t mean that one needs to follow a certain procedure to achieve some purpose. Nevertheless, with the drive unaltered to have something concrete, my understanding may be twisted.
+
+After all, it was only due to my subjective stance. I have not been capable of relaxing, and thus everything other than seriousness and “meaningfulness” feels heterogeneous to myself. Not really that there is a purpose even behind simple relationships, it is rather myself that have not been able to relax and consequently everything is rendered and narrated in such a fashion. 
+
+Because of various reasons that I myself have not yet prepared to list (the Christmas party, recent readings, what you said...), all of sudden, I felt like I started to have some affordance to be easy. I don’t know. And changes are happening: preferences of writing styles, the way I talk with my friends... I even had two dreams about the type of partner I want for my intimate relationship, that I don’t want to involve in the other’s “dreams” and choose someone with whom things are easy (a feeling of white, but I think it didn’t mean moral purity).
+
+P.S. I was reading a novel one day. There was a scene where the protagonist, who is also serious, or say, anxious in his blood, truly relax when he was holding his infant little sister. It was a scene of Oxytocin. I was touched a lot.
+
+Take care.
+
+<!-- [^(I somehow prefer the Japanese expression 余裕ができた)] -->

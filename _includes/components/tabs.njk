@@ -1,0 +1,10 @@
+<div class="switcher">[
+  {%- for item, url in alternative -%}
+    <a href="{{ url }}">
+      {{- item | upper -}}
+    </a>
+    {%- if not loop.last -%}
+      /
+    {%- endif -%}
+  {%- endfor -%}
+]</div>

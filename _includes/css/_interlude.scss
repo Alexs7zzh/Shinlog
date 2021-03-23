@@ -1,0 +1,124 @@
+.interlude-index {
+  padding: calc(var(--spacing) / 4) var(--spacing-half);
+  background-color: var(--color-light);
+  font-family: var(--font-sans);
+  font-weight: 800;
+  margin-top: calc(0em - var(--spacing-2));
+  margin-bottom: var(--spacing-2);
+  margin-left: calc(0em - var(--spacing-half));
+  margin-right: calc(0em - var(--spacing-half));
+  position: relative;
+  @media screen and (min-width: #{$breakpoint-s}px) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  h2 {
+    font-weight: 500;
+    font-size: var(--font);
+    color: hsla(360, 89%, 61%, 0.7); // color-accent with opacity
+  }
+  ol {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.interlude-index-yearlist {
+  display: inline;
+  div {
+    display: inline;
+    color: var(--color-mid);
+    margin-right: 0.2em;
+  }
+  ol {
+    padding: 0;
+    display: inline;
+  }
+  li {
+    display: inline;
+    position: relative;
+    margin-right: 0.5em;
+    &::after {
+      content: '\A';
+      position: absolute;
+      top: calc(50% - 0.1em);
+      right: -0.35em;
+      width: var(--font-xxs);
+      height: var(--font-xxs);
+      border-radius: 50%;
+      background: var(--color-dim);
+      opacity: 0.7;
+      display: inline;
+    }
+    &:last-child::after {
+      display: none;
+    }
+  }
+  a {
+    color: var(--color-dim);
+    text-decoration: none;
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: var(--color-accent-default);
+      }
+    }
+  }
+}
+
+.interlude-list > hr {
+  margin: var(--spacing-2) 0;
+  @media screen and (min-width: #{$breakpoint-m}px) {
+    padding-left: var(--body-padding);
+  }
+}
+
+.interlude-item {
+  display: block;
+  position: relative;
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
+  aside {
+    background-color: var(--color-accent-bg);
+    margin: var(--spacing-half) 0;
+    padding: calc(var(--line-height) * 0.25) var(--spacing-half);
+    line-height: var(--aside-line-height);
+    font-family: var(--font-mono);
+    font-size: var(--font-s);
+    color: var(--color-accent-dim);
+    &::selection, ::selection {
+      color: var(--color-bg);
+      background-color: var(--color-accent-default);
+    }
+    *:lang(en) {
+      font-family: var(--font-mono);
+      font-size: var(--font-s);
+      line-height: var(--aside-line-height);
+    }
+    *:lang(zh) {
+      font-family: var(--font-hei);
+      font-size: var(--font-s);
+      line-height: var(--aside-line-height);
+    }
+  }
+  @media screen and (min-width: #{$breakpoint-m}px) {
+    padding-left: var(--body-padding);
+    aside {
+      position: absolute;
+      margin: var(--spacing) 0;
+      left: 0;
+      width: calc(var(--body-padding) - var(--spacing));
+    }
+  }
+}
+
+.interlude-date {
+  font-family: var(--font-mono);
+  font-size: var(--font-s);
+  user-select: none;
+  @media screen and (min-width: #{$breakpoint-m}px) {
+    position: absolute;
+    left: 0;
+    line-height: var(--line-height);
+  }
+}

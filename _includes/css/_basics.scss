@@ -1,0 +1,133 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-feature-settings: 'kern', 'liga', 'onum', 'calt', 'dlig', 'cv02', 'cv82', 'cv90', 'clig', 'swsh';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+img,
+picture {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+*:focus {
+  outline: 0;
+}
+
+[id] {
+  scroll-margin-top: var(--spacing-2);
+}
+
+html {
+  margin: 0;
+  padding: 0;
+  text-size-adjust: 100%;
+  font-size: 18px;
+  @media screen and (min-width: #{$breakpoint-m}px) {
+    font-size: 19px;
+  }
+  @media screen and (min-width: #{$breakpoint-l}px) {
+    font-size: 20px;
+  }
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-default);
+  font-family: var(--font-serif);
+  line-height: var(--line-height);
+
+  -webkit-hyphens: auto;
+  -webkit-hyphenate-limit-before: 3;
+  -webkit-hyphenate-limit-after: 3;
+  -webkit-hyphenate-limit-chars: 6 3 3;
+  -webkit-hyphenate-limit-lines: 2;
+  -webkit-hyphenate-limit-last: always;
+  -webkit-hyphenate-limit-zone: 8%;
+
+  -moz-hyphens: auto;
+  -moz-hyphenate-limit-chars: 6 3 3;
+  -moz-hyphenate-limit-lines: 2;
+  -moz-hyphenate-limit-last: always;
+  -moz-hyphenate-limit-zone: 8%;
+
+  -ms-hyphens: auto;
+  -ms-hyphenate-limit-chars: 6 3 3;
+  -ms-hyphenate-limit-lines: 2;
+  -ms-hyphenate-limit-last: always;
+  -ms-hyphenate-limit-zone: 8%;
+
+  hyphens: auto;
+  hyphenate-limit-chars: 6 3 3;
+  hyphenate-limit-lines: 2;
+  hyphenate-limit-last: always;
+  hyphenate-limit-zone: 8%;
+}
+
+::selection {
+  background-color: var(--color-accent-bg);
+}
+
+*:lang(zh) {
+  font-family: var(--font-song);
+  font-size: calc(var(--font) * var(--cjk-font));
+  line-break: strict;
+}
+*:lang(ja) {
+  font-family: var(--font-mincho);
+  font-size: calc(var(--font) * var(--cjk-font));
+  line-break: strict;
+}
+span:lang(en) {
+  font-family: var(--font-serif);
+  font-size: var(--font);
+}
+
+em:lang(en),
+em span:lang(en) {
+  font-style: italic;
+  text-emphasis: none;
+}
+em:lang(zh) {
+  text-emphasis: filled dot;
+  font-style: normal;
+  text-emphasis-position: under right;
+}
+em:lang(ja) {
+  text-emphasis: filled dot;
+  font-style: normal;
+  text-emphasis-position: over right;
+}
+
+.before::before {
+  font-family: var(--font-serif);
+  content: '\2006';
+}
+
+.after::after {
+  font-family: var(--font-serif);
+  content: '\2006';
+}
