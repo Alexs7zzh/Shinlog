@@ -103,7 +103,9 @@
 }
 
 .nopadding {
-  padding: 0;
+  @media screen and (min-width: #{$breakpoint-s}px) {
+    padding: 0;
+  }
 }
 
 .nomargin {

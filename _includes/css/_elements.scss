@@ -41,7 +41,7 @@ ul {
   margin-left: calc(0em - var(--spacing-half));
   padding-left: calc(var(--spacing-half) - 3px);
   border-left: 3px solid var(--color-accent-light);
-  @media screen and (min-width: #{$breakpoint-m}px) {
+  @media screen and (min-width: #{$breakpoint-s}px) {
     padding-left: var(--spacing);
     border: none;
     margin-left: 0;
