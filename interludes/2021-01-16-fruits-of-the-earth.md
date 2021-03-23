@@ -15,4 +15,4 @@
 > Long only for what you have. Understand that at every moment of the day God in His entirety may be yours. Let your longing be love and your possession a lover's. For what is a longing that is not effectual?
 > 
 > —— André Gide, _The Fruits of the Earth_
-{.noident}
+{.noindent .nopadding}
