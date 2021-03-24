@@ -1,0 +1,17 @@
+.noindent p + p {
+  text-indent: 0;
+}
+
+.nopadding {
+  @media screen and (min-width: #{$breakpoint-s}px) {
+    padding: 0;
+  }
+}
+
+.nomargin {
+  margin: 0;
+}
+
+.nounderline a {
+  text-decoration: none;
+}

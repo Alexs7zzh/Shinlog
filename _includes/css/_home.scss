@@ -48,28 +48,3 @@
   font-variant: small-caps;
   letter-spacing: 0.4px;
 }
-
-.fragments {
-  margin-top: var(--spacing);
-  hr {
-    margin: var(--spacing-2) 0;
-  }
-  & > div {
-    position: relative;
-  }
-}
-
-.fragments-date {
-  font-family: var(--font-mono);
-  font-size: var(--font-s);
-  line-height: 1;
-  margin-bottom: var(--spacing-half);
-  @media screen and (min-width: #{$breakpoint-m}px) {
-    --postlist-padding: 13em;
-    position: absolute;
-    left: calc(0em - var(--postlist-padding));
-    width: calc(var(--postlist-padding) - 2em);
-    text-align: right;
-    line-height: calc(var(--line-height) / 0.75);
-  }
-}
