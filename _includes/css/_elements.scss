@@ -48,6 +48,10 @@ ul {
   }
 }
 
+.quote p:first-child:lang(en) {
+  text-indent: -0.8ch
+}
+
 .quote figcaption {
   text-align: right;
   font-style: normal;
