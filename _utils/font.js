@@ -14,8 +14,6 @@ for (let i = 33; i <= 126; i++)
 
 const basic = String.fromCharCode.apply(this, range) + String.fromCharCode(11834) + '一二三四五六七八九十'
 
-let oldFonts = []
-
 const parsePath = path => {
   const extname = Path.extname(path)
   return {
@@ -26,14 +24,6 @@ const parsePath = path => {
 }
 
 const loadChar = async () => {
-  oldFonts = await fg('assets/SourceHanSerif**/**/*.{woff,woff2}')
-  let tmp = {}
-  oldFonts.forEach(f => {
-    let parsedPath = parsePath(f)
-    tmp[parsedPath.basename.split('-')[0] + parsedPath.extname] = f
-  })
-  oldFonts = tmp
-  
   await Promise.all([exec('rm assets/SourceHanSerifCN/*'), exec('rm assets/SourceHanSerifJP/*')])
   
   const entries = await fg('!(node_modules)/**/*.md')
@@ -96,21 +86,25 @@ const addHash = async () => {
   const fonts = await fg('assets/**/*.{woff,woff2}')
   for (const entry of fonts) {
     const content = await fs.readFile(entry, 'utf-8')
+    const hash = '-' + md5(content).slice(0,8)
+    
+    let oldName = '', newName = ''
     let parsedPath = parsePath(entry)
     
-    if (parsedPath.basename.split('-').length > 1)
-      parsedPath.basename = parsedPath.basename.split('-')[0]
+    if (parsedPath.basename.startsWith('SourceHanSerif')) {
+      oldName = parsedPath.basename + parsedPath.extname
+      newName = parsedPath.basename + hash + parsedPath.extname
+    } else {
+      oldName = parsedPath.basename + parsedPath.extname
+      newName = parsedPath.basename.split('-')[0] + hash + parsedPath.extname
+    }
+    // if (newName === oldName) continue
 
-    const hash = '-' + md5(content).slice(0,8)
-    const newName = parsedPath.basename + hash + parsedPath.extname
     const path = Path.join(parsedPath.dirname, newName)
-
     fs.rename(entry, path)
     
-    if (parsedPath.basename.startsWith('SourceHanSerif'))
-      map.push([oldFonts[parsedPath.basename + parsedPath.extname], newName])
-    else
-      map.push([entry, newName])
+    if (parsedPath.basename.split('-').length > 1) oldName = parsedPath.basename.split('-')[0] + parsedPath.extname
+    map.push([oldName, newName])
   }
   
   // make sure xx.woff2 appears before xx.woff so that when replacing .woff2 won't be replaced by .woff
@@ -120,7 +114,13 @@ const addHash = async () => {
   files.forEach(async file => {
     let content = await fs.readFile(file, 'utf-8')
     for (const key of map) {
-      const reg = new RegExp(key[0], 'g')
+      const name = key[0].split('.')[0], ext = key[0].split('.')[1]
+      let reg
+      if (ext.endsWith('2'))
+        reg = new RegExp(name + '-[a-z0-9]+?\\.woff2')
+      else
+        reg = new RegExp(name + '-[a-z0-9]+?\\.woff(?:(?!2))')
+
       content = content.replace(reg, key[1])
     }
     fs.writeFile(file, content)
