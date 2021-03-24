@@ -3,6 +3,7 @@ title: 实体、去抽象化、与设计是什么
 description: 如何给无边界之物赋予边界？如何给无形态信息赋予可以承载重量的容器？在「高信噪比」为主流价值观的时代，通过 Craig Mod 制作的 _Koya Bound_ 和 _Flipboard for iPhone_ 这两本书，《全球概览》和多声道信息输入等例子，作为数字土著的我尝试了一次从「为什么」到「如何」的探索。
 date: 2018-12-25
 lang: zh
+classes: ['nounderline']
 podcast: https://jiaocha.io/assets/podcasts/15.mp3
 ---
 

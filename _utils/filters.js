@@ -17,6 +17,7 @@ module.exports = config => {
   config.addFilter('console', data => util.inspect(data))
   config.addFilter('markdown', data => md.renderInline(data).toString())
   config.addFilter('removeMarkdown', data => removeMd(data.replace(/"/g, '\'')))
+  config.addFilter('classToString', classes => classes.map(c => ' ' + c).join(''))
 
   config.addFilter('getItem', (collection, page) => getCollectionItem(collection, page))
   const getCollectionItem = (collection, page) => {

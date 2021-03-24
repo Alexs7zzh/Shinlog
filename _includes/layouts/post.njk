@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 ---
-<sidenote-container-element class="post" lang="{{ lang }}" after-elements=".info">
+<sidenote-container-element class="post{% if classes %}{{ classes | classToString }}{% endif %}" lang="{{ lang }}" after-elements=".info">
   <section class="info">
     <h1>{{ title }}</h1>
     {% if alternative %}
