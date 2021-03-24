@@ -14,7 +14,26 @@ for (let i = 33; i <= 126; i++)
 
 const basic = String.fromCharCode.apply(this, range) + String.fromCharCode(11834) + '一二三四五六七八九十'
 
+let oldFonts = []
+
+const parsePath = path => {
+  const extname = Path.extname(path)
+  return {
+    dirname: Path.dirname(path),
+    basename: Path.basename(path, extname),
+    extname: extname
+  }
+}
+
 const loadChar = async () => {
+  oldFonts = await fg('assets/SourceHanSerif**/**/*.{woff,woff2}')
+  let tmp = {}
+  oldFonts.forEach(f => {
+    let parsedPath = parsePath(f)
+    tmp[parsedPath.basename.split('-')[0] + parsedPath.extname] = f
+  })
+  oldFonts = tmp
+  
   await Promise.all([exec('rm assets/SourceHanSerifCN/*'), exec('rm assets/SourceHanSerifJP/*')])
   
   const entries = await fg('!(node_modules)/**/*.md')
@@ -72,15 +91,6 @@ const loadChar = async () => {
   await Promise.all(commands)
 }
 
-const parsePath = path => {
-  const extname = Path.extname(path)
-  return {
-    dirname: Path.dirname(path),
-    basename: Path.basename(path, extname),
-    extname: extname
-  }
-}
-
 const addHash = async () => {
   let map = []
   const fonts = await fg('assets/**/*.{woff,woff2}')
@@ -88,14 +98,19 @@ const addHash = async () => {
     const content = await fs.readFile(entry, 'utf-8')
     let parsedPath = parsePath(entry)
     
-    if (parsedPath.basename.split('.').length > 1)
-      parsedPath.basename = parsedPath.basename.split('.')[0]
+    if (parsedPath.basename.split('-').length > 1)
+      parsedPath.basename = parsedPath.basename.split('-')[0]
 
-    const hash = '.' + md5(content)
-    const path = Path.join(parsedPath.dirname, parsedPath.basename + hash + parsedPath.extname)
+    const hash = '-' + md5(content).slice(0,8)
+    const newName = parsedPath.basename + hash + parsedPath.extname
+    const path = Path.join(parsedPath.dirname, newName)
 
     fs.rename(entry, path)
-    map.push([parsedPath.basename + parsedPath.extname, parsedPath.basename + hash + parsedPath.extname])
+    
+    if (parsedPath.basename.startsWith('SourceHanSerif'))
+      map.push([oldFonts[parsedPath.basename + parsedPath.extname], newName])
+    else
+      map.push([entry, newName])
   }
   
   // make sure xx.woff2 appears before xx.woff so that when replacing .woff2 won't be replaced by .woff

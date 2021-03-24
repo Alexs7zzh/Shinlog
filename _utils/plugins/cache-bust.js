@@ -20,7 +20,7 @@ const afterBuild = async () => {
     const content = await fs.readFile(entry, 'utf-8')
     const parsedPath = parsePath(entry)
 
-    const hash = '.' + md5(content)
+    const hash = '-' + md5(content).slice(0,8)
     const path = Path.join(parsedPath.dirname, parsedPath.basename + hash + parsedPath.extname)
 
     fs.rename(entry, path)
