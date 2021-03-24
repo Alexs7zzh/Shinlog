@@ -37,8 +37,7 @@ picture {
   outline: 0;
 }
 
-[id] {
-  scroll-snap-margin-top: var(--spacing-2);
+:target {
   scroll-margin-top: var(--spacing-2);
 }
 
