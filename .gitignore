@@ -1,10 +1,10 @@
-_site/
-node_modules/
-api/node_modules/
+_site
+node_modules
+api/node_modules
 package-lock.json
 Shinlog.code-workspace
 .DS_Store
-fonts/
+fonts
 test.js
 .nova
 .vercel
