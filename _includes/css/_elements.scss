@@ -22,7 +22,7 @@ ol {
   list-style-type: lower-roman;
 }
 
-ol:lang(zh) {
+ol li:lang(zh) {
   list-style-type: cjk-ideographic;
   list-style-type: simp-chinese-informal;
 }
