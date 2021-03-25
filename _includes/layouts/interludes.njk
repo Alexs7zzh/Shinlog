@@ -19,7 +19,7 @@ layout: layouts/base.njk
 
 <div class="interlude-list">
 {% for post in collections.interludes %}
-  <sidenote-container-element class="interlude-item" id="{{ post.date | htmlDateString }}" lang="{{ post.data.lang }}">
+  <sidenote-container-element class="interlude-item" id="{{ post.date | htmlDateString }}" lang="{{ post.data.lang }}" after-elements="time, aside">
     <time class="interlude-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
     {{ post.templateContent | safe }}
   </sidenote-container-element>
