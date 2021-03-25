@@ -16,6 +16,8 @@ class SidenoteContainerElement extends HTMLElement {
   }
   
   connectedCallback() {
+    this.setAttribute('role', 'article')
+    
     if (this.footnotes.length === 0) return
     this.calculateSidenotesPos()
     
