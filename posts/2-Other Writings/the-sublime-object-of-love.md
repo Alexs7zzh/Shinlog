@@ -5,7 +5,7 @@ date: 2020-11-22
 alternative: ['en', 'ja']
 ---
 {% note %}
-This article is written for an in-class presentation as an analysis of a picture book, which can be read <a href="/assets/the-frog.pdf" download>here</a>.
+This article is written for an in-class presentation as an analysis of a picture book, which can be read <a href="/the-frog.pdf" download>here</a>.
 {% endnote %}
 
 <span class="init">Eve and Adam, the first crush in human history.</span> As we all know, it is said that God made woman from the rib of man. Now I would like you to forgive me for quoting such an old and patriarchal story. For what is worth, it is an exemplary story for Freudian insights. Let’s recall in what terms Adam expresses himself when meeting Eve, “She is the bone of my bones, flesh of my flesh. She is called woman because she was taken from man.” It is unfortunate that Adam had not read Freud. For anyone familiar with Freud, it is immediately noticeable that Adam’s expression is the object choice called narcissism. He recognizes himself in Eve, in what they have in common.
