@@ -1,6 +1,4 @@
-let width = window.innerWidth
-document.documentElement.style.setProperty('--width', `${width}`)
+document.documentElement.style.setProperty('--width', window.innerWidth)
 window.addEventListener('resize', () => {
-  let width = window.innerWidth
-  document.documentElement.style.setProperty('--width', `${width}`)
+  document.documentElement.style.setProperty('--width', window.innerWidth)
 })
