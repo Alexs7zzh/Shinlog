@@ -14,7 +14,7 @@ module.exports = config => {
 
   config.setDataDeepMerge(true)
   config.setLibrary('md', markdown)
-  config.addPassthroughCopy('assets')
+  config.addPassthroughCopy({ 'assets': '/' })
   config.setTemplateFormats('md,njk')
 
   config.setBrowserSyncConfig({
