@@ -1,5 +1,5 @@
 ---
-layout: layouts/base.njk
+layout: base.njk
 ---
 {% if content %}
 <div>
@@ -11,7 +11,6 @@ layout: layouts/base.njk
 <section class="series">
   <h2>{{ series.title }}</h2>
 
-  {# {% if series.title != "Fragments" %} #}
   <ol class="postlist">
   {% for item in series.children %}
     <li class="postlist-item">
@@ -22,18 +21,6 @@ layout: layouts/base.njk
     </li>
   {% endfor %}
   </ol>
-
-  {# {% else %}
-  <div class="fragments">
-    {% for item in series.children %}
-    <div id="{{ item.date | htmlDateString }}">
-      <time class="postlist-date" datetime="{{ item.date | htmlDateString }}">{{ item.date | readableDate }}</time>
-      {{ item.templateContent | safe }}
-    </div>
-    {% if loop.last == false %}<hr />{% endif %}
-    {% endfor %}
-  </div>
-  {% endif %} #}
 
 </section>
 {% endfor %}

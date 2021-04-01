@@ -1,9 +1,9 @@
-const addPlugins = require('./_utils/plugins')
-const addFilters = require('./_utils/filters')
-const addTransforms = require('./_utils/transforms')
-const addShortcodes = require('./_utils/shortcodes')
-const addCollections = require('./_utils/collections')
-const markdown = require('./_utils/markdown')
+const addPlugins = require('./src/utils/plugins')
+const addFilters = require('./src/utils/filters')
+const addTransforms = require('./src/utils/transforms')
+const addShortcodes = require('./src/utils/shortcodes')
+const addCollections = require('./src/utils/collections')
+const markdown = require('./src/utils/markdown')
 
 module.exports = config => {
   addPlugins(config)
@@ -15,10 +15,19 @@ module.exports = config => {
   config.setDataDeepMerge(true)
   config.setLibrary('md', markdown)
   config.addPassthroughCopy({ 'assets': '/' })
+  if (!process.env.ELEVENTY_ENV)
+    config.addPassthroughCopy({ 'src/js': '/' })
   config.setTemplateFormats('md,njk')
 
   config.setBrowserSyncConfig({
     ui: false,
     ghostMode: false
   })
+  
+  return {
+    dir: {
+      includes: "src/layouts",
+      data: "src/data"
+    }
+  }
 }

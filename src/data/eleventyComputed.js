@@ -3,10 +3,7 @@ const path = require('path')
 module.exports = {
   permalink: data => {
     const filePath = data.page.filePathStem
-    if (
-      path.basename(path.dirname(filePath)) == '3-Fragments' ||
-      path.dirname(filePath).split(path.sep)[1] == 'interludes'
-    )
+    if (path.dirname(filePath).split(path.sep)[2] == 'interludes')
       return false
 
     let slug = data.page.fileSlug

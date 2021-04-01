@@ -15,6 +15,7 @@
       {{ content | safe }}
     </main>
 
-    {% include "components/js-body.njk" %}
+    <script type="module" src={{ "/script.js" | jsHash }}></script>
+
   </body>
 </html>

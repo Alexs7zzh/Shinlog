@@ -3,12 +3,12 @@ const path = require('path')
 
 module.exports = config => {
   config.addCollection('home', collectionApi => {
-    let posts = collectionApi.getFilteredByGlob('posts/**/*.md')
+    let posts = collectionApi.getFilteredByGlob('content/posts/**/*.md')
     let ancestryMap = {}
     
     posts.forEach(post => {
       if (post.filePathStem.endsWith('-ja') || post.filePathStem.endsWith('-zh')) return
-      const filePath = post.filePathStem.replace('/posts/', '')
+      const filePath = post.filePathStem.replace('/content/posts/', '')
       let parents = path.dirname(filePath).split(path.sep)
       let current = ancestryMap
       while (parents.length !== 0) {
@@ -42,12 +42,12 @@ module.exports = config => {
   })
 
   config.addCollection('interludes', collectionApi => {
-    return collectionApi.getFilteredByGlob('interludes/*.md')
+    return collectionApi.getFilteredByGlob('content/interludes/*.md')
   })
 
   config.addCollection('interludesByYear', collection => {
     let yearSet = new Set()
-    let posts = collection.getFilteredByGlob('interludes/*.md')
+    let posts = collection.getFilteredByGlob('content/interludes/*.md')
     posts.forEach(item => {
       yearSet.add(DateTime.fromJSDate(item.date).year)
     })
