@@ -1,71 +1,69 @@
-const { dest, src } = require('vinyl-fs')
-const postcss = require('gulp-postcss')
-const autoprefixer = require('autoprefixer')
-const csso = require('./gulp-csso')
-const { sassSync } = require('@mr-hope/gulp-sass')
 const Mutex = require('async-mutex').Mutex
-const { Transform } = require('stream')
 const md5 = require('md5')
-const { basename } = require('path')
+const { basename, extname } = require('path')
+const fs = require('fs-extra')
+const fg = require('fast-glob')
+const sass = require('sass')
+const csso = require('csso')
 
-const compile = () => {
-  src('src/scss/*.{scss,sass}')
-    .pipe(sassSync().on('error', sassSync.logError))
-    .pipe(dest('_site/'))
+const compile = async () => {
+  const files = await fg('src/scss/[!_]*.{scss,sass}')
+  
+  for (const entry of files) {
+    const ext = extname(entry)
+    const name = basename(entry, ext)
+    
+    const { css } = sass.renderSync({
+      file: entry
+    })
+    
+    try {
+      fs.mkdirSync('_site/')
+    }  catch (er) {
+      'nothing'
+    }
+    fs.writeFile(`_site/${name}.css`, css) 
+  }
 }
 
 const compileWatch = changed => {
   if (changed === undefined) return
   
-  let flag = false
-  changed.forEach(i => {
-    if (i.endsWith('scss') || i.endsWith('sass')) {
-      flag = true
-      return
-    }
-  })
-  if (!flag) return
+  changed = changed.filter(i => i.endsWith('scss') || i.endsWith('sass'))
   
-  compile()
+  if(changed.length > 0)
+    compile()
 }
 
 const build = async () => {
+  const files = await fg('src/scss/[!_]*.{scss,sass}')
   let result = {}
   
-  src('src/scss/*.{scss,sass}')
-    .pipe(sassSync().on('error', sassSync.logError))
-    .pipe(postcss([autoprefixer()]))
-    .pipe(csso({
+  for (const entry of files) {
+    const ext = extname(entry)
+    const name = basename(entry, ext)
+    
+    let { css } = sass.renderSync({
+      file: entry
+    })
+    
+    css = csso.minify(css, {
       sourceMap: false,
       restructure: true,
       forceMediaMerge: true
-    }))
-    .pipe((() => {
-      const stream = new Transform({ objectMode: true })
+    }).css
     
-      stream._transform = (file, encoding, cb) => {
-        if (file.isNull()) return cb(null, file)
+    const hash = md5(css).slice(0, 10)
+    result[name + '.css'] = `${name}-${hash}.css`
     
-        const inputFile = file.relative
-        const source = String(file.contents)
-        
-        try {
-          const name = basename(inputFile, '.css')
-          const hash = md5(source).slice(0, 10)
-          
-          result[name + '.css'] = `${name}-${hash}.css`
-          file.path = file.path.replace(name + '.css', `${name}-${hash}.css`)
-          
-          cb(null, file)
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    
-      return stream
-    })())
-    .pipe(dest('_site/'))
-  
+    try {
+      fs.mkdirSync('_site/')
+    }  catch (er) {
+      'nothing'
+    }
+    fs.writeFile(`_site/${name}-${hash}.css`, css) 
+  }
+
   return result
 }
 
