@@ -38,19 +38,23 @@ const bundling = async () => {
 }
 
 module.exports = config => {
-  const mutex = new Mutex()
-  let jsHash = {}
-  
-  config.addNunjucksAsyncFilter('jsHash', async (url, callback) => {
-    const release = await mutex.acquire()
-    try {
-      if (Object.keys(jsHash).length === 0)
-        jsHash = await bundling()
-    } finally {
-      release()
-    }
-    for(let i in jsHash)
-      url = url.replace(i, jsHash[i])
-    callback(null, url)
-  })
+  /* global process */
+  if (process.env.ELEVENTY_ENV) {
+    const mutex = new Mutex()
+    let jsHash = {}
+    
+    config.addNunjucksAsyncFilter('jsHash', async (url, callback) => {
+      const release = await mutex.acquire()
+      try {
+        if (Object.keys(jsHash).length === 0)
+          jsHash = await bundling()
+      } finally {
+        release()
+      }
+      for(let i in jsHash)
+        url = url.replace(i, jsHash[i])
+      callback(null, url)
+    })
+  } else
+    config.addFilter('jsHash', url => url)
 }
