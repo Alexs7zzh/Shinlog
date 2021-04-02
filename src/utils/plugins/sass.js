@@ -5,6 +5,8 @@ const fs = require('fs-extra')
 const fg = require('fast-glob')
 const sass = require('sass')
 const csso = require('csso')
+const autoprefixer = require('autoprefixer')
+const postcss = require('postcss')
 
 const compile = async () => {
   const files = await fg('src/scss/[!_]*.{scss,sass}')
@@ -46,6 +48,8 @@ const build = async () => {
     let { css } = sass.renderSync({
       file: entry
     })
+    
+    css = postcss([autoprefixer]).process(css).css
     
     css = csso.minify(css, {
       sourceMap: false,
