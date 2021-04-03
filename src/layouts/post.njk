@@ -15,7 +15,7 @@ layout: base.njk
     {% endif %}
   </section>
   {% if podcast %}
-    <div class="podcast"></div>
+    <div class="podcast" data-title={{ title }} data-src={{ podcast }}></div>
   {% endif %}
   {{ content | safe }}
 </sidenote-container-element>

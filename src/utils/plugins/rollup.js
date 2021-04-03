@@ -12,8 +12,8 @@ const bundling = async () => {
   })
     
   const { output } = await bundle.generate({
-    file: '_site/script.js',
-    format: 'iife',
+    dir: '_site/',
+    format: 'es',
     plugins: []
   })
   
@@ -22,14 +22,25 @@ const bundling = async () => {
     if (chunkOrAsset.type === 'chunk') {
       const { code, fileName } = chunkOrAsset
       const name = basename(fileName, '.js')
-      const hash = md5(code).slice(0, 10)
       
-      result[name + '.js'] = `${name}-${hash}.js`
-      
-      fs.writeFile(`_site/${name}-${hash}.js`, code, err => {
-        if (err)
-          console.log(`Cannot write to _site/${name}-${hash}.js`)
-      })
+      if (name === 'script') {
+        const { code } = chunkOrAsset
+        const hash = md5(code).slice(0, 10)
+        
+        result[name + '.js'] = `${name}-${hash}.js`
+        fs.writeFile(`_site/${name}-${hash}.js`, code, err => {
+          if (err)
+            console.log(`Cannot write to _site/${name}-${hash}.js`)
+        })
+      } else {
+        const index = name.lastIndexOf('-')
+        if (index !== -1)
+          result[name.slice(0, index) + '.js'] = `${name}.js`
+        fs.writeFile(`_site/${name}.js`, code, err => {
+          if (err)
+            console.log(`Cannot write to _site/${name}.js`)
+        })
+      }
     }
 
   await bundle.close()
