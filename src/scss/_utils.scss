@@ -15,3 +15,11 @@
 .nounderline a {
   text-decoration: none;
 }
+
+.smallcaps {
+  font-variant: small-caps;
+}
+
+.halfwidth {
+  font-feature-settings: 'palt';
+}

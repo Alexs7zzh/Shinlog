@@ -89,6 +89,35 @@
   }
 }
 
+.switcher {
+  font-family: var(--font-mono);
+  font-size: var(--font-s);
+  line-height: calc(var(--line-height) * 0.75);
+  user-select: none;
+  a {
+    font-family: var(--font-mono);
+    font-size: var(--font-s);
+    line-height: calc(var(--line-height) * 0.75);
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    margin-left: 0.1em;
+    margin-right: 0.1em;
+    transition: all 0.5s ease-out;
+    background: linear-gradient(to right, var(--color-accent-bg), var(--color-accent-bg));
+    background-size: 100% 40%;
+    background-repeat: no-repeat;
+    background-position: 0% 85%;
+    text-decoration: none;
+    &:hover {
+      border-radius: 8px;
+      background-color: var(--color-accent-bg);
+      color: var(--color-accent-default);
+      cursor: pointer;
+    }
+  }
+}
+
+
 .epigraph {
   font-style: italic;
   padding-left: 0;
@@ -106,47 +135,47 @@
   color: var(--color-accent-default);
 }
 
-.related {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  grid-template: 'previous next' 1fr / 1fr 1fr;
-  @media screen and (min-width: #{$breakpoint-m}px) {
-    margin-left: var(--body-padding);
-  }
-}
+// .related {
+//   list-style: none;
+//   padding: 0;
+//   display: grid;
+//   grid-template: 'previous next' 1fr / 1fr 1fr;
+//   @media screen and (min-width: #{$breakpoint-m}px) {
+//     margin-left: var(--body-padding);
+//   }
+// }
 
-.next,
-.previous {
-  .description {
-    text-transform: uppercase;
-    color: var(--color-dim);
-  }
-  .title {
-    font-variant: small-caps;
-    font-size: var(--font-l);
-  }
-  a {
-    text-decoration: none;
-  }
-}
-
-.next {
-  text-align: right;
-  grid-area: next;
-  .description::after {
-    content: '\261E';
-    margin-left: 0.3em;
-    color: var(--color-accent-default);
-  }
-}
-
-.previous {
-  grid-area: previous;
-  .description::before {
-    content: '\261C';
-    margin-right: 0.3em;
-    color: var(--color-accent-default);
-  }
-}
-
+// .next,
+// .previous {
+//   .description {
+//     text-transform: uppercase;
+//     color: var(--color-dim);
+//   }
+//   .title {
+//     font-variant: small-caps;
+//     font-size: var(--font-l);
+//   }
+//   a {
+//     text-decoration: none;
+//   }
+// }
+// 
+// .next {
+//   text-align: right;
+//   grid-area: next;
+//   .description::after {
+//     content: '\261E';
+//     margin-left: 0.3em;
+//     color: var(--color-accent-default);
+//   }
+// }
+// 
+// .previous {
+//   grid-area: previous;
+//   .description::before {
+//     content: '\261C';
+//     margin-right: 0.3em;
+//     color: var(--color-accent-default);
+//   }
+// }
+// 
