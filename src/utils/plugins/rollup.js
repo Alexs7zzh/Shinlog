@@ -24,7 +24,6 @@ const bundling = async () => {
       const name = basename(fileName, '.js')
       
       if (name === 'script') {
-        const { code } = chunkOrAsset
         const hash = md5(code).slice(0, 10)
         
         result[name + '.js'] = `${name}-${hash}.js`
