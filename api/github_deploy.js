@@ -1,6 +1,6 @@
 const axios = require('axios')
 /* global process */
-const telegram = async (content, notification = false) => {
+const telegram = async (content, notification = false) =>
   axios.post(`https://api.telegram.org/bot${process.env.telegram_token}/sendMessage`, {
     chat_id: process.env.telegram_chat_id,
     text: content,
@@ -8,7 +8,6 @@ const telegram = async (content, notification = false) => {
     parse_mode: 'markdown',
     disable_web_page_preview: true
   })
-}
 
 const capitalize = s => {
   if (typeof s !== 'string') return ''
