@@ -1,8 +1,8 @@
 const axios = require('axios')
 /* global process */
-const telegram = async (content, notification = false, me = true) =>
+const telegram = async (content, notification = false) =>
   axios.post(`https://api.telegram.org/bot${process.env.telegram_token}/sendMessage`, {
-    chat_id: me ? process.env.telegram_chat_id : process.env.telegram_chat_id_jesse,
+    chat_id: process.env.telegram_chat_id,
     text: content,
     disable_notification: notification,
     parse_mode: 'markdown',
@@ -29,7 +29,6 @@ module.exports = (req, res) => {
 ${status.description}.  
 ${url}`
   
-  telegram(content, notification, false)
   telegram(content, notification)
     .then(() => {
       res.status(200).send()
