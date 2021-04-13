@@ -23,15 +23,6 @@ layout: base.njk
     <time class="interlude-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
     {{ post.templateContent | safe }}
   </sidenote-container-element>
-
-  {# {% else %}
-  <section class="interlude-item" id="{{ post.date | htmlDateString }}">
-    <time class="interlude-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
-    <div class="lang-switch">[{% set langs = post.data.lang %}{% for lang in langs %}{% set tabid = (post.date | htmlDateString) + "-" + lang %}<input type="radio" name="tabs" id="{{ tabid }}" {% if loop.first %}checked{% endif %}/><label for="{{ tabid }}" onclick="switchLang('{{ lang }}', this)">{{ lang | upper }}</label>{% if loop.last == false %}/{% endif %}{% endfor %}]</div>
-    {{ post.templateContent | safe }}
-  </section>
-  {% endif %} #}
-
   {% if loop.last == false %}<hr />{% endif %}
 {% endfor %}
 </div>
