@@ -1,7 +1,7 @@
 const { parseHTML } = require('linkedom')
 
 const addEnd = document => {
-  const ele = document.querySelector('article > p:last-child')
+  const ele = document.querySelector('sidenote-container-element:not(.noend) > p:last-of-type')
   if (ele === null) return
   const end = document.createElement('span')
   end.textContent = '❧'
