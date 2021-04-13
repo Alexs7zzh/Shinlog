@@ -33,13 +33,6 @@ picture {
   height: auto;
 }
 
-*:focus {
-  outline: 0;
-  border-radius: 8px;
-  background-color: var(--color-accent-bg);
-  color: var(--color-accent-default);
-}
-
 :target {
   scroll-margin-top: var(--spacing-2);
 }
