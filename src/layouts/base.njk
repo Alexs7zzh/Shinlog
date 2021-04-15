@@ -15,7 +15,13 @@
       {{ content | safe }}
     </main>
 
-    <script type="module" src={{ "/script.js" | jsHash }}></script>
-
+    {% if page.url !== '/' %}
+    <script>
+      {{ 'sidenote.js' | js | jsmin | safe }}
+    </script>
+    {% endif %}
+    {% if podcast %}
+    <script src="/podcast.js"></script>
+    {% endif %}
   </body>
 </html>
