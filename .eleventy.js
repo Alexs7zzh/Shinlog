@@ -14,9 +14,10 @@ module.exports = config => {
 
   config.setDataDeepMerge(true)
   config.setLibrary('md', markdown)
-  config.addPassthroughCopy({ 'assets': '/' })
-  if (!process.env.ELEVENTY_ENV)
-    config.addPassthroughCopy({ 'src/js': '/' })
+  config.addPassthroughCopy({ 
+    'assets': '/',
+    'src/js': '/'
+  })
   config.setTemplateFormats('md,njk')
 
   config.setBrowserSyncConfig({
