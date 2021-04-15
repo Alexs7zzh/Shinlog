@@ -27,8 +27,8 @@ module.exports = config => {
   
   return {
     dir: {
-      includes: "src/layouts",
-      data: "src/data"
+      includes: 'src/layouts',
+      data: 'src/data'
     }
   }
 }

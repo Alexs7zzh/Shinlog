@@ -42,6 +42,7 @@
       "commonjs": true,
       "es2021": true
     },
+    "ignorePatterns": ["_site/**/*.js", "!.eleventy.js"],
     "extends": "eslint:recommended",
     "parserOptions": {
       "ecmaVersion": 12,
