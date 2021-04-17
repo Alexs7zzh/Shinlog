@@ -9,6 +9,10 @@
         {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "interest-cohort=()",
         }
       ]
     },
@@ -17,56 +21,16 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, no-cache"
+          "value": "no-cache"
         }
       ]
     },
     {
-       "source": "(.*)css",
+       "source": "(.*)(css|js|woff2?)",
         "headers": [
           {
             "key": "Cache-Control",
             "value": "public, max-age=31536000, immutable"
-          }
-        ]
-    },
-    {
-       "source": "(.*)js",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-          }
-        ]
-    },
-    {
-       "source": "(.*)woff",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-          }
-        ]
-    },
-    {
-       "source": "(.*)woff2",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-          }
-        ]
-    },
-    {
-       "source": "(.*).ico",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-          },
-          {
-            "key": "Content-Type",
-            "value": "image/x-icon"
           }
         ]
     }
