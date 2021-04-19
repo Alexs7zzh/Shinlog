@@ -1,33 +1,25 @@
 self.addEventListener('install', function() {
-  self.skipWaiting()
+  event.waitUntil(self.skipWaiting())
 })
 
-addEventListener('activate', function(event) {
-  event.waitUntil(async function() {
-    if (self.registration.navigationPreload)
-      await self.registration.navigationPreload.enable()
-  }())
+self.addEventListener('activate', function(event) {
+  event.waitUntil(self.clients.claim())
 })
 
 addEventListener('fetch', function(event) {
-  console.log(event)
-  event.respondWith(async function() {
-    if (/browser-sync/.test(event.request.url)) return fetch(event.request)
-    if (/plausible/.test(event.request.url)) return fetch(event.request)
-    if (event.request.method !== 'GET') return fetch(event.request)
-    
-    const cachedResponse = await caches.match(event.request)
-    if (cachedResponse) return cachedResponse
-    
-    const preloadResponse = await event.preloadResponse
-    if (preloadResponse) return preloadResponse
-    
-    return fetch(event.request).then(function(response) {
-      caches.open('cache').then(function(cache) {
-        cache.put(event.request, response.clone())
-        return response
-      })
-    })
-    
-  }())
+  if (event.request.url.startsWith(self.location.origin)) {
+    console.log(event)
+    event.respondWith(async function() {
+      if (/browser-sync/.test(event.request.url)) return fetch(event.request)
+      
+      const cachedResponse = await caches.match(event.request)
+      if (cachedResponse) return cachedResponse
+      
+      const response = await fetch(event.request)
+      const cache = await caches.open('cache')
+      await cache.put(event.request, response.clone())
+      
+      return response
+    }())
+  }
 })
