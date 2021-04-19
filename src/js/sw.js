@@ -7,7 +7,7 @@ self.addEventListener('activate', function(event) {
 })
 
 self.addEventListener('fetch', function(event) {
-  if (event.request.url.startsWith(self.location.origin) && !event.request.url.endsWith('/'))
+  if (event.request.url.startsWith(self.location.origin) && !event.request.url.endsWith('/') && event.request.method == 'GET' && !/browser-sync/.test(event.request.url))
     event.respondWith(async function() {
       const cachedResponse = await caches.match(event.request)
       if (cachedResponse) return cachedResponse
