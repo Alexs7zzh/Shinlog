@@ -6,12 +6,10 @@ self.addEventListener('activate', function(event) {
   event.waitUntil(self.clients.claim())
 })
 
-addEventListener('fetch', function(event) {
-  if (event.request.url.startsWith(self.location.origin)) {
+self.addEventListener('fetch', function(event) {
+  if (event.request.url.startsWith(self.location.origin) && !/browser-sync/.test(event.request.url)) {
     console.log(event)
     event.respondWith(async function() {
-      if (/browser-sync/.test(event.request.url)) return fetch(event.request)
-      
       const cachedResponse = await caches.match(event.request)
       if (cachedResponse) return cachedResponse
       
