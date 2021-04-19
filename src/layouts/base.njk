@@ -14,14 +14,12 @@
     <main>
       {{ content | safe }}
     </main>
-
+    
     {% if page.url !== '/' %}
-    <script>
-      {{ 'sidenote.js' | js | jsmin | safe }}
-    </script>
+      <script src={{ "/sidenote.js" | jsHash }}></script>
     {% endif %}
     {% if podcast %}
-    <script src="/podcast.js"></script>
+      <script src={{ "/podcast.js" | jsHash }}></script>
     {% endif %}
   </body>
 </html>
