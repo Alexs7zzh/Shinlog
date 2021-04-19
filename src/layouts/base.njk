@@ -14,7 +14,10 @@
     <main>
       {{ content | safe }}
     </main>
-
+    
+    <script>
+    if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js')
+    </script>
     {% if page.url !== '/' %}
     <script>
       {{ 'sidenote.js' | js | jsmin | safe }}
