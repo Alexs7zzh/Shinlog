@@ -10,9 +10,11 @@ addEventListener('activate', function(event) {
 })
 
 addEventListener('fetch', function(event) {
+  console.log(event)
   event.respondWith(async function() {
     if (/browser-sync/.test(event.request.url)) return fetch(event.request)
     if (/plausible/.test(event.request.url)) return fetch(event.request)
+    if (event.request.method !== 'GET') return fetch(event.request)
     
     const cachedResponse = await caches.match(event.request)
     if (cachedResponse) return cachedResponse
