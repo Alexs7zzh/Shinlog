@@ -15,7 +15,7 @@
       {{ content | safe }}
     </main>
     
-    <script {% if env %}type="module"{% endif %} src="{{ '/ql.js' | jsHash }}"></script>
+    <script {% if not env %}type="module"{% endif %} src="{{ '/ql.js' | jsHash }}"></script>
     {% if page.url !== '/' %}
       <script src={{ "/sidenote.js" | jsHash }}></script>
     {% endif %}
