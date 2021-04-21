@@ -20,7 +20,7 @@
       <script src={{ "/sidenote.js" | jsHash }}></script>
     {% endif %}
     {% if podcast %}
-      <script src={{ "/podcast.js" | jsHash }}></script>
+      <script {% if not env %}type="module"{% endif %} src={{ "/podcast.js" | jsHash }}></script>
     {% endif %}
   </body>
 </html>
