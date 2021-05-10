@@ -1,5 +1,5 @@
 const fg = require('fast-glob')
-const fs = require('fs-extra')
+const fs = require('fs')
 const matter = require('gray-matter')
 const util = require('util')
 const md5 = require('md5')
@@ -28,7 +28,7 @@ const loadChar = async () => {
   
   const entries = await fg('!(node_modules)/**/*.md')
   for (const entry of entries) {
-    const content = await fs.readFile(entry, 'utf-8')
+    const content = fs.readFileSync(entry, 'utf-8')
     let post
     try {
       post = matter(content)
@@ -85,7 +85,7 @@ const addHash = async () => {
   let map = []
   const fonts = await fg('assets/**/*.{woff,woff2}')
   for (const entry of fonts) {
-    const content = await fs.readFile(entry, 'utf-8')
+    const content = fs.readFileSync(entry, 'utf-8')
     const hash = '-' + md5(content).slice(0,8)
     
     let oldName = '', newName = ''
@@ -101,7 +101,7 @@ const addHash = async () => {
     // if (newName === oldName) continue
 
     const path = Path.join(parsedPath.dirname, newName)
-    fs.rename(entry, path)
+    fs.renameSync(entry, path)
     
     if (parsedPath.basename.split('-').length > 1) oldName = parsedPath.basename.split('-')[0] + parsedPath.extname
     map.push([oldName, newName])
@@ -111,8 +111,8 @@ const addHash = async () => {
   map.sort((a, b) => b[0].localeCompare(a[0]))
   
   const files = ['_includes/components/preload.njk', '_includes/css/_fonts.scss']
-  files.forEach(async file => {
-    let content = await fs.readFile(file, 'utf-8')
+  files.forEach(file => {
+    let content = fs.readFileSync(file, 'utf-8')
     for (const key of map) {
       const name = key[0].split('.')[0], ext = key[0].split('.')[1]
       let reg
@@ -123,7 +123,7 @@ const addHash = async () => {
 
       content = content.replace(reg, key[1])
     }
-    fs.writeFile(file, content)
+    fs.writeFileSync(file, content)
   })
 }
 
