@@ -36,7 +36,7 @@
     display: inline;
   }
   li {
-    display: inline;
+    display: inline-block;
     position: relative;
     margin-right: 0.5em;
     &::after {
@@ -49,7 +49,6 @@
       border-radius: 50%;
       background: var(--color-dim);
       opacity: 0.7;
-      display: inline;
     }
     &:last-child::after {
       display: none;
