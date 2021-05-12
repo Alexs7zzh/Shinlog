@@ -12,7 +12,7 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', function(event) {
   if (event.request.url.startsWith(self.location.origin) && event.request.method == 'GET' && !/browser-sync/.test(event.request.url))
     event.respondWith(async function() {
-      if (!event.request.url.endsWith('/')) {
+      if (/.+(css|js|woff2?|png|jpeg|webp)$/.test(event.request.url)) {
         const cachedResponse = await caches.match(event.request)
         if (cachedResponse) return cachedResponse
         
@@ -26,8 +26,10 @@ self.addEventListener('fetch', function(event) {
           if (preloadResponse) return preloadResponse
           
           const response = await fetch(event.request)
-          const cache = await caches.open('offline')
-          await cache.put(event.request, response.clone())
+          if (event.request.url.endsWith('/')) {
+            const cache = await caches.open('offline')
+            await cache.put(event.request, response.clone())
+          }
           return response
         } catch {
           return caches.match(event.request)
