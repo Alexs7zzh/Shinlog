@@ -51,16 +51,23 @@ sup {
   }
   ol { 
     margin: 0;
-    list-style-type: decimal;
+    list-style: none;
+    counter-reset: footnote;
   }
   li {
     line-height: var(--aside-line-height);
+    counter-increment: footnote;
     span:lang(en) {
       font-family: var(--font-mono);
       font-size: var(--font-s);
     }
     &:target {
       animation: highlight 3s ease-in;
+    }
+    &::before {
+      content: counter(footnote) ".";
+      color: var(--color-accent-default);
+      margin-right: .5em;
     }
   }
   @media screen and (min-width: #{$breakpoint-m}px) {
