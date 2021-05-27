@@ -1,3 +1,5 @@
+@use "sass:math";
+
 :root {
   --font-serif: 'EB Garamond', Garamond, Georgia, 'Times New Roman', Times, serif;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Noto Sans', 'Helvetica Neue', Helvetica, 'Nimbus Sans L', Arial, 'Liberation Sans', sans-serif;
@@ -47,4 +49,4 @@ $aside-percentage-max: 0.35;
 
 $breakpoint-s: 600;
 $breakpoint-m: 800;
-$breakpoint-l: $body-max-width / $body-percentage;
+$breakpoint-l: math.div($body-max-width, $body-percentage);
