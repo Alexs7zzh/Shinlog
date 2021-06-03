@@ -34,7 +34,12 @@ picture {
 }
 
 :target {
-  scroll-margin-top: var(--spacing-2);
+  @supports (scroll-margin-top: 0) {
+    scroll-margin-top: var(--spacing-2);
+  }
+  @supports not (scroll-margin-top: 0) {
+    scroll-snap-margin-top: var(--spacing-2);
+  }
 }
 
 html {
