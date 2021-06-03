@@ -26,7 +26,7 @@
       ]
     },
     {
-       "source": "(.*).(css|js|woff2?)",
+       "source": "(.*).(css|js|woff2?|png)",
         "headers": [
           {
             "key": "Cache-Control",
