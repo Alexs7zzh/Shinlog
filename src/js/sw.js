@@ -13,6 +13,8 @@ self.addEventListener('fetch', function(event) {
   if (event.request.url.startsWith(self.location.origin) && event.request.method == 'GET' && !/browser-sync/.test(event.request.url))
     event.respondWith(async function() {
       if (/.+(css|js|woff2?|png|jpeg|webp)$/.test(event.request.url)) {
+        if (/.+(js\/script\.js)$/.test(event.request.url) || event.request.url.includes('gtag') || event.request.url.includes('plausible')) return await fetch(event.request)
+        
         const cachedResponse = await caches.match(event.request)
         if (cachedResponse) return cachedResponse
         
