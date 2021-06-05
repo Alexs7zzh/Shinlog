@@ -56,6 +56,20 @@ module.exports = config => {
         url = url.replace(i, jsHash[i])
       callback(null, url)
     })
+    
+    config.on('beforeBuild', async () => {
+      const bundle = await rollup.rollup({
+        input: ['src/js/sw.js'],
+        plugins: [terser()]
+      })
+      
+      await bundle.write({
+        dir: '_site/',
+        format: 'es'
+      })
+      await bundle.close()
+    })
+    
   } else
     config.addFilter('jsHash', url => url)
 }
