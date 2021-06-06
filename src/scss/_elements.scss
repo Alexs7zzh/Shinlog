@@ -1,9 +1,24 @@
 a {
   color: var(--color-default);
   transition: 0.5s ease-out;
-  // @media (hover: hover) and (pointer: fine) {
   &:hover {
     color: var(--color-accent-default);
+  }
+}
+
+p > a {
+  line-height: calc(var(--line-height) * 0.75);
+  transition: all 0.5s ease-out;
+  background: linear-gradient(to right, var(--color-accent-bg), var(--color-accent-bg));
+  background-size: 100% 40%;
+  background-repeat: no-repeat;
+  background-position: 0% 85%;
+  text-decoration: none;
+  &:hover {
+    border-radius: 8px;
+    background-color: var(--color-accent-bg);
+    color: var(--color-accent-default);
+    cursor: pointer;
   }
 }
 
@@ -35,6 +50,16 @@ ul {
   }
 }
 
+figure {
+  margin: var(--spacing-half) 0;
+  
+  figcaption {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: var(--font-s);
+  }
+}
+
 .quote {
   margin: var(--spacing-half) 0;
   margin-left: calc(0em - var(--spacing-half));
@@ -45,15 +70,17 @@ ul {
     border: none;
     margin-left: 0;
   }
-}
-
-.quote p:first-child:lang(en) {
-  text-indent: -0.8ch
-}
-
-.quote figcaption {
-  text-align: right;
-  font-style: normal;
+  
+  p:first-child:lang(en) {
+    text-indent: -0.8ch
+  }
+  
+  figcaption {
+    text-align: right;
+    // font-style: normal;
+    font-family: var(--font-serif);
+    font-size: var(--font);
+  }
 }
 
 hr {

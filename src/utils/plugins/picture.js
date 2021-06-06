@@ -4,8 +4,8 @@ const defaultOptions = {
   widths: [640, 768, 1280, 1366, 1600, 1920],
   sizes: '',
   formats: ['webp', 'jpeg'],
-  urlPath: '/assets/',
-  outputDir: './_site/assets/'
+  urlPath: '/',
+  outputDir: './_site/'
 }
 
 module.exports = (document, options) => {
@@ -15,8 +15,8 @@ module.exports = (document, options) => {
   
   const images = [...document.querySelectorAll('figure img')]
   
-  images.forEach((i, index) => {
-    const src = '.' + i.getAttribute('src')
+  images.forEach(i => {
+    const src = './assets' + i.getAttribute('src')
     
     Image(src, options)
     const meta = Image.statsSync(src, options)
@@ -24,10 +24,8 @@ module.exports = (document, options) => {
     const last = meta.jpeg[meta.jpeg.length - 1]
     i.setAttribute('width', last.width)
     i.setAttribute('height', last.height)
-    if (index !== 0) {
-      i.setAttribute('loading', 'lazy')
-      i.setAttribute('decoding', 'async')
-    }
+    i.setAttribute('loading', 'lazy')
+    i.setAttribute('decoding', 'async')
     
     i.outerHTML = `
     <picture>
