@@ -1,9 +1,7 @@
 {% set currentTitle = (title + " | " + meta.title) if title else meta.title %}
 
 <title>{{ currentTitle }}</title>
-{% if description %}
-<meta name="description" content="{{ description | removeMarkdown }}">
-{% endif %}
+<meta name="description" content="{{ description or meta.description | removeMarkdown }}">
 <meta name="author" content="{{ meta.author }}">
 <link rel="canonical" href="{{ meta.url }}{{ page.url }}">
 
