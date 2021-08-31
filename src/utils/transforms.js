@@ -17,7 +17,7 @@ module.exports = config => {
       
       addEnd(document)
       
-      if (process.env.ELEVENTY_ENV)
+      if (process.env.PRODUCTION)
         require('./plugins/picture')(document, {
           sizes: '(max-width: 600px) 100vw, (max-width: 1500px) 52vw, 780px'
         })
@@ -28,7 +28,7 @@ module.exports = config => {
   })
   
   /* global process */
-  if (process.env.ELEVENTY_ENV) {
+  if (process.env.PRODUCTION) {
     const minify = require('html-minifier').minify
     config.addTransform('minifyHtml', (content, outputPath) => {
       if (outputPath && outputPath.endsWith('.html')) 

@@ -39,7 +39,7 @@ const bundling = async url => {
 
 module.exports = config => {
   /* global process */
-  if (process.env.ELEVENTY_ENV) {
+  if (process.env.PRODUCTION) {
     const mutex = new Mutex()
     let jsHash = {}
     
