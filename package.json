@@ -11,8 +11,8 @@
     "brenchmark": "DEBUG=Eleventy:Benchmark* PRODUCTION=true npx @11ty/eleventy"
   },
   "dependencies": {
-    "@11ty/eleventy": "^1.0.0-canary.41",
-    "@11ty/eleventy-img": "^0.10.0",
+    "@11ty/eleventy": "^1.0.0-canary.43",
+    "@11ty/eleventy-img": "^1.0.0-beta.2",
     "async-mutex": "^0.3.2",
     "autoprefixer": "^10.3.4",
     "csso": "^4.2.0",
