@@ -2,7 +2,6 @@
 title: It's Crawling beneath You!
 date: 2021-06-06
 ---
-# It's Crawling beneath You!
 
 About a week ago, I had a dream in which I saw two cockroaches in my room. Fortunately, the spray insecticide I had was quite effective. I killed the cockroaches and felt relieved. The spray happened to run out of its filling as well. “What a coincidence! It finished its mission,” I thought, and was going to buy a new one from the supermarket. At this very moment, another insect crawled out of my bed and marched directly towards me. It’s huge and unstoppable. I screamed and woke up.
 
