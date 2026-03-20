@@ -2,7 +2,8 @@
 
 :root {
   --body-font: 'body-font', Garamond, Georgia, 'Times New Roman', Times, serif;
-  --body-font-cjk: 'body-font-cjk', Garamond, Georgia, 'Times New Roman', Times, serif;
+  --body-font-zh: 'body-font-cjk-zh', Garamond, Georgia, 'Times New Roman', Times, serif;
+  --body-font-ja: 'body-font-cjk-ja', Garamond, Georgia, 'Times New Roman', Times, serif;
   --ui-font: -apple-system, BlinkMacSystemFont, 'Noto Sans', 'Helvetica Neue', Helvetica, 'Nimbus Sans L', Arial, 'Liberation Sans', sans-serif;
   --mono-font: 'mono-font', 'Menlo', 'Courier New', monospace;
 
@@ -117,12 +118,12 @@ body {
 }
 
 body :lang(zh) {
-  font-family: var(--body-font-cjk), var(--body-cjk-zh);
+  font-family: var(--body-font-zh), var(--body-cjk-zh);
   font-size: calc(var(--font) * var(--cjk-font));
   line-break: strict;
 }
 body :lang(ja) {
-  font-family: var(--body-font-cjk), var(--body-cjk-ja);
+  font-family: var(--body-font-ja), var(--body-cjk-ja);
   font-size: calc(var(--font) * var(--cjk-font));
   line-break: strict;
 }
