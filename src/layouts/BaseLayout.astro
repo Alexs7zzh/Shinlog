@@ -1,0 +1,95 @@
+---
+import '../styles/style.scss';
+
+import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Header from '../components/Header.astro';
+
+const {
+  title = null,
+  description = SITE_DESCRIPTION,
+  htmlLang = 'en',
+} = Astro.props;
+
+const currentTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
+const ebGaramondRegularHref = '/fonts/eb-garamond/eb-garamond-regular.2026-03-19.woff2';
+const icon180Href = '/icons/icon-180.2026-03-19.png';
+const icon32Href = '/icons/icon-32.2026-03-19.png';
+const icon512Href = '/icons/icon-512.2026-03-19.png';
+const icon544Href = '/icons/icon-544.2026-03-19.png';
+const icon96Href = '/icons/icon-96.2026-03-19.png';
+const sourceHanSerifCnRegularHref = '/fonts/SourceHanSerifCN/source-han-serif-cn-regular.2026-03-19.woff2';
+const sourceHanSerifJpRegularHref = '/fonts/SourceHanSerifJP/source-han-serif-jp-regular.2026-03-19.woff2';
+const fontPreloads = [
+  ebGaramondRegularHref,
+  ...(htmlLang === 'ja' ? [sourceHanSerifJpRegularHref] : []),
+  ...(htmlLang === 'zh' ? [sourceHanSerifCnRegularHref] : []),
+];
+---
+
+<!doctype html>
+<html lang={htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{currentTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={SITE_AUTHOR} />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href={new URL('/sitemap-index.xml', Astro.site).toString()} />
+    {fontPreloads.map((href) => (
+      <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+    ))}
+
+    <meta name="theme-color" content="#fffff9" />
+    <link rel="icon" type="image/png" href={icon32Href} sizes="32x32" />
+    <link rel="icon" type="image/png" href={icon96Href} sizes="96x96" />
+    <link rel="icon" type="image/png" href={icon512Href} sizes="512x512" />
+    <link rel="icon" type="image/png" href={icon544Href} sizes="544x544" />
+    <link rel="apple-touch-icon" href={icon180Href} sizes="180x180" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style lang="scss">
+  @use '../styles/config';
+
+  body {
+    margin-left: auto;
+    margin-right: auto;
+    padding: var(--spacing) var(--spacing-half);
+    padding-bottom: var(--spacing-3);
+
+    @media (--viewport-s) {
+      --body-max-width: calc(600px + (#{config.$body-max-width} - 600) * (100vw - 600px) / (#{config.$breakpoint-l} - 600));
+      max-width: var(--body-max-width);
+      padding-top: calc(var(--spacing) + var(--spacing-2) * (var(--width) - #{config.$breakpoint-s}) / (#{config.$breakpoint-l} - #{config.$breakpoint-s}));
+    }
+
+    @media (--viewport-m) {
+      display: grid;
+      --body-padding: calc(var(--body-max-width) * (#{config.$aside-percentage-min} + (var(--width) - #{config.$breakpoint-m}) / (#{config.$breakpoint-l} - #{config.$breakpoint-m}) * (#{config.$aside-percentage-max} - #{config.$aside-percentage-min})));
+
+      grid-template:
+        'title   nav' var(--font-l)
+        'article article' 1fr /
+        var(--body-padding) 1fr;
+    }
+
+    @media (--viewport-l) {
+      --body-max-width: #{config.$body-max-width}px;
+      --body-padding: calc(#{config.$aside-percentage-max} * var(--body-max-width));
+      padding-top: var(--spacing-3);
+    }
+  }
+
+  main {
+    grid-area: article;
+    margin-top: var(--spacing-3);
+  }
+</style>

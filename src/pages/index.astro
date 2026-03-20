@@ -1,0 +1,130 @@
+---
+import path from 'node:path';
+
+import { getCollection } from 'astro:content';
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_DESCRIPTION } from '../consts';
+import { formatHtmlDate, formatReadableDate } from '../lib/date';
+import { getPostLang, getPostUrl, validatePostLocales } from '../lib/post-paths';
+
+function getRawSlug(id: string): string {
+  return path.basename(id, path.extname(id));
+}
+
+function isHomepageVariant(rawSlug: string): boolean {
+  return rawSlug.endsWith('-ja') || rawSlug.endsWith('-zh');
+}
+
+const posts = await getCollection('posts');
+
+validatePostLocales(posts);
+
+const homepagePosts = posts
+  .filter((post) => !isHomepageVariant(getRawSlug(post.id)))
+  .map((post) => ({
+    post,
+    rawSlug: getRawSlug(post.id),
+    series: path.dirname(post.id).split(path.sep).filter(Boolean)[0] ?? '',
+    url: getPostUrl(post),
+  }));
+
+const postsBySeries = new Map<string, typeof homepagePosts>();
+
+for (const post of homepagePosts) {
+  const seriesPosts = postsBySeries.get(post.series) ?? [];
+  seriesPosts.push(post);
+  postsBySeries.set(post.series, seriesPosts);
+}
+
+const series = Array.from(postsBySeries.entries())
+  .sort(([left], [right]) => left.localeCompare(right))
+  .map(([title, children]) => ({
+    title: title.replace(/^\d+-/, ''),
+    children: /^\d+-/.test(children[0]?.rawSlug ?? '')
+      ? [...children].sort((left, right) => left.rawSlug.localeCompare(right.rawSlug))
+      : [...children].sort((left, right) => left.post.data.date.getTime() - right.post.data.date.getTime()),
+  }));
+---
+
+<BaseLayout description={SITE_DESCRIPTION} htmlLang="en">
+  {series.map((seriesItem) => (
+    <section class="series">
+      <h2>{seriesItem.title}</h2>
+
+      <ol class="postlist">
+        {seriesItem.children.map((item) => (
+          <li class="postlist-item">
+            <div class="postlist-date">
+              <time datetime={formatHtmlDate(item.post.data.date)}>{formatReadableDate(item.post.data.date)}</time>
+            </div>
+            <a href={item.url} class="postlist-link" lang={getPostLang(item.post)} data-astro-prefetch>
+              {item.post.data.title}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
+</BaseLayout>
+
+<style lang="scss">
+  @use '../styles/config';
+
+  .series {
+    @media (--viewport-m) {
+      margin-left: var(--body-padding);
+    }
+
+    h2 {
+      font-style: italic;
+      font-size: var(--font-l);
+      font-weight: normal;
+    }
+  }
+
+  .postlist {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--spacing);
+    margin-bottom: var(--spacing-2);
+  }
+
+  .postlist-item {
+    margin-bottom: var(--spacing-half);
+    font-size: var(--font-l);
+
+    a {
+      text-decoration: none;
+
+      &:lang(zh),
+      &:lang(ja) {
+        font-size: var(--font);
+        line-height: 1;
+      }
+    }
+
+    @media (--viewport-m) {
+      position: relative;
+    }
+  }
+
+  .postlist-date {
+    font-family: var(--mono-font);
+    font-size: var(--font-s);
+    color: var(--color-dim);
+
+    @media (--viewport-m) {
+      --postlist-padding: 13em;
+      position: absolute;
+      left: calc(0em - var(--postlist-padding));
+      width: calc(var(--postlist-padding) - 2em);
+      text-align: right;
+    }
+  }
+
+  .postlist-link {
+    font-variant: small-caps;
+    letter-spacing: 0.4px;
+  }
+</style>

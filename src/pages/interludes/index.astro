@@ -1,0 +1,233 @@
+---
+import { getCollection } from 'astro:content';
+import path from 'node:path';
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SidenoteContainer from '../../components/SidenoteContainer.astro';
+import { formatHtmlDate, formatReadableDate, formatShortDate } from '../../lib/date';
+import { renderMarkdownFragment } from '../../lib/render-markdown-fragment';
+
+function getInterludeLang(id: string, lang: string | undefined): string {
+  if (lang) return lang;
+
+  const rawSlug = path.basename(id, path.extname(id));
+  if (rawSlug.endsWith('-ja')) return 'ja';
+  if (rawSlug.endsWith('-zh')) return 'zh';
+  return 'en';
+}
+
+const interludes = (await getCollection('interludes')).sort(
+  (left, right) => left.data.date.getTime() - right.data.date.getTime(),
+);
+const interludesByYear = Array.from(
+  interludes.reduce((groups, interlude) => {
+    const year = interlude.data.date.getFullYear();
+    const group = groups.get(year) ?? [];
+    group.push(interlude);
+    groups.set(year, group);
+    return groups;
+  }, new Map<number, typeof interludes>()),
+);
+const renderedInterludes = await Promise.all(
+  interludes.map(async (entry) => {
+    const headnoteHtml = entry.data.headnote ? await renderMarkdownFragment(entry.data.headnote) : undefined;
+    const bodyHtml = entry.body ? await renderMarkdownFragment(entry.body) : '';
+
+    return {
+      ...entry,
+      bodyHtml,
+      headnoteHtml,
+    };
+  }),
+);
+---
+
+<BaseLayout title="Interludes" htmlLang="en">
+  <div class="interlude-index">
+    <h2>Index</h2>
+    <ol>
+      {interludesByYear.map(([year, posts]) => (
+        <li class="interlude-index-yearlist">
+          <div>{year}:</div>
+          <ol>
+            {posts.map((post) => (
+              <li>
+                <a href={`#${formatHtmlDate(post.data.date)}`} data-astro-prefetch>{formatShortDate(post.data.date)}</a>
+                
+              </li>
+            ))}
+          </ol>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="interlude-list">
+    {renderedInterludes.map((post, index) => (
+      <>
+        <SidenoteContainer
+          className="interlude-item"
+          id={formatHtmlDate(post.data.date)}
+          lang={getInterludeLang(post.id, post.data.lang)}
+          afterElements="time, aside"
+        >
+          <time class="interlude-date" datetime={formatHtmlDate(post.data.date)}>
+            {formatReadableDate(post.data.date)}
+          </time>
+          {post.headnoteHtml && <aside class="interlude-headnote" set:html={post.headnoteHtml} />}
+          <Fragment set:html={post.bodyHtml} />
+        </SidenoteContainer>
+        {index < renderedInterludes.length - 1 && <hr />}
+      </>
+    ))}
+  </div>
+</BaseLayout>
+
+<style lang="scss">
+  @use '../../styles/config';
+
+  .interlude-index {
+    padding: calc(var(--spacing) / 4) var(--spacing-half);
+    background-color: var(--color-light);
+    font-family: var(--ui-font);
+    font-weight: 800;
+    margin-top: calc(0em - var(--spacing-2));
+    margin-bottom: var(--spacing-2);
+    margin-left: calc(0em - var(--spacing-half));
+    margin-right: calc(0em - var(--spacing-half));
+    position: relative;
+
+    @media (--viewport-s) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    h2 {
+      font-weight: 500;
+      font-size: var(--font);
+      color: hsla(360, 89%, 61%, 0.7);
+    }
+
+    ol {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  .interlude-index-yearlist {
+    display: inline;
+
+    div {
+      display: inline;
+      color: var(--color-mid);
+      margin-right: 0.2em;
+    }
+
+    ol {
+      padding: 0;
+      display: inline;
+    }
+
+    li {
+      display: inline-block;
+      position: relative;
+      margin-right: 0.5em;
+
+      &::after {
+        content: '\A';
+        position: absolute;
+        top: calc(50% - 0.1em);
+        right: -0.35em;
+        width: var(--font-xxs);
+        height: var(--font-xxs);
+        border-radius: 50%;
+        background: var(--color-dim);
+        opacity: 0.7;
+      }
+
+      &:last-child::after {
+        display: none;
+      }
+    }
+
+    a {
+      color: var(--color-dim);
+      text-decoration: none;
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          color: var(--color-accent-default);
+        }
+      }
+    }
+  }
+
+  .interlude-list > hr {
+    margin: var(--spacing-2) 0;
+
+    @media (--viewport-m) {
+      padding-left: var(--body-padding);
+    }
+  }
+
+  .interlude-list :global(.interlude-item) {
+    display: block;
+    position: relative;
+  }
+
+  .interlude-list :global(.interlude-item .interlude-headnote) {
+    background-color: var(--color-accent-bg);
+    margin: var(--spacing-half) 0;
+    padding: calc(var(--line-height) * 0.25) var(--spacing-half);
+    line-height: var(--aside-line-height);
+    font-family: var(--mono-font);
+    font-size: var(--font-s);
+    color: var(--color-accent-dim);
+  }
+
+  .interlude-list :global(.interlude-item .interlude-headnote)::selection,
+  .interlude-list :global(.interlude-item .interlude-headnote ::selection) {
+    color: var(--color-bg);
+    background-color: var(--color-accent-default);
+  }
+
+  .interlude-list :global(.interlude-item .interlude-headnote *:lang(zh)) {
+    font-family: var(--mono-font), var(--meta-cjk-zh);
+    font-size: var(--font-s);
+    line-height: var(--aside-line-height);
+  }
+
+  .interlude-list :global(.interlude-item .interlude-headnote *:lang(ja)) {
+    font-family: var(--mono-font), var(--meta-cjk-ja);
+    font-size: var(--font-s);
+    line-height: var(--aside-line-height);
+  }
+
+  @media (--viewport-m) {
+    .interlude-list :global(.interlude-item) {
+      padding-left: var(--body-padding);
+    }
+
+    .interlude-list :global(.interlude-item .interlude-headnote) {
+      position: absolute;
+      margin: var(--spacing) 0;
+      left: 0;
+      width: calc(var(--body-padding) - var(--spacing));
+    }
+  }
+
+  .interlude-list :global(.interlude-date) {
+    font-family: var(--mono-font);
+    font-size: var(--font-s);
+    user-select: none;
+  }
+
+  @media (--viewport-m) {
+    .interlude-list :global(.interlude-date) {
+      position: absolute;
+      left: 0;
+      line-height: var(--line-height);
+    }
+  }
+</style>

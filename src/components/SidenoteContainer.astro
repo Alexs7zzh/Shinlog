@@ -1,0 +1,108 @@
+---
+const {
+  id,
+  lang,
+  className = '',
+  afterElements = '',
+} = Astro.props;
+---
+
+<article
+  id={id}
+  lang={lang}
+  class:list={['sidenote-container', className]}
+  data-after-elements={afterElements}
+>
+  <slot />
+</article>
+
+<script>
+  const containerSelector = '.sidenote-container[data-after-elements]';
+
+  const getFootnoteKey = (value: string | null, prefix: 'fn-' | 'fnref-'): string | null => {
+    if (!value || !value.startsWith(prefix)) {
+      return null;
+    }
+
+    return value.slice(prefix.length);
+  };
+
+  const solveFor = (element: HTMLElement, currentTop: number, parentTop: number): number => {
+    const previousElement = element.previousElementSibling;
+    if (!(previousElement instanceof HTMLElement)) {
+      return currentTop;
+    }
+
+    const previousElementBottom = previousElement.getBoundingClientRect().bottom - parentTop;
+    return currentTop < previousElementBottom ? previousElementBottom : currentTop;
+  };
+
+  const precedes = (element: HTMLElement, reference: HTMLElement): boolean => {
+    return Boolean(element.compareDocumentPosition(reference) & Node.DOCUMENT_POSITION_FOLLOWING);
+  };
+
+  const calculateSidenotesPos = (container: HTMLElement): void => {
+    const refs = [...container.querySelectorAll<HTMLElement>('[data-footnote-ref]')];
+    const footnotes = [...container.querySelectorAll<HTMLElement>('.footnotes li')];
+    const afterElements = container.dataset.afterElements ?? '';
+
+    for (const element of footnotes) {
+      const id = getFootnoteKey(element.getAttribute('id'), 'fn-');
+      if (!id) {
+        continue;
+      }
+
+      const references = refs.filter((item) => getFootnoteKey(item.getAttribute('id'), 'fnref-') === id);
+
+      if (references.length > 1) {
+        console.error(`Find multiple sidenote references for sidenote id:${element.getAttribute('id')}`);
+        continue;
+      }
+
+      if (references.length === 0) {
+        console.error(`Cannot find any sidenote reference for sidenote id:${element.getAttribute('id')}`);
+        continue;
+      }
+
+      const reference = references[0].closest('sup') ?? references[0];
+      const containerTop = container.getBoundingClientRect().top;
+      let top = Math.round(reference.getBoundingClientRect().top - containerTop);
+
+      if (element.previousElementSibling) {
+        top = solveFor(element, top, containerTop);
+      } else if (afterElements.length > 0) {
+        const bottoms = Array.from(container.querySelectorAll<HTMLElement>(afterElements))
+          .filter((item) => precedes(item, reference))
+          .map((item) => item.getBoundingClientRect().bottom);
+
+        if (bottoms.length > 0) {
+          const startPos = Math.max(...bottoms);
+          if (top < startPos - containerTop) {
+            top = Math.round(startPos - containerTop);
+          }
+        }
+      }
+
+      element.style.top = `${top}px`;
+      element.style.opacity = '1';
+    }
+  };
+
+  const containers = Array.from(document.querySelectorAll<HTMLElement>(containerSelector));
+
+  if (containers.length > 0) {
+    const updateAll = (): void => {
+      for (const container of containers) {
+        calculateSidenotesPos(container);
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(updateAll);
+
+    updateAll();
+
+    for (const container of containers) {
+      resizeObserver.observe(container);
+    }
+  }
+</script>

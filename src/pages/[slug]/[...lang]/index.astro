@@ -1,0 +1,63 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../../layouts/PostLayout.astro';
+import {
+  getPostAlternativeLinks,
+  getPostLang,
+  getPostSlug,
+  getPostUrl,
+  validatePostLocales,
+} from '../../../lib/post-paths';
+import { renderMarkdownFragment, stripHtml } from '../../../lib/render-markdown-fragment';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+
+  validatePostLocales(posts);
+
+  return posts.map((post) => {
+    const lang = getPostLang(post);
+
+    return {
+      params: {
+        slug: getPostSlug(post),
+        lang: lang === 'en' ? undefined : lang,
+      },
+      props: { url: getPostUrl(post) },
+    };
+  });
+}
+
+const { url } = Astro.props;
+if (typeof url !== 'string') {
+  throw new Error('Missing route url for post page.');
+}
+
+const posts = await getCollection('posts');
+
+validatePostLocales(posts);
+
+const post = posts.find((candidate) => getPostUrl(candidate) === url);
+if (!post) {
+  throw new Error(`Cannot find entry for url: ${url}`);
+}
+
+const slug = getPostSlug(post);
+const descriptionHtml = post.data.description ? await renderMarkdownFragment(post.data.description) : undefined;
+const entry = {
+  title: post.data.title,
+  lang: getPostLang(post),
+  descriptionHtml,
+  metaDescription: descriptionHtml ? stripHtml(descriptionHtml) : undefined,
+  date: post.data.date,
+  classes: post.data.classes,
+  podcast: post.data.podcast,
+  alternative: getPostAlternativeLinks(posts, slug),
+};
+
+const { Content } = await render(post);
+---
+
+<PostLayout entry={entry}>
+  <Content />
+</PostLayout>

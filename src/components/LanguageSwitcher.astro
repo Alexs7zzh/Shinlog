@@ -1,0 +1,65 @@
+---
+import type { AlternativeLink, EntryLang } from '../lib/types';
+
+const { currentLang, items = [] } = Astro.props as {
+  currentLang: EntryLang;
+  items?: AlternativeLink[];
+};
+---
+
+{items.length > 0 && (
+  <nav class="switcher" aria-label="Translations">
+    [
+    {items.map((item, index) => (
+      <>
+        {item.lang === currentLang ? (
+          <span aria-current="page">{item.lang.toUpperCase()}</span>
+        ) : (
+          <a href={item.url} hreflang={item.lang} data-astro-prefetch>{item.lang.toUpperCase()}</a>
+        )}
+        {index < items.length - 1 && '/'}
+      </>
+    ))}
+    ]
+  </nav>
+)}
+
+<style lang="scss">
+  .switcher {
+    font-family: var(--mono-font);
+    font-size: var(--font-s);
+    line-height: calc(var(--line-height) * 0.75);
+    user-select: none;
+
+    a,
+    span {
+      font-family: var(--mono-font);
+      font-size: var(--font-s);
+      line-height: calc(var(--line-height) * 0.75);
+      padding-left: 0.4em;
+      padding-right: 0.4em;
+      margin-left: 0.1em;
+      margin-right: 0.1em;
+      transition: all 0.5s ease-out;
+      background: linear-gradient(to right, var(--color-accent-bg), var(--color-accent-bg));
+      background-size: 100% 40%;
+      background-repeat: no-repeat;
+      background-position: 0% 85%;
+    }
+
+    a {
+      text-decoration: none;
+
+      &:hover {
+        border-radius: 8px;
+        background-color: var(--color-accent-bg);
+        color: var(--color-accent-default);
+        cursor: pointer;
+      }
+    }
+
+    span {
+      color: var(--color-default);
+    }
+  }
+</style>

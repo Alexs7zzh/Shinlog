@@ -1,0 +1,15 @@
+@use "sass:math";
+
+$body-percentage: 0.8;
+$body-max-width: 1100;
+
+$aside-percentage-min: 0.3;
+$aside-percentage-max: 0.35;
+
+$breakpoint-s: 600;
+$breakpoint-m: 800;
+$breakpoint-l: math.div($body-max-width, $body-percentage);
+
+@custom-media --viewport-s (min-width: #{$breakpoint-s}px);
+@custom-media --viewport-m (min-width: #{$breakpoint-m}px);
+@custom-media --viewport-l (min-width: #{$breakpoint-l}px);

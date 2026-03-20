@@ -1,0 +1,125 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import PodcastPlayer from '../components/PodcastPlayer.astro';
+import SidenoteContainer from '../components/SidenoteContainer.astro';
+import { SITE_DESCRIPTION } from '../consts';
+import { formatHtmlDate, formatReadableDate } from '../lib/date';
+import type { AlternativeLink, EntryLang } from '../lib/types';
+
+interface PostLayoutEntry {
+  title: string;
+  lang: EntryLang;
+  descriptionHtml?: string;
+  metaDescription?: string;
+  date?: Date;
+  classes?: string[];
+  podcast?: string;
+  alternative?: AlternativeLink[];
+}
+
+const { entry } = Astro.props as {
+  entry: PostLayoutEntry;
+};
+---
+
+<BaseLayout title={entry.title} description={entry.metaDescription ?? SITE_DESCRIPTION} htmlLang={entry.lang}>
+  <SidenoteContainer
+    className={['post', ...(entry.classes ?? []), entry.podcast ? 'noend' : ''].filter(Boolean).join(' ')}
+    lang={entry.lang}
+    afterElements=".info"
+  >
+    <section class="info">
+      <h1>{entry.title}</h1>
+      <LanguageSwitcher currentLang={entry.lang} items={entry.alternative} />
+      {entry.date && (
+        <time datetime={formatHtmlDate(entry.date)}>{formatReadableDate(entry.date)}</time>
+      )}
+      {entry.descriptionHtml && <div class="description" set:html={entry.descriptionHtml} />}
+    </section>
+
+    {entry.podcast && <PodcastPlayer title={entry.title} src={entry.podcast} />}
+    <slot />
+  </SidenoteContainer>
+</BaseLayout>
+
+<style lang="scss">
+  @use '../styles/config';
+
+  :global(.post) {
+    display: block;
+
+    @media (--viewport-m) {
+      padding-left: var(--body-padding);
+      position: relative;
+    }
+  }
+
+  :global(.post h1) {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: var(--font);
+    line-height: var(--line-height);
+
+    &:lang(zh),
+    &:lang(ja) {
+      font-size: var(--font);
+    }
+  }
+
+  :global(.post h2),
+  :global(.post h3) {
+    font-style: italic;
+    font-size: var(--font);
+    margin-top: var(--spacing);
+    margin-bottom: var(--spacing-half);
+    font-weight: normal;
+
+    &:lang(zh) {
+      font-style: normal;
+      font-family: var(--meta-cjk-zh);
+      font-weight: bold;
+    }
+
+    &:lang(ja) {
+      font-style: normal;
+      font-family: var(--meta-cjk-ja);
+      font-weight: bold;
+    }
+  }
+
+  :global(.info) {
+    padding-bottom: var(--spacing);
+
+    @media (--viewport-m) {
+      position: absolute;
+      left: 0;
+      top: 0;
+      max-width: calc(var(--body-padding) - var(--spacing));
+    }
+  }
+
+  :global(.info time) {
+    margin-top: var(--spacing-half);
+    display: inline-block;
+    font-family: var(--mono-font);
+    font-size: var(--font-s);
+    line-height: var(--line-height);
+  }
+
+  :global(.info .description) {
+    font-family: var(--mono-font);
+    font-size: var(--font-s);
+    hyphens: none;
+
+    &:lang(zh) {
+      font-style: normal;
+      font-family: var(--mono-font), var(--meta-cjk-zh);
+    }
+
+    &:lang(ja) {
+      font-style: normal;
+      font-family: var(--mono-font), var(--meta-cjk-ja);
+    }
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+const { title, src } = Astro.props;
+---
+
+<div class="podcast-player">
+  <p class="podcast-player-title">{title}</p>
+  <audio controls preload="metadata" src={src} data-title={title}>
+    Your browser does not support the audio element.
+  </audio>
+</div>
+
+<script>
+  const podcastElement = document.querySelector('.podcast-player audio');
+  const titleElement = document.querySelector('.podcast-player-title');
+
+  if (podcastElement instanceof HTMLAudioElement && titleElement instanceof HTMLElement) {
+    const title = podcastElement.dataset.title;
+    if (title) {
+      titleElement.textContent = title;
+    }
+  }
+</script>
+
+<style>
+  .podcast-player {
+    margin: var(--spacing) 0;
+    padding: var(--spacing-half);
+    background-color: var(--color-light);
+    border-radius: 10px;
+  }
+
+  .podcast-player-title {
+    margin-bottom: var(--spacing-half);
+    font-family: var(--mono-font);
+    font-size: var(--font-s);
+    color: var(--color-accent-dim);
+  }
+
+  .podcast-player audio {
+    display: block;
+    width: 100%;
+  }
+</style>
