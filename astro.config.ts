@@ -12,7 +12,7 @@ import rehypeQuoteDirectives from './src/lib/rehype-quote-directives';
 import rehypeTypography from './src/lib/rehype-typography';
 
 export default defineConfig({
-  site: 'https://shinlog.me',
+  site: 'https://shinlog.vercel.app',
   output: 'static',
   trailingSlash: 'always',
   build: {
