@@ -6,6 +6,7 @@ import remarkAttributeLists from './src/lib/remark-attribute-lists';
 import remarkDirectives from './src/lib/remark-directives';
 import remarkTypography from './src/lib/remark-typography';
 import rehypeFigureImages from './src/lib/rehype-figure-images';
+import rehypeMarkEndElement from './src/lib/rehype-mark-end-element';
 import rehypeAttributeLists from './src/lib/rehype-attribute-lists';
 import rehypePrefixFootnoteIds from './src/lib/rehype-prefix-footnote-ids';
 import rehypeQuoteDirectives from './src/lib/rehype-quote-directives';
@@ -29,7 +30,7 @@ export default defineConfig({
     gfm: true,
     smartypants: true,
     remarkPlugins: [remarkDirective, remarkDirectives, remarkAttributeLists, remarkTypography],
-    rehypePlugins: [rehypePrefixFootnoteIds, rehypeQuoteDirectives, rehypeAttributeLists, rehypeTypography, rehypeFigureImages],
+    rehypePlugins: [rehypePrefixFootnoteIds, rehypeQuoteDirectives, rehypeAttributeLists, rehypeTypography, rehypeFigureImages, rehypeMarkEndElement],
   },
   integrations: [sitemap()],
 });

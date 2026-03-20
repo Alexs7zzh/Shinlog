@@ -9,6 +9,7 @@ import rehypeStringify from 'rehype-stringify';
 
 import rehypeAttributeLists from './rehype-attribute-lists';
 import rehypeFigureImages from './rehype-figure-images';
+import rehypeMarkEndElement from './rehype-mark-end-element';
 import rehypePrefixFootnoteIds from './rehype-prefix-footnote-ids';
 import rehypeQuoteDirectives from './rehype-quote-directives';
 import rehypeTypography from './rehype-typography';
@@ -31,6 +32,7 @@ const markdownFragmentProcessor = unified()
   .use(rehypeAttributeLists)
   .use(rehypeTypography)
   .use(rehypeFigureImages)
+  .use(rehypeMarkEndElement)
   .use(rehypeStringify, { allowDangerousHtml: true })
   .freeze();
 
