@@ -1,6 +1,6 @@
 ---
 title: 愛の崇高な対象
-description: 主体が欲求する前に、常に既に欲求の主体である。従って、純粋な欲求は生産と消費の領域を先回ることができる。愛の快感原則からの根本的な脱離を我々は立ち会う —— 「愛に落ちる」ということは、the base of subject itself is disrupted and dissolved into a storm of sensations which are violently superimposed and fluctuating. Is not love a complete disregard for the consequences, representations, and social orders?
+description: 主体が欲求する前に、常に既に欲求の主体である。従って、純粋な欲求は生産と消費の領域を先回ることができる。愛の快感原則からの根本的な脱離を我々は立ち会う —— 「愛に落ちる」ということは、主体そのものの基盤が攪乱され、激しく重なり合い、揺れ動く感覚の嵐のなかへと溶解していく。愛とは、結果や表象、そして社会秩序を完全に顧みないことではないだろうか。
 date: 2020-11-22
 lang: ja
 ---
