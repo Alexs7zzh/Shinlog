@@ -1,42 +1,147 @@
 ---
 import { getCollection } from 'astro:content';
-import path from 'node:path';
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
 import SidenoteContainer from '../../components/SidenoteContainer.astro';
+import { ENTRY_LANGS } from '../../consts';
 import { formatHtmlDate, formatReadableDate, formatShortDate } from '../../lib/date';
-import { renderMarkdownFragment } from '../../lib/render-markdown-fragment';
+import {
+  getEntryAlternativeLinks,
+  getEntryLang,
+  getEntryRawSlug,
+  stripLanguageSuffix,
+  validateEntryLocales,
+} from '../../lib/entry-locales';
+import { renderMarkdownFragmentWithPrefix } from '../../lib/render-markdown-fragment';
+import type { CollectionEntry } from 'astro:content';
 
-function getInterludeLang(id: string, lang: string | undefined): string {
-  if (lang) return lang;
+type InterludeSource = CollectionEntry<'interludes'>;
 
-  const rawSlug = path.basename(id, path.extname(id));
-  if (rawSlug.endsWith('-ja')) return 'ja';
-  if (rawSlug.endsWith('-zh')) return 'zh';
-  return 'en';
+function getInterludeSlug(interlude: Pick<InterludeSource, 'id'>): string {
+  return stripLanguageSuffix(getEntryRawSlug(interlude));
 }
 
-const interludes = (await getCollection('interludes')).sort(
-  (left, right) => left.data.date.getTime() - right.data.date.getTime(),
-);
-const interludesByYear = Array.from(
+function getCanonicalInterlude(interludes: InterludeSource[]): InterludeSource {
+  const baseVariant = interludes.find((interlude) => getEntryRawSlug(interlude) === getInterludeSlug(interlude));
+  if (baseVariant) {
+    return baseVariant;
+  }
+
+  for (const lang of ENTRY_LANGS) {
+    const variant = interludes.find((interlude) => getEntryLang(interlude) === lang);
+    if (variant) {
+      return variant;
+    }
+  }
+
+  return interludes[0];
+}
+
+function sortInterludeVariants(interludes: InterludeSource[], canonical: InterludeSource): InterludeSource[] {
+  return [...interludes].sort((left, right) => {
+    if (left.id === canonical.id) return -1;
+    if (right.id === canonical.id) return 1;
+
+    return ENTRY_LANGS.indexOf(getEntryLang(left)) - ENTRY_LANGS.indexOf(getEntryLang(right));
+  });
+}
+
+function validateInterludeDates(interludes: InterludeSource[]): void {
+  const datesBySlug = new Map<string, string>();
+
+  for (const interlude of interludes) {
+    const slug = getInterludeSlug(interlude);
+    const date = formatHtmlDate(interlude.data.date);
+    const previous = datesBySlug.get(slug);
+
+    if (previous && previous !== date) {
+      throw new Error(
+        `Interlude locale group "${slug}" must share one date, but found "${previous}" and "${date}" (entry "${interlude.id}").`,
+      );
+    }
+
+    datesBySlug.set(slug, date);
+  }
+}
+
+function getInterludeAnchor(interlude: InterludeSource, canonical: InterludeSource): string {
+  const date = formatHtmlDate(interlude.data.date);
+
+  return interlude.id === canonical.id ? date : `${date}-${getEntryLang(interlude)}`;
+}
+
+const interludes = await getCollection('interludes');
+
+validateEntryLocales(interludes, getInterludeSlug, 'interlude');
+validateInterludeDates(interludes);
+
+const interludeGroups = Array.from(
   interludes.reduce((groups, interlude) => {
-    const year = interlude.data.date.getFullYear();
-    const group = groups.get(year) ?? [];
+    const slug = getInterludeSlug(interlude);
+    const group = groups.get(slug) ?? [];
     group.push(interlude);
-    groups.set(year, group);
+    groups.set(slug, group);
     return groups;
-  }, new Map<number, typeof interludes>()),
-);
-const renderedInterludes = await Promise.all(
-  interludes.map(async (entry) => {
-    const headnoteHtml = entry.data.headnote ? await renderMarkdownFragment(entry.data.headnote) : undefined;
-    const bodyHtml = entry.body ? await renderMarkdownFragment(entry.body) : '';
+  }, new Map<string, InterludeSource[]>()),
+)
+  .map(([, variants]) => {
+    const canonical = getCanonicalInterlude(variants);
+    const entries = sortInterludeVariants(variants, canonical);
 
     return {
-      ...entry,
-      bodyHtml,
-      headnoteHtml,
+      canonical,
+      canonicalAnchor: getInterludeAnchor(canonical, canonical),
+      date: canonical.data.date,
+      entries,
+    };
+  })
+  .sort((left, right) => left.date.getTime() - right.date.getTime());
+
+const interludesByYear = Array.from(
+  interludeGroups.reduce((groups, group) => {
+    const year = group.date.getFullYear();
+    const yearGroups = groups.get(year) ?? [];
+    yearGroups.push(group);
+    groups.set(year, yearGroups);
+    return groups;
+  }, new Map<number, typeof interludeGroups>()),
+);
+
+const renderedInterludeGroups = await Promise.all(
+  interludeGroups.map(async (group) => {
+    const alternative = getEntryAlternativeLinks(
+      group.entries,
+      getInterludeSlug(group.canonical),
+      getInterludeSlug,
+      (entry) => `/interludes/#${getInterludeAnchor(entry, group.canonical)}`,
+      getEntryLang(group.canonical),
+    );
+    const entries = await Promise.all(
+      group.entries.map(async (entry) => {
+        const anchor = getInterludeAnchor(entry, group.canonical);
+        const headnoteHtml = entry.data.headnote
+          ? await renderMarkdownFragmentWithPrefix(entry.data.headnote, `${anchor}-headnote`)
+          : undefined;
+        const bodyHtml = entry.body
+          ? await renderMarkdownFragmentWithPrefix(entry.body, anchor)
+          : '';
+
+        return {
+          anchor,
+          bodyHtml,
+          date: entry.data.date,
+          headnoteHtml,
+          lang: getEntryLang(entry),
+        };
+      }),
+    );
+
+    return {
+      alternative,
+      canonicalAnchor: group.canonicalAnchor,
+      date: group.date,
+      entries,
     };
   }),
 );
@@ -46,14 +151,13 @@ const renderedInterludes = await Promise.all(
   <div class="interlude-index">
     <h2>Index</h2>
     <ol>
-      {interludesByYear.map(([year, posts]) => (
+      {interludesByYear.map(([year, groups]) => (
         <li class="interlude-index-yearlist">
           <div>{year}:</div>
           <ol>
-            {posts.map((post) => (
+            {groups.map((group) => (
               <li>
-                <a href={`#${formatHtmlDate(post.data.date)}`} data-astro-prefetch>{formatShortDate(post.data.date)}</a>
-                
+                <a href={`#${group.canonicalAnchor}`} data-astro-prefetch>{formatShortDate(group.date)}</a>
               </li>
             ))}
           </ol>
@@ -63,21 +167,36 @@ const renderedInterludes = await Promise.all(
   </div>
 
   <div class="interlude-list">
-    {renderedInterludes.map((post, index) => (
+    {renderedInterludeGroups.map((group, index) => (
       <>
-        <SidenoteContainer
-          className="interlude-item"
-          id={formatHtmlDate(post.data.date)}
-          lang={getInterludeLang(post.id, post.data.lang)}
-          afterElements="time, aside"
-        >
-          <time class="interlude-date" datetime={formatHtmlDate(post.data.date)}>
-            {formatReadableDate(post.data.date)}
-          </time>
-          {post.headnoteHtml && <aside class="interlude-headnote" set:html={post.headnoteHtml} />}
-          <Fragment set:html={post.bodyHtml} />
-        </SidenoteContainer>
-        {index < renderedInterludes.length - 1 && <hr />}
+        <div class="interlude-group">
+          {group.entries.map((post) => (
+            <div
+              class="interlude-variant"
+              data-interlude-anchor={post.anchor}
+              data-default-variant={post.anchor === group.canonicalAnchor ? 'true' : undefined}
+            >
+              <SidenoteContainer
+                className="interlude-item"
+                id={post.anchor}
+                lang={post.lang}
+                afterElements=".interlude-header"
+              >
+                <header class="interlude-header">
+                  <div class="interlude-meta">
+                    <time class="interlude-date" datetime={formatHtmlDate(post.date)}>
+                      {formatReadableDate(post.date)}
+                    </time>
+                    <LanguageSwitcher currentLang={post.lang} items={group.alternative} />
+                  </div>
+                  {post.headnoteHtml && <aside class="interlude-headnote" set:html={post.headnoteHtml} />}
+                </header>
+                <Fragment set:html={post.bodyHtml} />
+              </SidenoteContainer>
+            </div>
+          ))}
+        </div>
+        {index < renderedInterludeGroups.length - 1 && <hr />}
       </>
     ))}
   </div>
@@ -176,9 +295,36 @@ const renderedInterludes = await Promise.all(
     position: relative;
   }
 
+  .interlude-list .interlude-variant {
+    display: none;
+  }
+
+  .interlude-list .interlude-variant[data-default-variant='true'] {
+    display: block;
+  }
+
+  .interlude-list .interlude-group:has(.interlude-item:target) .interlude-variant {
+    display: none;
+  }
+
+  .interlude-list .interlude-group .interlude-variant:has(.interlude-item:target) {
+    display: block;
+  }
+
+  .interlude-list :global(.interlude-item .interlude-header) {
+    display: grid;
+    gap: var(--spacing-half);
+    margin-bottom: var(--spacing-half);
+  }
+
+  .interlude-list :global(.interlude-item .interlude-meta) {
+    display: grid;
+    gap: calc(var(--spacing-half) / 2);
+  }
+
   .interlude-list :global(.interlude-item .interlude-headnote) {
     background-color: var(--color-accent-bg);
-    margin: var(--spacing-half) 0;
+    margin: 0;
     padding: calc(var(--line-height) * 0.25) var(--spacing-half);
     line-height: var(--aside-line-height);
     font-family: var(--mono-font);
@@ -209,24 +355,27 @@ const renderedInterludes = await Promise.all(
       padding-left: var(--body-padding);
     }
 
-    .interlude-list :global(.interlude-item .interlude-headnote) {
+    .interlude-list :global(.interlude-item .interlude-header) {
       position: absolute;
-      margin: var(--spacing) 0;
+      top: 0;
       left: 0;
       width: calc(var(--body-padding) - var(--spacing));
     }
   }
 
   .interlude-list :global(.interlude-date) {
+    display: block;
     font-family: var(--mono-font);
     font-size: var(--font-s);
     user-select: none;
   }
 
+  .interlude-list :global(.interlude-item .switcher) {
+    margin-top: calc(var(--spacing-half) / 2);
+  }
+
   @media (--viewport-m) {
     .interlude-list :global(.interlude-date) {
-      position: absolute;
-      left: 0;
       line-height: var(--line-height);
     }
   }

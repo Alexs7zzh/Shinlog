@@ -40,6 +40,15 @@ export async function renderMarkdownFragment(markdown: string): Promise<string> 
   return String(await markdownFragmentProcessor.process(markdown));
 }
 
+export async function renderMarkdownFragmentWithPrefix(markdown: string, prefix: string): Promise<string> {
+  return String(
+    await markdownFragmentProcessor.process({
+      path: `${prefix}.md`,
+      value: markdown,
+    }),
+  );
+}
+
 export function stripHtml(html: string): string {
   return html
     .replace(/<style[\s\S]*?<\/style>/gi, ' ')
