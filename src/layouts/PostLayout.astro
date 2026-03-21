@@ -32,12 +32,9 @@ const { entry } = Astro.props as {
     <section class="info">
       <h1>{entry.title}</h1>
       <LanguageSwitcher currentLang={entry.lang} items={entry.alternative} />
-      {entry.date && (
-        <time datetime={formatHtmlDate(entry.date)}>{formatReadableDate(entry.date)}</time>
-      )}
+      {entry.date && <time datetime={formatHtmlDate(entry.date)}>{formatReadableDate(entry.date)}</time>}
       {entry.descriptionHtml && <div class="description" set:html={entry.descriptionHtml} />}
     </section>
-
     {entry.podcast && <PodcastPlayer title={entry.title} src={entry.podcast} />}
     <slot />
   </SidenoteContainer>

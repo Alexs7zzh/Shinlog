@@ -37,10 +37,7 @@ const fontPreloads = [
     <meta name="author" content={SITE_AUTHOR} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href={new URL('/sitemap-index.xml', Astro.site).toString()} />
-    {fontPreloads.map((href) => (
-      <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
-    ))}
-
+    {fontPreloads.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
     <meta name="theme-color" content="#fffff9" />
     <link rel="icon" type="image/png" href={icon32Href} sizes="32x32" />
     <link rel="icon" type="image/png" href={icon96Href} sizes="96x96" />
@@ -48,12 +45,7 @@ const fontPreloads = [
     <link rel="icon" type="image/png" href={icon544Href} sizes="544x544" />
     <link rel="apple-touch-icon" href={icon180Href} sizes="180x180" />
   </head>
-  <body>
-    <Header />
-    <main>
-      <slot />
-    </main>
-  </body>
+  <body><Header /><main><slot /></main></body>
 </html>
 
 <style lang="scss">
