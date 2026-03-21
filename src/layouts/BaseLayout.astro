@@ -1,5 +1,9 @@
 ---
 import '../styles/style.scss';
+import ebGaramondRegularHref from '../fonts/eb-garamond/eb-garamond-regular.woff2';
+import ebGaramondSemiboldHref from '../fonts/eb-garamond/eb-garamond-semibold.woff2';
+import sourceHanSerifCnRegularHref from '../fonts/SourceHanSerifCN/source-han-serif-cn-regular.woff2';
+import sourceHanSerifJpRegularHref from '../fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2';
 
 import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Header from '../components/Header.astro';
@@ -12,16 +16,14 @@ const {
 
 const currentTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).toString();
-const ebGaramondRegularHref = '/fonts/eb-garamond/eb-garamond-regular.woff2';
 const icon180Href = '/icons/icon-180.2026-03-19.png';
 const icon32Href = '/icons/icon-32.2026-03-19.png';
 const icon512Href = '/icons/icon-512.2026-03-19.png';
 const icon544Href = '/icons/icon-544.2026-03-19.png';
 const icon96Href = '/icons/icon-96.2026-03-19.png';
-const sourceHanSerifCnRegularHref = '/fonts/SourceHanSerifCN/source-han-serif-cn-regular.woff2';
-const sourceHanSerifJpRegularHref = '/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2';
 const fontPreloads = [
   ebGaramondRegularHref,
+  ebGaramondSemiboldHref,
   ...(htmlLang === 'ja' ? [sourceHanSerifJpRegularHref] : []),
   ...(htmlLang === 'zh' ? [sourceHanSerifCnRegularHref] : []),
 ];

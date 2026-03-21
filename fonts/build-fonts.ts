@@ -1,36 +1,59 @@
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parse } from 'node-html-parser';
+import rehypeRaw from 'rehype-raw';
+import rehypeStringify from 'rehype-stringify';
+import remarkDirective from 'remark-directive';
+import remarkGfm from 'remark-gfm';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import remarkSmartypants from 'remark-smartypants';
+import { unified } from 'unified';
+
+import { ENTRY_LANGS, SITE_TITLE } from '../src/consts.ts';
+import { formatReadableDate } from '../src/lib/date.ts';
+import rehypeAttributeLists from '../src/lib/rehype-attribute-lists.ts';
+import rehypeFigureImages from '../src/lib/rehype-figure-images.ts';
+import rehypeMarkEndElement from '../src/lib/rehype-mark-end-element.ts';
+import rehypePrefixFootnoteIds from '../src/lib/rehype-prefix-footnote-ids.ts';
+import rehypeQuoteDirectives from '../src/lib/rehype-quote-directives.ts';
+import rehypeTypography from '../src/lib/rehype-typography.ts';
+import remarkAttributeLists from '../src/lib/remark-attribute-lists.ts';
+import remarkDirectives from '../src/lib/remark-directives.ts';
+import remarkTypography from '../src/lib/remark-typography.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 const contentRoot = path.join(repoRoot, 'src', 'content');
 const generatedRoot = path.join(repoRoot, 'fonts', 'generated');
-const publicRoot = path.join(repoRoot, 'public', 'fonts');
+const generatedFontRoot = path.join(repoRoot, 'src', 'fonts');
+const legacyPublicRoot = path.join(repoRoot, 'public', 'fonts');
 const venvRoot = path.join(repoRoot, 'fonts', '.venv');
+const configPath = path.join(repoRoot, 'fonts', 'fonts.config.json');
 
-const printableAscii = Array.from({ length: 95 }, (_, index) => String.fromCharCode(index + 32)).join('');
-const latinSeed = `${printableAscii}’‘“”–—…⸺•·一二三四五六七八九十`;
-const bodyRegularLayoutFeatures = 'ccmp,kern,liga,onum,calt,dlig,cv02,hlig,locl,mark,mkmk,smcp,c2sc,sups';
-const bodyItalicLayoutFeatures = 'ccmp,clig,kern,liga,onum,calt,dlig,cv02,hlig,locl,mark,mkmk,smcp,c2sc,sups,swsh';
-const bodySemiboldLayoutFeatures = 'kern,liga,onum,dlig,locl,smcp,swsh';
-const monoLayoutFeatures = '*';
-const cjkLayoutFeatures = 'vrt2,ccmp,locl,vert,vkrn,kern,liga,jp78,jp83,jp90,nlck,palt';
-
-const bodyFontPaths = {
-  regular: path.join(repoRoot, 'fonts', 'source', 'eb-garamond', 'EBGaramond-Regular.ttf'),
-  italic: path.join(repoRoot, 'fonts', 'source', 'eb-garamond', 'EBGaramond-Italic.ttf'),
-  semibold: path.join(repoRoot, 'fonts', 'source', 'eb-garamond', 'EBGaramond-SemiBold.ttf'),
-};
-
-const monoFontPaths = {
-  regular: path.join(repoRoot, 'fonts', 'source', 'ia-duo', 'iAWriterDuo-Regular.ttf'),
-  italic: path.join(repoRoot, 'fonts', 'source', 'ia-duo', 'iAWriterDuo-Italic.ttf'),
-};
+const markdownFragmentProcessor = unified()
+  .use(remarkParse)
+  .use(remarkGfm)
+  .use(remarkSmartypants)
+  .use(remarkDirective)
+  .use(remarkDirectives)
+  .use(remarkAttributeLists)
+  .use(remarkTypography)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeRaw)
+  .use(rehypePrefixFootnoteIds)
+  .use(rehypeQuoteDirectives)
+  .use(rehypeAttributeLists)
+  .use(rehypeTypography)
+  .use(rehypeFigureImages)
+  .use(rehypeMarkEndElement)
+  .use(rehypeStringify, { allowDangerousHtml: true })
+  .freeze();
 
 type EntryLang = 'en' | 'zh' | 'ja';
-type CharsetName = 'latin' | 'zh' | 'ja';
 
 type FontInspection = {
   axes: string[];
@@ -41,8 +64,19 @@ type FontInspection = {
   subfamily: string;
 };
 
+type RenderedFieldName = 'description' | 'headnote' | 'body';
+
+type CharsetSourceConfig = {
+  allRawText?: boolean;
+  alwaysIncludeChars?: string;
+  extraText?: string[];
+  lang?: EntryLang;
+  langRawText?: EntryLang;
+  selectors?: string[];
+};
+
 type FontJob = {
-  charset: CharsetName;
+  charsetSource: CharsetSourceConfig;
   extraArgs?: string[];
   features: string;
   id: string;
@@ -51,86 +85,37 @@ type FontJob = {
   outputPath: string;
 };
 
-type FontReport = {
-  availableFeatures: string[];
-  axes: string[];
-  charset: CharsetName;
-  charsetCount: number;
-  extraArgs: string[];
-  family: string;
-  featuresSpec: string;
-  flavor: string;
-  id: string;
-  inputPath: string;
-  keptFeatures: string[];
-  kind: FontJob['kind'];
-  outputBytes: number;
-  outputPath: string;
-  requestedButMissing: string[];
-  subfamily: string;
-  droppedFeatures: string[];
+type FontJobConfigFile = {
+  jobs: FontJob[];
 };
 
-const fontJobs: FontJob[] = [
-  {
-    id: 'body-regular',
-    kind: 'body',
-    charset: 'latin',
-    inputPath: bodyFontPaths.regular,
-    outputPath: path.join(publicRoot, 'eb-garamond', 'eb-garamond-regular.woff2'),
-    features: bodyRegularLayoutFeatures,
-  },
-  {
-    id: 'body-italic',
-    kind: 'body',
-    charset: 'latin',
-    inputPath: bodyFontPaths.italic,
-    outputPath: path.join(publicRoot, 'eb-garamond', 'eb-garamond-italic.woff2'),
-    features: bodyItalicLayoutFeatures,
-  },
-  {
-    id: 'body-semibold',
-    kind: 'body',
-    charset: 'latin',
-    inputPath: bodyFontPaths.semibold,
-    outputPath: path.join(publicRoot, 'eb-garamond', 'eb-garamond-semibold.woff2'),
-    features: bodySemiboldLayoutFeatures,
-  },
-  {
-    id: 'mono-regular',
-    kind: 'mono',
-    charset: 'latin',
-    inputPath: monoFontPaths.regular,
-    outputPath: path.join(publicRoot, 'ia-duo', 'ia-writer-duo-regular.woff2'),
-    features: monoLayoutFeatures,
-  },
-  {
-    id: 'mono-italic',
-    kind: 'mono',
-    charset: 'latin',
-    inputPath: monoFontPaths.italic,
-    outputPath: path.join(publicRoot, 'ia-duo', 'ia-writer-duo-italic.woff2'),
-    features: monoLayoutFeatures,
-  },
-  {
-    id: 'cjk-zh',
-    kind: 'cjk',
-    charset: 'zh',
-    inputPath: path.join(repoRoot, 'fonts', 'source', 'source-han-serif-cn', 'SourceHanSerifCN-Regular.otf'),
-    outputPath: path.join(publicRoot, 'SourceHanSerifCN', 'source-han-serif-cn-regular.woff2'),
-    features: cjkLayoutFeatures,
-    extraArgs: ['--desubroutinize'],
-  },
-  {
-    id: 'cjk-ja',
-    kind: 'cjk',
-    charset: 'ja',
-    inputPath: path.join(repoRoot, 'fonts', 'source', 'source-han-serif-jp', 'SourceHanSerifJP-Regular.otf'),
-    outputPath: path.join(publicRoot, 'SourceHanSerifJP', 'source-han-serif-jp-regular.woff2'),
-    features: cjkLayoutFeatures,
-    extraArgs: ['--desubroutinize'],
-  },
-];
+type FontReport = {
+  includedCount: number;
+  id: string;
+  keptFeatures: string[];
+  outputBytes: number;
+  outputPath: string;
+  requestedCount: number;
+  requestedButMissing: string[];
+};
+
+type ContentEntryRecord = {
+  body: string;
+  collection: string;
+  date?: Date;
+  description: string;
+  filePath: string;
+  headnote: string;
+  lang: EntryLang;
+  relativePath: string;
+  rendered: Record<RenderedFieldName, string>;
+  title: string;
+};
+
+type SelectorDocument = {
+  html: string;
+  lang?: EntryLang;
+};
 
 function listMarkdownFiles(dir: string): string[] {
   const entries = readdirSync(dir, { withFileTypes: true });
@@ -236,6 +221,89 @@ function ensureFonttools(): string {
   return pyftsubset;
 }
 
+function ensureEntryLang(value: unknown, context: string): EntryLang {
+  if (value === 'en' || value === 'zh' || value === 'ja') {
+    return value;
+  }
+
+  throw new Error(`${context} must be one of "en", "zh", or "ja".`);
+}
+
+function ensureStringArray(value: unknown, context: string): string[] {
+  if (!Array.isArray(value) || value.some((item) => typeof item !== 'string')) {
+    throw new Error(`${context} must be an array of strings.`);
+  }
+
+  return value;
+}
+
+function parseCharsetSourceConfig(value: unknown, context: string): CharsetSourceConfig {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`${context} must be an object.`);
+  }
+
+  const source = value as Record<string, unknown>;
+
+  return {
+    allRawText: typeof source.allRawText === 'boolean' ? source.allRawText : undefined,
+    alwaysIncludeChars: typeof source.alwaysIncludeChars === 'string' ? source.alwaysIncludeChars : undefined,
+    extraText: source.extraText === undefined ? undefined : ensureStringArray(source.extraText, `${context}.extraText`),
+    lang: source.lang === undefined ? undefined : ensureEntryLang(source.lang, `${context}.lang`),
+    langRawText: source.langRawText === undefined ? undefined : ensureEntryLang(source.langRawText, `${context}.langRawText`),
+    selectors: source.selectors === undefined ? undefined : ensureStringArray(source.selectors, `${context}.selectors`),
+  };
+}
+
+function loadFontJobs(): FontJob[] {
+  const raw = JSON.parse(readFileSync(configPath, 'utf8')) as unknown;
+
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+    throw new Error('fonts/fonts.config.json must be an object.');
+  }
+
+  const config = raw as Partial<FontJobConfigFile> & Record<string, unknown>;
+  if (!Array.isArray(config.jobs)) {
+    throw new Error('fonts/fonts.config.json must contain a jobs array.');
+  }
+
+  return config.jobs.map((job, index) => {
+    if (!job || typeof job !== 'object' || Array.isArray(job)) {
+      throw new Error(`jobs[${index}] must be an object.`);
+    }
+
+    const rawJob = job as Record<string, unknown>;
+    if (rawJob.kind !== 'body' && rawJob.kind !== 'mono' && rawJob.kind !== 'cjk') {
+      throw new Error(`jobs[${index}].kind must be "body", "mono", or "cjk".`);
+    }
+
+    if (typeof rawJob.id !== 'string' || rawJob.id.length === 0) {
+      throw new Error(`jobs[${index}].id must be a non-empty string.`);
+    }
+
+    if (typeof rawJob.inputPath !== 'string' || rawJob.inputPath.length === 0) {
+      throw new Error(`jobs[${index}].inputPath must be a non-empty string.`);
+    }
+
+    if (typeof rawJob.outputPath !== 'string' || rawJob.outputPath.length === 0) {
+      throw new Error(`jobs[${index}].outputPath must be a non-empty string.`);
+    }
+
+    if (typeof rawJob.features !== 'string') {
+      throw new Error(`jobs[${index}].features must be a string.`);
+    }
+
+    return {
+      id: rawJob.id,
+      kind: rawJob.kind,
+      inputPath: path.join(repoRoot, rawJob.inputPath),
+      outputPath: path.join(repoRoot, rawJob.outputPath),
+      features: rawJob.features,
+      extraArgs: rawJob.extraArgs === undefined ? undefined : ensureStringArray(rawJob.extraArgs, `jobs[${index}].extraArgs`),
+      charsetSource: parseCharsetSourceConfig(rawJob.charsetSource, `jobs[${index}].charsetSource`),
+    };
+  });
+}
+
 function inspectFont(fontPath: string): FontInspection {
   const pythonCode = `
 import json
@@ -273,53 +341,278 @@ print(json.dumps({
   return JSON.parse(runCapture(venvBin('python'), ['-c', pythonCode, fontPath])) as FontInspection;
 }
 
-function collectGlyphs(): Record<EntryLang | 'latin', string> {
+function parseDate(value?: string): Date | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  const normalized = /^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T00:00:00.000Z` : value;
+  const date = new Date(normalized);
+  return Number.isNaN(date.getTime()) ? undefined : date;
+}
+
+async function renderMarkdownFragment(markdown: string, filePath: string): Promise<string> {
+  return String(
+    await markdownFragmentProcessor.process({
+      path: filePath,
+      value: markdown,
+    }),
+  );
+}
+
+async function loadContentEntries(): Promise<ContentEntryRecord[]> {
   const files = listMarkdownFiles(contentRoot);
-  let allText = latinSeed;
-  let zhText = latinSeed;
-  let jaText = latinSeed;
+  const entries: ContentEntryRecord[] = [];
 
   for (const filePath of files) {
     const raw = readFileSync(filePath, 'utf8');
     const { data, body } = parseFrontmatter(raw);
-    const frontmatterText = [data.title, data.description, data.headnote].filter(Boolean).join('');
-    const text = `${frontmatterText}${body}`;
-    const lang = inferLang(filePath, data.lang);
+    const relativePath = path.relative(repoRoot, filePath);
+    const title = data.title ?? '';
+    const description = data.description ?? '';
+    const headnote = data.headnote ?? '';
 
-    allText += text;
+    entries.push({
+      filePath,
+      relativePath,
+      collection: relativePath.split(path.sep)[1] ?? '',
+      lang: inferLang(filePath, data.lang),
+      title,
+      description,
+      headnote,
+      body,
+      date: parseDate(data.date),
+      rendered: {
+        description: description ? await renderMarkdownFragment(description, `${relativePath}#description`) : '',
+        headnote: headnote ? await renderMarkdownFragment(headnote, `${relativePath}#headnote`) : '',
+        body: body ? await renderMarkdownFragment(body, relativePath) : '',
+      },
+    });
+  }
 
-    if (lang === 'zh') {
-      zhText += text;
+  return entries;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function collectRawEntryText(entries: ContentEntryRecord[], lang?: EntryLang): string {
+  return entries
+    .filter((entry) => !lang || entry.lang === lang)
+    .map((entry) => `${entry.title}${entry.description}${entry.headnote}${entry.body}`)
+    .join('');
+}
+
+function buildSelectorDocuments(entries: ContentEntryRecord[]): SelectorDocument[] {
+  const documents: SelectorDocument[] = [
+    {
+      lang: 'en',
+      html: `<div data-font-root><h1 class="site-title">${escapeHtml(SITE_TITLE)}</h1></div>`,
+    },
+  ];
+
+  const seriesTitles = new Set<string>();
+
+  for (const entry of entries) {
+    if (entry.collection === 'posts') {
+      const segments = entry.relativePath.split(path.sep);
+      const seriesSegment = segments[2];
+      if (seriesSegment) {
+        seriesTitles.add(seriesSegment.replace(/^\d+-/, ''));
+      }
+
+      documents.push({
+        lang: entry.lang,
+        html: [
+          '<div data-font-root>',
+          `<h1>${escapeHtml(entry.title)}</h1>`,
+          entry.date ? `<time>${escapeHtml(formatReadableDate(entry.date))}</time>` : '',
+          '<div class="language-switcher">',
+          ENTRY_LANGS.map((lang) => `<span class="language-label">${lang.toUpperCase()}</span>`).join(''),
+          '</div>',
+          entry.rendered.description ? `<div class="description">${entry.rendered.description}</div>` : '',
+          `<p class="podcast-player-title">${escapeHtml(entry.title)}</p>`,
+          '</div>',
+        ].join(''),
+      });
     }
 
-    if (lang === 'ja') {
-      jaText += text;
+    if (entry.collection === 'interludes') {
+      documents.push({
+        lang: entry.lang,
+        html: [
+          '<div data-font-root>',
+          entry.date ? `<time>${escapeHtml(formatReadableDate(entry.date))}</time>` : '',
+          '<div class="language-switcher">',
+          ENTRY_LANGS.map((lang) => `<span class="language-label">${lang.toUpperCase()}</span>`).join(''),
+          '</div>',
+          entry.rendered.headnote ? `<aside class="interlude-headnote">${entry.rendered.headnote}</aside>` : '',
+          '</div>',
+        ].join(''),
+      });
+    }
+
+    documents.push({
+      lang: entry.lang,
+      html: `<div data-font-root>${entry.rendered.description}</div>`,
+    });
+    documents.push({
+      lang: entry.lang,
+      html: `<div data-font-root>${entry.rendered.headnote}</div>`,
+    });
+    documents.push({
+      lang: entry.lang,
+      html: `<div data-font-root>${entry.rendered.body}</div>`,
+    });
+  }
+
+  documents.push({
+    lang: 'en',
+    html: `<div data-font-root>${[...seriesTitles].map((title) => `<h2>${escapeHtml(title)}</h2>`).join('')}</div>`,
+  });
+
+  return documents;
+}
+
+function extractSelectedRenderedText(html: string, selectors: string[]): string {
+  if (!html || selectors.length === 0) {
+    return '';
+  }
+
+  const root = parse(`<div>${html}</div>`);
+  const texts: string[] = [];
+
+  for (const selector of selectors) {
+    for (const node of root.querySelectorAll(selector)) {
+      texts.push(node.innerText);
     }
   }
 
-  return {
-    latin: uniqueChars(allText),
-    zh: uniqueChars(zhText),
-    ja: uniqueChars(jaText),
-    en: uniqueChars(allText),
-  };
+  return texts.join('');
 }
 
-function writeCharset(name: string, text: string): string {
-  ensureDir(generatedRoot);
-  const outputPath = path.join(generatedRoot, `${name}.txt`);
+function collectCharsetText(entries: ContentEntryRecord[], selectorDocuments: SelectorDocument[], source: CharsetSourceConfig): string {
+  let text = source.alwaysIncludeChars ?? '';
+
+  if (source.allRawText) {
+    text += collectRawEntryText(entries, source.lang);
+  }
+
+  if (source.langRawText) {
+    text += collectRawEntryText(entries, source.langRawText);
+  }
+
+  if (source.selectors && source.selectors.length > 0) {
+    for (const document of selectorDocuments) {
+      if (source.lang && document.lang && document.lang !== source.lang) {
+        continue;
+      }
+
+      if (source.lang && !document.lang) {
+        continue;
+      }
+
+      text += extractSelectedRenderedText(document.html, source.selectors);
+    }
+  }
+
+  if (source.extraText) {
+    text += source.extraText.join('');
+  }
+
+  return uniqueChars(text);
+}
+
+function writeCharsetInput(root: string, name: string, text: string): string {
+  ensureDir(root);
+  const outputPath = path.join(root, `${name}.txt`);
   writeFileSync(outputPath, text);
   return outputPath;
 }
 
+function formatCharForInspector(char: string): string {
+  if (char === '\n') {
+    return '\\n';
+  }
+
+  if (char === '\t') {
+    return '\\t';
+  }
+
+  if (char === ' ') {
+    return 'SPACE';
+  }
+
+  return char;
+}
+
+function writeFontSnapshot(report: FontReport, text: string): string {
+  ensureDir(generatedRoot);
+  const outputPath = path.join(generatedRoot, `${report.id}.txt`);
+  const header = [
+    `# output: ${path.relative(repoRoot, report.outputPath)}`,
+    `# output_bytes: ${report.outputBytes}`,
+    `# requested_chars: ${report.requestedCount}`,
+    `# included_chars: ${report.includedCount}`,
+    `# kept_features: ${report.keptFeatures.join(', ') || '(none)'}`,
+    `# requested_missing_features: ${report.requestedButMissing.join(', ') || '(none)'}`,
+    '',
+  ];
+  const lines = [...text].map((char) => {
+    const codepoint = `U+${char.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')}`;
+    return `${codepoint}\t${formatCharForInspector(char)}`;
+  });
+  writeFileSync(outputPath, `${header.join('\n')}${lines.join('\n')}\n`);
+  return outputPath;
+}
+
+function inspectSubsetText(fontPath: string): string {
+  const pythonCode = `
+import json
+import sys
+from fontTools.ttLib import TTFont
+
+font = TTFont(sys.argv[1])
+codepoints = set()
+for table in font["cmap"].tables:
+    codepoints.update(table.cmap.keys())
+
+print(json.dumps(sorted(codepoints)))
+`;
+
+  const codepoints = JSON.parse(runCapture(venvBin('python'), ['-c', pythonCode, fontPath])) as number[];
+  return codepoints.map((codepoint) => String.fromCodePoint(codepoint)).join('');
+}
+
 function parseFeatureSpec(spec: string): string[] {
-  return spec === '*' ? [] : spec.split(',').map((entry) => entry.trim()).filter(Boolean);
+  if (spec === '*') {
+    return [];
+  }
+
+  if (spec.trim() === '') {
+    return [];
+  }
+
+  return spec.split(',').map((entry) => entry.trim()).filter(Boolean);
 }
 
 function resolveKeptFeatures(spec: string, availableFeatures: string[]): { kept: string[]; missing: string[] } {
   if (spec === '*') {
     return {
       kept: [...availableFeatures],
+      missing: [],
+    };
+  }
+
+  if (spec.trim() === '') {
+    return {
+      kept: [],
       missing: [],
     };
   }
@@ -331,70 +624,6 @@ function resolveKeptFeatures(spec: string, availableFeatures: string[]): { kept:
   return { kept, missing };
 }
 
-function formatCodepoints(text: string): string {
-  return [...text]
-    .map((char) => `U+${char.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')}`)
-    .join(', ');
-}
-
-function isVisibleChar(char: string): boolean {
-  return !/[\u0000-\u001F\u007F]/u.test(char);
-}
-
-function writeGeneratedReport(relativePath: string, content: string): void {
-  const outputPath = path.join(generatedRoot, relativePath);
-  ensureDir(path.dirname(outputPath));
-  writeFileSync(outputPath, content);
-}
-
-function writeCharsetReports(charsets: Record<CharsetName, string>): void {
-  const lines = ['# Charset Report', ''];
-
-  for (const [name, text] of Object.entries(charsets) as Array<[CharsetName, string]>) {
-    const preview = [...text].filter(isVisibleChar).slice(0, 24).join('');
-    const previewCodepoints = formatCodepoints([...text].slice(0, 12).join(''));
-
-    lines.push(`## ${name}`);
-    lines.push('');
-    lines.push(`- Characters: ${[...text].length}`);
-    lines.push(`- File: \`${name}.txt\``);
-    lines.push(`- Preview: \`${preview}\``);
-    lines.push(`- First codepoints: ${previewCodepoints || '(none)'}`);
-    lines.push('');
-  }
-
-  writeGeneratedReport('charsets.md', `${lines.join('\n')}\n`);
-}
-
-function writeFontReports(reports: FontReport[]): void {
-  const markdownLines = ['# Font Feature Report', ''];
-
-  for (const report of reports) {
-    markdownLines.push(`## ${report.id}`);
-    markdownLines.push('');
-    markdownLines.push(`- Source: \`${path.relative(repoRoot, report.inputPath)}\``);
-    markdownLines.push(`- Output: \`${path.relative(repoRoot, report.outputPath)}\``);
-    markdownLines.push(`- Family: \`${report.family}\``);
-    markdownLines.push(`- Subfamily: \`${report.subfamily}\``);
-    markdownLines.push(`- Flavor: \`${report.flavor}\``);
-    markdownLines.push(`- Axes: ${report.axes.length ? report.axes.map((axis) => `\`${axis}\``).join(', ') : '(none)'}`);
-    markdownLines.push(`- Charset: \`${report.charset}\` (${report.charsetCount} chars)`);
-    markdownLines.push(`- Output size: ${report.outputBytes} bytes`);
-    markdownLines.push(`- Feature spec: \`${report.featuresSpec}\``);
-    markdownLines.push(`- Available features: ${report.availableFeatures.length ? report.availableFeatures.map((feature) => `\`${feature}\``).join(', ') : '(none)'}`);
-    markdownLines.push(`- Kept features: ${report.keptFeatures.length ? report.keptFeatures.map((feature) => `\`${feature}\``).join(', ') : '(none)'}`);
-    markdownLines.push(`- Dropped features: ${report.droppedFeatures.length ? report.droppedFeatures.map((feature) => `\`${feature}\``).join(', ') : '(none)'}`);
-    markdownLines.push(`- Requested but missing: ${report.requestedButMissing.length ? report.requestedButMissing.map((feature) => `\`${feature}\``).join(', ') : '(none)'}`);
-    if (report.extraArgs.length > 0) {
-      markdownLines.push(`- Extra subset args: ${report.extraArgs.map((arg) => `\`${arg}\``).join(', ')}`);
-    }
-    markdownLines.push('');
-  }
-
-  writeGeneratedReport('font-features.md', `${markdownLines.join('\n')}\n`);
-  writeGeneratedReport('font-report.json', `${JSON.stringify(reports, null, 2)}\n`);
-}
-
 function subsetFont(
   pyftsubset: string,
   inputPath: string,
@@ -403,80 +632,74 @@ function subsetFont(
   layoutFeatures: string,
   extraArgs: string[] = [],
 ): void {
+  const resolvedLayoutFeatures = layoutFeatures.trim();
   ensureDir(path.dirname(outputPath));
   run(pyftsubset, [
     inputPath,
     `--output-file=${outputPath}`,
     '--flavor=woff2',
     `--text-file=${textFilePath}`,
-    `--layout-features=${layoutFeatures}`,
+    `--layout-features=${resolvedLayoutFeatures}`,
     '--ignore-missing-unicodes',
     '--no-hinting',
     ...extraArgs,
   ]);
 }
 
-function cleanPublicFonts(): void {
-  rmSync(path.join(publicRoot, 'eb-garamond'), { recursive: true, force: true });
-  rmSync(path.join(publicRoot, 'ia-duo'), { recursive: true, force: true });
-  rmSync(path.join(publicRoot, 'SourceHanSerifCN'), { recursive: true, force: true });
-  rmSync(path.join(publicRoot, 'SourceHanSerifJP'), { recursive: true, force: true });
+function cleanGeneratedFonts(): void {
+  rmSync(generatedFontRoot, { recursive: true, force: true });
 }
 
-function main(): void {
+function cleanLegacyPublicFonts(): void {
+  rmSync(legacyPublicRoot, { recursive: true, force: true });
+}
+
+function cleanGeneratedRoot(): void {
+  rmSync(generatedRoot, { recursive: true, force: true });
+}
+
+async function main(): Promise<void> {
   const pyftsubset = ensureFonttools();
-  const glyphs = collectGlyphs();
-  const charsets: Record<CharsetName, string> = {
-    latin: glyphs.latin,
-    zh: glyphs.zh,
-    ja: glyphs.ja,
-  };
-  const charsetPaths: Record<CharsetName, string> = {
-    latin: writeCharset('latin', charsets.latin),
-    zh: writeCharset('zh', charsets.zh),
-    ja: writeCharset('ja', charsets.ja),
-  };
+  const entries = await loadContentEntries();
+  const fontJobs = loadFontJobs();
+  const selectorDocuments = buildSelectorDocuments(entries);
+  const charsetInputRoot = mkdtempSync(path.join(tmpdir(), 'shinlog-fonts-'));
 
-  cleanPublicFonts();
+  cleanGeneratedRoot();
+  cleanGeneratedFonts();
+  cleanLegacyPublicFonts();
 
-  const reports: FontReport[] = [];
+  try {
+    for (const job of fontJobs) {
+      const charsetText = collectCharsetText(entries, selectorDocuments, job.charsetSource);
+      const charsetPath = writeCharsetInput(charsetInputRoot, job.id, charsetText);
 
-  for (const job of fontJobs) {
-    subsetFont(
-      pyftsubset,
-      job.inputPath,
-      job.outputPath,
-      charsetPaths[job.charset],
-      job.features,
-      job.extraArgs ?? [],
-    );
+      subsetFont(
+        pyftsubset,
+        job.inputPath,
+        job.outputPath,
+        charsetPath,
+        job.features,
+        job.extraArgs ?? [],
+      );
 
-    const inspection = inspectFont(job.inputPath);
-    const { kept, missing } = resolveKeptFeatures(job.features, inspection.features);
+      const includedText = inspectSubsetText(job.outputPath);
+      const inspection = inspectFont(job.inputPath);
+      const { kept, missing } = resolveKeptFeatures(job.features, inspection.features);
 
-    reports.push({
-      id: job.id,
-      kind: job.kind,
-      charset: job.charset,
-      charsetCount: [...charsets[job.charset]].length,
-      inputPath: job.inputPath,
-      outputPath: job.outputPath,
-      family: inspection.family,
-      subfamily: inspection.subfamily,
-      flavor: inspection.flavor,
-      axes: inspection.axes,
-      availableFeatures: inspection.features,
-      featuresSpec: job.features,
-      keptFeatures: kept,
-      droppedFeatures: inspection.features.filter((feature) => !kept.includes(feature)),
-      requestedButMissing: missing,
-      extraArgs: job.extraArgs ?? [],
-      outputBytes: statSync(job.outputPath).size,
-    });
+      writeFontSnapshot({
+        id: job.id,
+        includedCount: [...includedText].length,
+        outputPath: job.outputPath,
+        requestedCount: [...charsetText].length,
+        keptFeatures: kept,
+        requestedButMissing: missing,
+        outputBytes: statSync(job.outputPath).size,
+      }, includedText);
+    }
+  } finally {
+    rmSync(charsetInputRoot, { recursive: true, force: true });
   }
-
-  writeCharsetReports(charsets);
-  writeFontReports(reports);
 }
 
-main();
+await main();

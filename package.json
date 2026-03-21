@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "pnpm fonts",
     "build": "astro build",
     "fonts": "node --experimental-strip-types fonts/build-fonts.ts",
     "typecheck": "astro check",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
     "@types/node": "^25.5.0",
+    "node-html-parser": "^7.1.0",
     "postcss": "^8.5.8",
     "postcss-custom-media": "^12.0.1",
     "typescript": "^5.9.3"
