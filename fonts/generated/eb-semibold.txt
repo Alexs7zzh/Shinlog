@@ -1,0 +1,38 @@
+# output: src/fonts/eb-garamond/eb-garamond-semibold.woff2
+# output_bytes: 9860
+# requested_chars: 32
+# included_chars: 32
+# kept_features: kern, liga, onum, dlig, locl, smcp, swsh
+# requested_missing_features: (none)
+U+0020	SPACE
+U+002C	,
+U+002E	.
+U+003F	?
+U+0041	A
+U+0044	D
+U+0045	E
+U+0049	I
+U+0053	S
+U+0057	W
+U+005B	[
+U+005D	]
+U+0061	a
+U+0063	c
+U+0064	d
+U+0065	e
+U+0066	f
+U+0067	g
+U+0068	h
+U+0069	i
+U+006C	l
+U+006D	m
+U+006E	n
+U+006F	o
+U+0070	p
+U+0072	r
+U+0073	s
+U+0074	t
+U+0075	u
+U+0076	v
+U+0078	x
+U+0079	y
