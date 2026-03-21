@@ -5,7 +5,11 @@ type MdastNode = {
 };
 
 function normalizeDoubleEmDash(value: string): string {
-  return value.replace(/\u2014{2}/g, '\u2E3A');
+  return normalizeCjkEmDash(value.replace(/\u2014{2}/g, '\u2E3A'));
+}
+
+function normalizeCjkEmDash(value: string): string {
+  return value.replace(/(?<=[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}])\u2014(?=[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}])/gu, '\u2E3A');
 }
 
 function splitWrappedText(value: string): MdastNode[] {
@@ -14,13 +18,15 @@ function splitWrappedText(value: string): MdastNode[] {
 }
 
 function transformHtmlBlock(value: string): string {
-  return value
+  return normalizeCjkEmDash(
+    value
     .replace(/(^|[^-])---(?=[^-]|$)/gm, '$1\u2014')
     .replace(/(^|\s)--(?=\s|$)/gm, '$1\u2013')
     .replace(/(^|[^-\s])--(?=[^-\s]|$)/gm, '$1\u2013')
     .replace(/\u2014{2}/g, '\u2E3A')
     .replace(/\.{2,}/g, '…')
-    .replace(/([?!])…/g, '$1..');
+    .replace(/([?!])…/g, '$1..'),
+  );
 }
 
 function visit(node: MdastNode): void {
