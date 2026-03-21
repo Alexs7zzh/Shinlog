@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "fonts": "node --experimental-strip-types fonts/build-fonts.ts",
     "typecheck": "astro check",
     "preview": "astro preview",
     "astro": "astro"
