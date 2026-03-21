@@ -1,8 +1,8 @@
 # output: src/fonts/eb-garamond/eb-garamond-italic.woff2
-# output_bytes: 23436
+# output_bytes: 21412
 # requested_chars: 58
 # included_chars: 58
-# kept_features: kern, liga, onum, dlig, hlig, locl, mark, mkmk, smcp, c2sc, sups, swsh
+# kept_features: kern, liga, onum, hlig, locl, mark, mkmk, smcp, c2sc, sups, swsh
 # requested_missing_features: ccmp, clig, calt, cv02
 U+0020	SPACE
 U+002C	,

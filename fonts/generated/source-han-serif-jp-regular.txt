@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 125356
-# requested_chars: 583
-# included_chars: 582
+# output_bytes: 126312
+# requested_chars: 594
+# included_chars: 593
 # kept_features: vrt2, ccmp, locl, vert, vkrn, kern, liga, jp78, jp83, jp90, nlck, palt
 # requested_missing_features: (none)
 U+0020	SPACE
@@ -48,9 +48,11 @@ U+007B	{
 U+007D	}
 U+2014	—
 U+2026	…
+U+2E3A	⸺
 U+3001	、
 U+3002	。
 U+3005	々
+U+3007	〇
 U+300C	「
 U+300D	」
 U+300E	『
@@ -171,6 +173,8 @@ U+30F3	ン
 U+30FB	・
 U+30FC	ー
 U+4E00	一
+U+4E03	七
+U+4E07	万
 U+4E09	三
 U+4E0A	上
 U+4E0D	不
@@ -180,10 +184,12 @@ U+4E21	両
 U+4E2D	中
 U+4E3B	主
 U+4E4F	乏
+U+4E5D	九
 U+4E71	乱
 U+4E73	乳
 U+4E8B	事
 U+4E8C	二
+U+4E94	五
 U+4EA1	亡
 U+4EAB	享
 U+4EBA	人
@@ -215,7 +221,9 @@ U+5149	光
 U+5150	児
 U+5165	入
 U+5168	全
+U+516B	八
 U+516C	公
+U+516D	六
 U+5171	共
 U+5177	具
 U+5185	内
@@ -239,6 +247,7 @@ U+52D5	動
 U+5316	化
 U+533A	区
 U+5341	十
+U+5343	千
 U+5348	午
 U+539F	原
 U+53CD	反
@@ -264,6 +273,7 @@ U+554F	問
 U+559C	喜
 U+55AA	喪
 U+5606	嘆
+U+56DB	四
 U+56DE	回
 U+56F2	囲
 U+56FA	固
@@ -565,6 +575,7 @@ U+968F	随
 U+969C	障
 U+96A0	隠
 U+96E2	離
+U+96F6	零
 U+975E	非
 U+9762	面
 U+97F3	音

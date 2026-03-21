@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifCN/source-han-serif-cn-regular.woff2
-# output_bytes: 128776
-# requested_chars: 736
-# included_chars: 735
+# output_bytes: 129900
+# requested_chars: 748
+# included_chars: 747
 # kept_features: vrt2, ccmp, locl, vert, vkrn, kern, liga, palt
 # requested_missing_features: jp78, jp83, jp90, nlck
 U+0020	SPACE
@@ -91,6 +91,7 @@ U+2026	…
 U+2E3A	⸺
 U+3001	、
 U+3002	。
+U+3007	〇
 U+300A	《
 U+300B	》
 U+300C	「
@@ -101,6 +102,7 @@ U+3066	て
 U+306A	な
 U+3082	も
 U+4E00	一
+U+4E03	七
 U+4E07	万
 U+4E09	三
 U+4E0A	上
@@ -123,6 +125,7 @@ U+4E49	义
 U+4E4B	之
 U+4E4E	乎
 U+4E54	乔
+U+4E5D	九
 U+4E5F	也
 U+4E60	习
 U+4E66	书
@@ -130,7 +133,9 @@ U+4E70	买
 U+4E86	了
 U+4E88	予
 U+4E8B	事
+U+4E8C	二
 U+4E8E	于
+U+4E94	五
 U+4E9A	亚
 U+4E9B	些
 U+4EA1	亡
@@ -179,7 +184,9 @@ U+50CF	像
 U+5149	光
 U+5165	入
 U+5168	全
+U+516B	八
 U+516C	公
+U+516D	六
 U+5173	关
 U+5176	其
 U+5177	具
@@ -213,6 +220,8 @@ U+52A1	务
 U+52AA	努
 U+5316	化
 U+533A	区
+U+5341	十
+U+5343	千
 U+5348	午
 U+5355	单
 U+535A	博
@@ -261,6 +270,7 @@ U+5584	善
 U+559C	喜
 U+5668	器
 U+566A	噪
+U+56DB	四
 U+56DE	回
 U+56E0	因
 U+56ED	园
@@ -517,6 +527,7 @@ U+7591	疑
 U+75BE	疾
 U+75C5	病
 U+767D	白
+U+767E	百
 U+7684	的
 U+76D6	盖
 U+76EE	目
@@ -712,6 +723,7 @@ U+9640	陀
 U+9677	陷
 U+968F	随
 U+96BE	难
+U+96F6	零
 U+9700	需
 U+9732	露
 U+9759	静
