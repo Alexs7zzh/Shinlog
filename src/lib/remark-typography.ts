@@ -4,12 +4,40 @@ type MdastNode = {
   children?: MdastNode[];
 };
 
+const CJK_DASH_PUNCTUATION = new Set(['「', '」', '『', '』', '（', '）', '《', '》', '〈', '〉', '【', '】', '“', '”']);
+
+function isCjkDashContextChar(char: string | undefined): boolean {
+  return typeof char === 'string' && (/[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u.test(char) || CJK_DASH_PUNCTUATION.has(char));
+}
+
 function normalizeDoubleEmDash(value: string): string {
   return normalizeCjkEmDash(value.replace(/\u2014{2}/g, '\u2E3A'));
 }
 
 function normalizeCjkEmDash(value: string): string {
-  return value.replace(/(?<=[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}])\u2014(?=[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}])/gu, '\u2E3A');
+  const chars = Array.from(value);
+
+  for (let index = 0; index < chars.length; index += 1) {
+    if (chars[index] !== '\u2014') {
+      continue;
+    }
+
+    let leftIndex = index - 1;
+    while (leftIndex >= 0 && chars[leftIndex] === ' ') {
+      leftIndex -= 1;
+    }
+
+    let rightIndex = index + 1;
+    while (rightIndex < chars.length && chars[rightIndex] === ' ') {
+      rightIndex += 1;
+    }
+
+    if (isCjkDashContextChar(chars[leftIndex]) && isCjkDashContextChar(chars[rightIndex])) {
+      chars[index] = '\u2E3A';
+    }
+  }
+
+  return chars.join('');
 }
 
 function splitWrappedText(value: string): MdastNode[] {

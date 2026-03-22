@@ -10,12 +10,20 @@ const TYPE1 = '、。，？！；：';
 const TYPE2 = '《》「」『』（）”“';
 const SKIP_TAG_NAMES = new Set(['code', 'pre', 'script', 'style']);
 
+function isCjkScript(char: string | undefined): boolean {
+  return typeof char === 'string' && /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u.test(char);
+}
+
 function isType1(char: string | undefined): boolean {
   return typeof char === 'string' && TYPE1.includes(char);
 }
 
 function isType2(char: string | undefined): boolean {
   return typeof char === 'string' && TYPE2.includes(char);
+}
+
+function isCjkDashContextChar(char: string | undefined): boolean {
+  return isCjkScript(char) || isType2(char);
 }
 
 function isHalfwidthCandidate(char: string | undefined): boolean {
@@ -47,8 +55,34 @@ function createHalfwidthNode(value: string): HastNode {
   };
 }
 
-function splitTextNode(value: string): HastNode[] {
+function normalizeCjkEmDash(value: string): string {
   const chars = Array.from(value);
+
+  for (let index = 0; index < chars.length; index += 1) {
+    if (chars[index] !== '\u2014') {
+      continue;
+    }
+
+    let leftIndex = index - 1;
+    while (leftIndex >= 0 && chars[leftIndex] === ' ') {
+      leftIndex -= 1;
+    }
+
+    let rightIndex = index + 1;
+    while (rightIndex < chars.length && chars[rightIndex] === ' ') {
+      rightIndex += 1;
+    }
+
+    if (isCjkDashContextChar(chars[leftIndex]) && isCjkDashContextChar(chars[rightIndex])) {
+      chars[index] = '\u2E3A';
+    }
+  }
+
+  return chars.join('');
+}
+
+function splitTextNode(value: string): HastNode[] {
+  const chars = Array.from(normalizeCjkEmDash(value));
   const nodes: HastNode[] = [];
   let textBuffer = '';
 
