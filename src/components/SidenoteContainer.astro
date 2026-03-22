@@ -14,8 +14,15 @@ const {
   data-after-elements={afterElements}
 ><slot /></article>
 
+<style is:global>
+  .sidenote-container {
+    padding-bottom: var(--sidenote-bottom-padding, 0px);
+  }
+</style>
+
 <script>
   const containerSelector = '.sidenote-container[data-after-elements]';
+  const MINIMUM_SIDENOTE_BOTTOM_GAP = 16;
 
   const getFootnoteKey = (value: string | null, prefix: 'fn-' | 'fnref-'): string | null => {
     if (!value || !value.startsWith(prefix)) {
@@ -39,10 +46,36 @@ const {
     return Boolean(element.compareDocumentPosition(reference) & Node.DOCUMENT_POSITION_FOLLOWING);
   };
 
+  const getDynamicBottomPadding = (container: HTMLElement): number => {
+    return Number.parseFloat(container.dataset.sidenoteBottomPadding ?? '0') || 0;
+  };
+
+  const setDynamicBottomPadding = (container: HTMLElement, padding: number): void => {
+    container.dataset.sidenoteBottomPadding = `${padding}`;
+    container.style.setProperty('--sidenote-bottom-padding', `${padding}px`);
+  };
+
+  const updateBottomPadding = (container: HTMLElement, footnotes: HTMLElement[], containerTop: number): void => {
+    if (footnotes.length === 0 || getComputedStyle(footnotes[0]).position !== 'absolute') {
+      setDynamicBottomPadding(container, 0);
+      return;
+    }
+
+    const currentPadding = getDynamicBottomPadding(container);
+    const baseHeight = container.getBoundingClientRect().height - currentPadding;
+    const maxBottom = Math.max(...footnotes.map((element) => element.getBoundingClientRect().bottom - containerTop));
+    const nextPadding = Math.max(0, Math.ceil(maxBottom + MINIMUM_SIDENOTE_BOTTOM_GAP - baseHeight));
+
+    if (nextPadding !== currentPadding) {
+      setDynamicBottomPadding(container, nextPadding);
+    }
+  };
+
   const calculateSidenotesPos = (container: HTMLElement): void => {
     const refs = [...container.querySelectorAll<HTMLElement>('[data-footnote-ref]')];
     const footnotes = [...container.querySelectorAll<HTMLElement>('.footnotes li')];
     const afterElements = container.dataset.afterElements ?? '';
+    const containerTop = container.getBoundingClientRect().top;
 
     for (const element of footnotes) {
       const id = getFootnoteKey(element.getAttribute('id'), 'fn-');
@@ -63,7 +96,6 @@ const {
       }
 
       const reference = references[0].closest('sup') ?? references[0];
-      const containerTop = container.getBoundingClientRect().top;
       let top = Math.round(reference.getBoundingClientRect().top - containerTop);
 
       if (element.previousElementSibling) {
@@ -84,6 +116,8 @@ const {
       element.style.top = `${top}px`;
       element.style.opacity = '1';
     }
+
+    updateBottomPadding(container, footnotes, containerTop);
   };
 
   const containers = Array.from(document.querySelectorAll<HTMLElement>(containerSelector));
