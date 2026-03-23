@@ -119,4 +119,20 @@ const { entry } = Astro.props as {
       font-family: var(--mono-font), var(--meta-cjk-ja);
     }
   }
+
+  :global(.info .description > *:lang(zh)) {
+    font-family: var(--mono-font), var(--meta-cjk-zh);
+    font-size: inherit;
+  }
+
+  :global(.info .description > *:lang(ja)) {
+    font-family: var(--mono-font), var(--meta-cjk-ja);
+    font-size: inherit;
+  }
+
+  :global(.info .description > * :lang(zh)),
+  :global(.info .description > * :lang(ja)) {
+    font-family: inherit;
+    font-size: inherit;
+  }
 </style>
