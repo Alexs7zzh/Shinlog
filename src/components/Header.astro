@@ -8,8 +8,8 @@ const navItems = [
 ];
 ---
 
-<h1 class="site-title"><a href="/" data-astro-prefetch>{SITE_TITLE}</a></h1>
-<nav>
+<h1 class="site-title" lang="en"><a href="/" data-astro-prefetch>{SITE_TITLE}</a></h1>
+<nav lang="en">
   {navItems.map(([label, href]) => (
     <a
       class:list={['nav-item', { 'nav-item-active': href === pathname }]}
@@ -74,10 +74,11 @@ const navItems = [
     &::after {
       content: '\A';
       position: absolute;
-      top: calc(50% - var(--font-xxs));
-      right: calc(0em - (var(--nav-gap) + var(--font-xxs)) / 2);
+      top: 50%;
+      inset-inline-end: calc((var(--nav-gap) + var(--font-xxs)) / -2);
       width: var(--font-xxs);
       height: var(--font-xxs);
+      transform: translateY(-50%);
       border-radius: 50%;
       background: var(--color-accent-default);
       opacity: 0.7;
