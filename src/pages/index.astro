@@ -12,6 +12,20 @@ function getRawSlug(id: string): string {
   return path.basename(id, path.extname(id));
 }
 
+function formatSeriesTitle(series: string): string {
+  return series
+    .replace(/^\d+-/, '')
+    .split('-')
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+function getSeriesName(post: (typeof posts)[number]): string {
+  const sourcePath = post.filePath ? path.dirname(post.filePath).split(path.sep).at(-1) : null;
+  return sourcePath ?? (path.dirname(post.id).split(path.sep).filter(Boolean)[0] ?? '');
+}
+
 function isHomepageVariant(rawSlug: string): boolean {
   return rawSlug.endsWith('-ja') || rawSlug.endsWith('-zh');
 }
@@ -25,7 +39,7 @@ const homepagePosts = posts
   .map((post) => ({
     post,
     rawSlug: getRawSlug(post.id),
-    series: path.dirname(post.id).split(path.sep).filter(Boolean)[0] ?? '',
+    series: getSeriesName(post),
     url: getPostUrl(post),
   }));
 
@@ -40,7 +54,7 @@ for (const post of homepagePosts) {
 const series = Array.from(postsBySeries.entries())
   .sort(([left], [right]) => left.localeCompare(right))
   .map(([title, children]) => ({
-    title: title.replace(/^\d+-/, ''),
+    title: formatSeriesTitle(title),
     children: /^\d+-/.test(children[0]?.rawSlug ?? '')
       ? [...children].sort((left, right) => left.rawSlug.localeCompare(right.rawSlug))
       : [...children].sort((left, right) => left.post.data.date.getTime() - right.post.data.date.getTime()),
