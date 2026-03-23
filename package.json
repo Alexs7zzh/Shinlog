@@ -11,6 +11,9 @@
     "build": "astro build",
     "fonts": "node --experimental-strip-types fonts/build-fonts.ts",
     "typecheck": "astro check",
+    "verify:typography:install": "playwright install chromium",
+    "verify:typography": "playwright test ./scripts/typography.verify.spec.mjs --config ./scripts/playwright.typography.config.mjs --reporter=line",
+    "verify:typography:update": "UPDATE_TYPOGRAPHY_BASELINE=1 playwright test ./scripts/typography.verify.spec.mjs --config ./scripts/playwright.typography.config.mjs --reporter=line",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -30,6 +33,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
+    "@playwright/test": "^1.58.2",
     "@types/node": "^25.5.0",
     "node-html-parser": "^7.1.0",
     "postcss": "^8.5.8",

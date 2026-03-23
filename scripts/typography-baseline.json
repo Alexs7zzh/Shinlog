@@ -1,0 +1,315 @@
+{
+  "generatedAt": "2026-03-23T04:58:49.772Z",
+  "viewport": {
+    "width": 1440,
+    "height": 1200
+  },
+  "checks": [
+    {
+      "name": "zh-header-site-title",
+      "url": "/de-abstraction-and-design/zh/",
+      "selector": ".site-title",
+      "nth": 0,
+      "textSample": "Shinlog",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "body-font, Garamond, Georgia, \"Times New Roman\", Times, serif",
+        "fontSize": "22px",
+        "lineHeight": "22px",
+        "fontStyle": "normal",
+        "fontWeight": "700",
+        "letterSpacing": "4.4px",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "zh-header-nav",
+      "url": "/de-abstraction-and-design/zh/",
+      "selector": "nav",
+      "nth": 0,
+      "textSample": "Contents Interludes",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "body-font, Garamond, Georgia, \"Times New Roman\", Times, serif",
+        "fontSize": "22px",
+        "lineHeight": "26.4px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "zh-post-title",
+      "url": "/de-abstraction-and-design/zh/",
+      "selector": ".post h1",
+      "nth": 0,
+      "textSample": "实体、去抽象化、与设计是什么",
+      "styles": {
+        "resolvedLang": "zh",
+        "fontFamily": "body-font-cjk-zh, Garamond, Georgia, \"Times New Roman\", Times, serif, \"Source Han Serif CN\", \"Nimbus Roman No9 L\", \"Songti SC\", \"Noto Serif CJK SC\", STSong, NSimSun, SimSun, PMingLiU, MingLiU, serif",
+        "fontSize": "20px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "700",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "zh-post-description",
+      "url": "/de-abstraction-and-design/zh/",
+      "selector": ".info .description",
+      "nth": 0,
+      "textSample": "如何给无边界之物赋予边界？如何给无形态信息赋予可以承载重量的容器？在「高信噪比」为主流价值观的时代，通过 Craig Mod 制作的 Koya Bound 和 Flipboard for iPhone 这两本书，《全球概览》和多声道信息输入",
+      "styles": {
+        "resolvedLang": "zh",
+        "fontFamily": "mono-font, Menlo, \"Courier New\", monospace, \"PingFang SC\", \"Hiragino Sans GB\", \"Noto Sans CJK SC\", \"Source Han Sans SC\", \"Source Han Sans CN\", \"Source Han Sans\", \"Microsoft YaHei\", \"Wenquanyi Micro Hei\", \"WenQuanYi Zen Hei\", \"ST Heiti\", SimHei, sans-serif",
+        "fontSize": "15px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "zh-post-description-paragraph",
+      "url": "/de-abstraction-and-design/zh/",
+      "selector": ".info .description p.end-mark",
+      "nth": 0,
+      "textSample": "如何给无边界之物赋予边界？如何给无形态信息赋予可以承载重量的容器？在「高信噪比」为主流价值观的时代，通过 Craig Mod 制作的 Koya Bound 和 Flipboard for iPhone 这两本书，《全球概览》和多声道信息输入",
+      "styles": {
+        "resolvedLang": "zh",
+        "fontFamily": "mono-font, Menlo, \"Courier New\", monospace, \"PingFang SC\", \"Hiragino Sans GB\", \"Noto Sans CJK SC\", \"Source Han Sans SC\", \"Source Han Sans CN\", \"Source Han Sans\", \"Microsoft YaHei\", \"Wenquanyi Micro Hei\", \"WenQuanYi Zen Hei\", \"ST Heiti\", SimHei, sans-serif",
+        "fontSize": "15px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "zh-post-description-halfwidth",
+      "url": "/de-abstraction-and-design/zh/",
+      "selector": ".info .description .halfwidth",
+      "nth": 0,
+      "textSample": "，",
+      "styles": {
+        "resolvedLang": "zh",
+        "fontFamily": "mono-font, Menlo, \"Courier New\", monospace, \"PingFang SC\", \"Hiragino Sans GB\", \"Noto Sans CJK SC\", \"Source Han Sans SC\", \"Source Han Sans CN\", \"Source Han Sans\", \"Microsoft YaHei\", \"Wenquanyi Micro Hei\", \"WenQuanYi Zen Hei\", \"ST Heiti\", SimHei, sans-serif",
+        "fontSize": "15px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"palt\""
+      }
+    },
+    {
+      "name": "zh-post-body-list-item",
+      "url": "/de-abstraction-and-design/zh/",
+      "selector": ".post li",
+      "nth": 0,
+      "textSample": "Craig Mod 博客",
+      "styles": {
+        "resolvedLang": "zh",
+        "fontFamily": "body-font-cjk-zh, Garamond, Georgia, \"Times New Roman\", Times, serif, \"Source Han Serif CN\", \"Nimbus Roman No9 L\", \"Songti SC\", \"Noto Serif CJK SC\", STSong, NSimSun, SimSun, PMingLiU, MingLiU, serif",
+        "fontSize": "18px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "home-series-heading",
+      "url": "/",
+      "selector": ".series h2",
+      "nth": 0,
+      "textSample": "Anxiety",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "body-font, Garamond, Georgia, \"Times New Roman\", Times, serif",
+        "fontSize": "22px",
+        "lineHeight": "34px",
+        "fontStyle": "italic",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "home-post-date",
+      "url": "/",
+      "selector": ".postlist-date",
+      "nth": 0,
+      "textSample": "June 6, 2021",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "mono-font, Menlo, \"Courier New\", monospace",
+        "fontSize": "15px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "home-post-link",
+      "url": "/",
+      "selector": ".postlist-link",
+      "nth": 0,
+      "textSample": "It's Crawling beneath You!",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "body-font, Garamond, Georgia, \"Times New Roman\", Times, serif",
+        "fontSize": "22px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "0.4px",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "interlude-index-title",
+      "url": "/interludes/",
+      "selector": ".interlude-index h2",
+      "nth": 0,
+      "textSample": "Index",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "-apple-system, \"system-ui\", \"Noto Sans\", \"Helvetica Neue\", Helvetica, \"Nimbus Sans L\", Arial, \"Liberation Sans\", sans-serif",
+        "fontSize": "20px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "500",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "interlude-date",
+      "url": "/interludes/",
+      "selector": "[id=\"2020-03-21\"] .interlude-date",
+      "nth": 0,
+      "textSample": "March 21, 2020",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "mono-font, Menlo, \"Courier New\", monospace",
+        "fontSize": "15px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "interlude-headnote",
+      "url": "/interludes/",
+      "selector": "[id=\"2020-03-21\"] .interlude-headnote",
+      "nth": 0,
+      "textSample": "An application written for my psychoanalysis seminar. I was seeing my professor once a week for about a month back then.",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "mono-font, Menlo, \"Courier New\", monospace",
+        "fontSize": "15px",
+        "lineHeight": "26px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "interlude-body-first-paragraph",
+      "url": "/interludes/",
+      "selector": "[id=\"2020-03-21\"] > p",
+      "nth": 0,
+      "textSample": "What is expected from an application? Shall it be one’s closeness to psychological insights in their life? My confusion ",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "body-font, Garamond, Georgia, \"Times New Roman\", Times, serif",
+        "fontSize": "20px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "interlude-footnote",
+      "url": "/interludes/",
+      "selector": "[id=\"2021-05-15\"] .footnotes li",
+      "nth": 0,
+      "textSample": "This impotent gaze is a common element in my dream. I was wandering around, having no interaction with others. Why did I",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "mono-font, Menlo, \"Courier New\", monospace",
+        "fontSize": "15px",
+        "lineHeight": "26px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "en-post-date",
+      "url": "/intro/",
+      "selector": ".info time",
+      "nth": 0,
+      "textSample": "February 24, 2020",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "mono-font, Menlo, \"Courier New\", monospace",
+        "fontSize": "15px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "en-post-body-first-paragraph",
+      "url": "/intro/",
+      "selector": ".post > p",
+      "nth": 0,
+      "textSample": "By the word lie, Kant refers to a specific meaning – distinguished from error – of an intentionally untruthful statement",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "body-font, Garamond, Georgia, \"Times New Roman\", Times, serif",
+        "fontSize": "20px",
+        "lineHeight": "34px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    },
+    {
+      "name": "en-post-footnote",
+      "url": "/intro/",
+      "selector": ".footnotes li",
+      "nth": 0,
+      "textSample": "Kant, The Metaphysics of Morals, 430, 227. ↩",
+      "styles": {
+        "resolvedLang": "en",
+        "fontFamily": "mono-font, Menlo, \"Courier New\", monospace",
+        "fontSize": "15px",
+        "lineHeight": "26px",
+        "fontStyle": "normal",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "fontFeatureSettings": "\"calt\", \"clig\", \"cv02\", \"cv82\", \"cv90\", \"dlig\", \"kern\", \"liga\", \"onum\", \"swsh\""
+      }
+    }
+  ]
+}
