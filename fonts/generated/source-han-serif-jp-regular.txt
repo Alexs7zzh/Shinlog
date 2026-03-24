@@ -1,8 +1,11 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 126312
+# output_bytes: 103120
 # requested_chars: 594
 # included_chars: 593
-# kept_features: vrt2, ccmp, locl, vert, vkrn, kern, liga, jp78, jp83, jp90, nlck, palt
+# auto_kept_required_features: (none)
+# kept_features: ccmp, locl, palt
+# excluded_features: vert, vkrn, vrt2
+# dropped_features: aalt, dlig, fwid, halt, hist, hwid, jp78, jp83, jp90, kern, liga, mark, nlck, pwid, ruby, vhal, vpal
 # requested_missing_features: (none)
 U+0020	SPACE
 U+0022	"

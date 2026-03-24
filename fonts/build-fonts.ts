@@ -61,6 +61,7 @@ type FontInspection = {
   features: string[];
   flavor: string;
   path: string;
+  requiredFeatures: string[];
   subfamily: string;
 };
 
@@ -77,8 +78,9 @@ type CharsetSourceConfig = {
 
 type FontJob = {
   charsetSource: CharsetSourceConfig;
+  excludeFeatures?: string[];
   extraArgs?: string[];
-  features: string;
+  features: string[];
   id: string;
   inputPath: string;
   kind: 'body' | 'mono' | 'cjk';
@@ -90,6 +92,9 @@ type FontJobConfigFile = {
 };
 
 type FontReport = {
+  autoKeptRequiredFeatures: string[];
+  droppedFeatures: string[];
+  excludedFeatures: string[];
   includedCount: number;
   id: string;
   keptFeatures: string[];
@@ -288,8 +293,12 @@ function loadFontJobs(): FontJob[] {
       throw new Error(`jobs[${index}].outputPath must be a non-empty string.`);
     }
 
-    if (typeof rawJob.features !== 'string') {
-      throw new Error(`jobs[${index}].features must be a string.`);
+    if (!Array.isArray(rawJob.features) || rawJob.features.some((item) => typeof item !== 'string')) {
+      throw new Error(`jobs[${index}].features must be an array of strings.`);
+    }
+
+    if (rawJob.features.includes('*')) {
+      throw new Error(`jobs[${index}].features cannot include "*"; list features explicitly.`);
     }
 
     return {
@@ -298,6 +307,7 @@ function loadFontJobs(): FontJob[] {
       inputPath: path.join(repoRoot, rawJob.inputPath),
       outputPath: path.join(repoRoot, rawJob.outputPath),
       features: rawJob.features,
+      excludeFeatures: rawJob.excludeFeatures === undefined ? undefined : ensureStringArray(rawJob.excludeFeatures, `jobs[${index}].excludeFeatures`),
       extraArgs: rawJob.extraArgs === undefined ? undefined : ensureStringArray(rawJob.extraArgs, `jobs[${index}].extraArgs`),
       charsetSource: parseCharsetSourceConfig(rawJob.charsetSource, `jobs[${index}].charsetSource`),
     };
@@ -322,9 +332,31 @@ def pick_name(name_id):
     return ""
 
 features = []
+required_features = set()
 for table_name in ("GSUB", "GPOS"):
-    if table_name in font and getattr(font[table_name].table, "FeatureList", None):
-        features.extend(record.FeatureTag for record in font[table_name].table.FeatureList.FeatureRecord)
+    if table_name not in font:
+        continue
+
+    table = font[table_name].table
+    feature_list = getattr(table, "FeatureList", None)
+    if feature_list:
+        feature_records = feature_list.FeatureRecord
+        features.extend(record.FeatureTag for record in feature_records)
+
+        script_list = getattr(table, "ScriptList", None)
+        if script_list:
+            for script_record in script_list.ScriptRecord:
+                script = script_record.Script
+                langsys_tables = []
+                if getattr(script, "DefaultLangSys", None) is not None:
+                    langsys_tables.append(script.DefaultLangSys)
+                for langsys_record in getattr(script, "LangSysRecord", []) or []:
+                    langsys_tables.append(langsys_record.LangSys)
+
+                for langsys in langsys_tables:
+                    required_index = getattr(langsys, "ReqFeatureIndex", 0xFFFF)
+                    if required_index != 0xFFFF and required_index < len(feature_records):
+                        required_features.add(feature_records[required_index].FeatureTag)
 
 axes = [axis.axisTag for axis in font["fvar"].axes] if "fvar" in font else []
 
@@ -335,6 +367,7 @@ print(json.dumps({
     "flavor": "CFF" if "CFF " in font else "glyf",
     "axes": sorted(axes),
     "features": sorted(set(features)),
+    "requiredFeatures": sorted(required_features),
 }))
 `;
 
@@ -560,7 +593,10 @@ function writeFontSnapshot(report: FontReport, text: string): string {
     `# output_bytes: ${report.outputBytes}`,
     `# requested_chars: ${report.requestedCount}`,
     `# included_chars: ${report.includedCount}`,
+    `# auto_kept_required_features: ${report.autoKeptRequiredFeatures.join(', ') || '(none)'}`,
     `# kept_features: ${report.keptFeatures.join(', ') || '(none)'}`,
+    `# excluded_features: ${report.excludedFeatures.join(', ') || '(none)'}`,
+    `# dropped_features: ${report.droppedFeatures.join(', ') || '(none)'}`,
     `# requested_missing_features: ${report.requestedButMissing.join(', ') || '(none)'}`,
     '',
   ];
@@ -590,38 +626,55 @@ print(json.dumps(sorted(codepoints)))
   return codepoints.map((codepoint) => String.fromCodePoint(codepoint)).join('');
 }
 
-function parseFeatureSpec(spec: string): string[] {
-  if (spec === '*') {
-    return [];
-  }
-
-  if (spec.trim() === '') {
-    return [];
-  }
-
-  return spec.split(',').map((entry) => entry.trim()).filter(Boolean);
+function uniqueStrings(values: string[]): string[] {
+  return [...new Set(values)];
 }
 
-function resolveKeptFeatures(spec: string, availableFeatures: string[]): { kept: string[]; missing: string[] } {
-  if (spec === '*') {
-    return {
-      kept: [...availableFeatures],
-      missing: [],
-    };
-  }
+function buildLayoutFeatureSpec(
+  spec: string[],
+  requiredFeatures: string[],
+  excludedFeatures: string[],
+): string {
+  const exclusions = new Set(excludedFeatures);
 
-  if (spec.trim() === '') {
+  return uniqueStrings([...spec, ...requiredFeatures])
+    .filter((feature) => !exclusions.has(feature))
+    .join(',');
+}
+
+function resolveFeatureReport(
+  spec: string[],
+  availableFeatures: string[],
+  requiredFeatures: string[],
+  excludedFeatures: string[],
+): { autoKeptRequired: string[]; dropped: string[]; excluded: string[]; kept: string[]; missing: string[] } {
+  const excluded = uniqueStrings(excludedFeatures);
+  const autoKeptRequired = requiredFeatures.filter((feature) => !excluded.includes(feature));
+  const reportableFeatures = availableFeatures.filter((feature) => !autoKeptRequired.includes(feature));
+  const excludedAvailable = reportableFeatures.filter((feature) => excluded.includes(feature));
+
+  if (spec.length === 0) {
     return {
+      autoKeptRequired,
+      dropped: reportableFeatures.filter((feature) => !excluded.includes(feature)),
+      excluded: excludedAvailable,
       kept: [],
       missing: [],
     };
   }
 
-  const requested = parseFeatureSpec(spec);
-  const kept = requested.filter((feature) => availableFeatures.includes(feature));
-  const missing = requested.filter((feature) => !availableFeatures.includes(feature));
+  const requested = uniqueStrings(spec.filter((feature) => !autoKeptRequired.includes(feature)));
+  const kept = requested.filter((feature) => reportableFeatures.includes(feature) && !excluded.includes(feature));
+  const missing = requested.filter((feature) => !reportableFeatures.includes(feature));
+  const dropped = reportableFeatures.filter((feature) => !requested.includes(feature) && !excluded.includes(feature));
 
-  return { kept, missing };
+  return {
+    autoKeptRequired,
+    dropped,
+    excluded: excludedAvailable,
+    kept,
+    missing,
+  };
 }
 
 function subsetFont(
@@ -673,21 +726,34 @@ async function main(): Promise<void> {
     for (const job of fontJobs) {
       const charsetText = collectCharsetText(entries, selectorDocuments, job.charsetSource);
       const charsetPath = writeCharsetInput(charsetInputRoot, job.id, charsetText);
+      const inspection = inspectFont(job.inputPath);
+      const layoutFeatures = buildLayoutFeatureSpec(
+        job.features,
+        inspection.requiredFeatures,
+        job.excludeFeatures ?? [],
+      );
 
       subsetFont(
         pyftsubset,
         job.inputPath,
         job.outputPath,
         charsetPath,
-        job.features,
+        layoutFeatures,
         job.extraArgs ?? [],
       );
 
       const includedText = inspectSubsetText(job.outputPath);
-      const inspection = inspectFont(job.inputPath);
-      const { kept, missing } = resolveKeptFeatures(job.features, inspection.features);
+      const { autoKeptRequired, dropped, excluded, kept, missing } = resolveFeatureReport(
+        job.features,
+        inspection.features,
+        inspection.requiredFeatures,
+        job.excludeFeatures ?? [],
+      );
 
       writeFontSnapshot({
+        autoKeptRequiredFeatures: autoKeptRequired,
+        droppedFeatures: dropped,
+        excludedFeatures: excluded,
         id: job.id,
         includedCount: [...includedText].length,
         outputPath: job.outputPath,

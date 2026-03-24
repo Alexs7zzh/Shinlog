@@ -170,6 +170,11 @@ hr {
   font-feature-settings: 'palt';
 }
 
+.halfwidth:is(:lang(zh), :lang(ja)),
+.halfwidth :is(:lang(zh), :lang(ja)) {
+  font-feature-settings: 'ccmp', 'locl', 'palt';
+}
+
 sup {
   vertical-align: unset;
   font-size: unset;
