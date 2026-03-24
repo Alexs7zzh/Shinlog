@@ -3,9 +3,9 @@
     {
       "id": "eb-regular",
       "kind": "body",
-      "inputPath": "fonts/source/eb-garamond/EBGaramond-Regular.ttf",
+      "inputPath": "fonts/source/eb-garamond/EBGaramond-Regular.otf",
       "outputPath": "src/fonts/eb-garamond/eb-garamond-regular.woff2",
-      "features": ["ccmp", "clig", "kern", "liga", "onum", "calt", "dlig", "cv02", "cv82", "cv90", "locl", "mark", "mkmk", "smcp", "c2sc", "sups", "swsh"],
+      "features": ["ccmp", "kern", "liga", "onum", "calt", "dlig", "cv02", "cv82", "cv90", "locl", "smcp", "sups"],
       "charsetSource": {
         "lang": "en",
         "allRawText": true,
@@ -16,9 +16,9 @@
     {
       "id": "eb-italic",
       "kind": "body",
-      "inputPath": "fonts/source/eb-garamond/EBGaramond-Italic.ttf",
+      "inputPath": "fonts/source/eb-garamond/EBGaramond-Italic.otf",
       "outputPath": "src/fonts/eb-garamond/eb-garamond-italic.woff2",
-      "features": ["ccmp", "clig", "kern", "liga", "onum", "calt", "dlig", "cv02", "cv82", "cv90", "locl", "mark", "mkmk", "smcp", "c2sc", "sups", "swsh"],
+      "features": ["ccmp", "clig", "kern", "liga", "onum", "calt", "dlig", "cv02", "cv82", "locl", "swsh"],
       "charsetSource": {
         "lang": "en",
         "selectors": ["h2", "h3", "em", "i"]
@@ -27,9 +27,9 @@
     {
       "id": "eb-semibold",
       "kind": "body",
-      "inputPath": "fonts/source/eb-garamond/EBGaramond-SemiBold.ttf",
+      "inputPath": "fonts/source/eb-garamond/EBGaramond-SemiBold.otf",
       "outputPath": "src/fonts/eb-garamond/eb-garamond-semibold.woff2",
-      "features": ["ccmp", "clig", "kern", "liga", "onum", "calt", "dlig", "cv02", "cv82", "cv90", "locl", "mark", "mkmk", "smcp", "c2sc", "sups", "swsh"],
+      "features": ["kern", "liga", "onum", "dlig", "locl", "smcp", "swsh"],
       "charsetSource": {
         "lang": "en",
         "selectors": [".site-title", "h1", "strong", "b", ".init"]

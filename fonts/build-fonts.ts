@@ -632,13 +632,15 @@ function uniqueStrings(values: string[]): string[] {
 
 function buildLayoutFeatureSpec(
   spec: string[],
+  availableFeatures: string[],
   requiredFeatures: string[],
   excludedFeatures: string[],
 ): string {
   const exclusions = new Set(excludedFeatures);
+  const available = new Set(availableFeatures);
 
   return uniqueStrings([...spec, ...requiredFeatures])
-    .filter((feature) => !exclusions.has(feature))
+    .filter((feature) => available.has(feature) && !exclusions.has(feature))
     .join(',');
 }
 
@@ -729,6 +731,7 @@ async function main(): Promise<void> {
       const inspection = inspectFont(job.inputPath);
       const layoutFeatures = buildLayoutFeatureSpec(
         job.features,
+        inspection.features,
         inspection.requiredFeatures,
         job.excludeFeatures ?? [],
       );

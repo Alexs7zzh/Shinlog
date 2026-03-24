@@ -1,9 +1,12 @@
 # output: src/fonts/eb-garamond/eb-garamond-regular.woff2
-# output_bytes: 31372
+# output_bytes: 28952
 # requested_chars: 113
 # included_chars: 112
-# kept_features: kern, liga, onum, dlig, hlig, locl, mark, smcp, c2sc, sups
-# requested_missing_features: ccmp, calt, cv02, mkmk
+# auto_kept_required_features: (none)
+# kept_features: ccmp, kern, liga, onum, calt, dlig, cv02, cv82, cv90, locl, smcp, sups
+# excluded_features: (none)
+# dropped_features: c2sc, case, cv01, cv03, cv06, cv11, cv21, cv27, cv47, cv80, cv81, cv83, cv91, dnom, frac, hlig, lfbd, lnum, mark, mkmk, numr, ordn, pnum, rtbd, salt, sinf, size, ss01, ss02, ss05, ss06, ss07, ss08, ss10, ss20, subs, tnum, xtex
+# requested_missing_features: (none)
 U+0020	SPACE
 U+0021	!
 U+0022	"
