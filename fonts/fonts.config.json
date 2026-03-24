@@ -1,4 +1,11 @@
 {
+  "defaults": {
+    "subsetOptions": {
+      "desubroutinize": true,
+      "hinting": false,
+      "ignoreMissingUnicodes": true
+    }
+  },
   "jobs": [
     {
       "id": "eb-regular",
@@ -63,7 +70,6 @@
       "outputPath": "src/fonts/SourceHanSerifCN/source-han-serif-cn-regular.woff2",
       "features": ["ccmp", "locl", "palt"],
       "excludeFeatures": ["vert", "vrt2", "vkrn"],
-      "extraArgs": ["--desubroutinize"],
       "charsetSource": {
         "alwaysIncludeChars": "⸺〇零一二三四五六七八九十百千万、",
         "langRawText": "zh"
@@ -76,7 +82,6 @@
       "outputPath": "src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2",
       "features": ["ccmp", "locl", "palt"],
       "excludeFeatures": ["vert", "vrt2", "vkrn"],
-      "extraArgs": ["--desubroutinize"],
       "charsetSource": {
         "alwaysIncludeChars": "⸺〇零一二三四五六七八九十百千万、",
         "langRawText": "ja"

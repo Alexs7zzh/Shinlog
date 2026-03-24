@@ -1,5 +1,7 @@
 `pnpm fonts` regenerates the site fonts from the upstream sources in `fonts/source`.
 
+Subsetting behavior is configured in `fonts/fonts.config.json`. Shared subset defaults live under `defaults.subsetOptions`, and individual jobs can override them with boolean `subsetOptions` fields such as `hinting`, `ignoreMissingUnicodes`, and `desubroutinize`.
+
 Structure:
 
 - `fonts/source`: upstream font binaries committed to the repo

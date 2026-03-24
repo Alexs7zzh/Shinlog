@@ -15,6 +15,7 @@ import { unified } from 'unified';
 
 import { ENTRY_LANGS, SITE_TITLE } from '../src/consts.ts';
 import { formatReadableDate } from '../src/lib/date.ts';
+import { toUppercaseDisplayText } from '../src/lib/display-text.ts';
 import rehypeAttributeLists from '../src/lib/rehype-attribute-lists.ts';
 import rehypeFigureImages from '../src/lib/rehype-figure-images.ts';
 import rehypeMarkEndElement from '../src/lib/rehype-mark-end-element.ts';
@@ -76,18 +77,27 @@ type CharsetSourceConfig = {
   selectors?: string[];
 };
 
+type SubsetOptions = {
+  desubroutinize?: boolean;
+  hinting?: boolean;
+  ignoreMissingUnicodes?: boolean;
+};
+
 type FontJob = {
   charsetSource: CharsetSourceConfig;
   excludeFeatures?: string[];
-  extraArgs?: string[];
   features: string[];
   id: string;
   inputPath: string;
   kind: 'body' | 'mono' | 'cjk';
   outputPath: string;
+  subsetOptions: SubsetOptions;
 };
 
 type FontJobConfigFile = {
+  defaults?: {
+    subsetOptions?: SubsetOptions;
+  };
   jobs: FontJob[];
 };
 
@@ -242,6 +252,33 @@ function ensureStringArray(value: unknown, context: string): string[] {
   return value;
 }
 
+function parseSubsetOptions(value: unknown, context: string): SubsetOptions {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`${context} must be an object.`);
+  }
+
+  const options = value as Record<string, unknown>;
+
+  const ensureBoolean = (field: string): boolean | undefined => {
+    const rawField = options[field];
+    if (rawField === undefined) {
+      return undefined;
+    }
+
+    if (typeof rawField !== 'boolean') {
+      throw new Error(`${context}.${field} must be a boolean.`);
+    }
+
+    return rawField;
+  };
+
+  return {
+    desubroutinize: ensureBoolean('desubroutinize'),
+    hinting: ensureBoolean('hinting'),
+    ignoreMissingUnicodes: ensureBoolean('ignoreMissingUnicodes'),
+  };
+}
+
 function parseCharsetSourceConfig(value: unknown, context: string): CharsetSourceConfig {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
     throw new Error(`${context} must be an object.`);
@@ -270,6 +307,11 @@ function loadFontJobs(): FontJob[] {
   if (!Array.isArray(config.jobs)) {
     throw new Error('fonts/fonts.config.json must contain a jobs array.');
   }
+
+  const defaultSubsetOptions =
+    config.defaults?.subsetOptions === undefined
+      ? {}
+      : parseSubsetOptions(config.defaults.subsetOptions, 'defaults.subsetOptions');
 
   return config.jobs.map((job, index) => {
     if (!job || typeof job !== 'object' || Array.isArray(job)) {
@@ -308,7 +350,10 @@ function loadFontJobs(): FontJob[] {
       outputPath: path.join(repoRoot, rawJob.outputPath),
       features: rawJob.features,
       excludeFeatures: rawJob.excludeFeatures === undefined ? undefined : ensureStringArray(rawJob.excludeFeatures, `jobs[${index}].excludeFeatures`),
-      extraArgs: rawJob.extraArgs === undefined ? undefined : ensureStringArray(rawJob.extraArgs, `jobs[${index}].extraArgs`),
+      subsetOptions: {
+        ...defaultSubsetOptions,
+        ...(rawJob.subsetOptions === undefined ? {} : parseSubsetOptions(rawJob.subsetOptions, `jobs[${index}].subsetOptions`)),
+      },
       charsetSource: parseCharsetSourceConfig(rawJob.charsetSource, `jobs[${index}].charsetSource`),
     };
   });
@@ -446,7 +491,7 @@ function buildSelectorDocuments(entries: ContentEntryRecord[]): SelectorDocument
   const documents: SelectorDocument[] = [
     {
       lang: 'en',
-      html: `<div data-font-root><h1 class="site-title">${escapeHtml(SITE_TITLE)}</h1></div>`,
+      html: `<div data-font-root><h1 class="site-title">${escapeHtml(toUppercaseDisplayText(SITE_TITLE, 'en'))}</h1></div>`,
     },
   ];
 
@@ -464,7 +509,7 @@ function buildSelectorDocuments(entries: ContentEntryRecord[]): SelectorDocument
         lang: entry.lang,
         html: [
           '<div data-font-root>',
-          `<h1>${escapeHtml(entry.title)}</h1>`,
+          `<h1>${escapeHtml(toUppercaseDisplayText(entry.title, entry.lang))}</h1>`,
           entry.date ? `<time>${escapeHtml(formatReadableDate(entry.date))}</time>` : '',
           '<div class="language-switcher">',
           ENTRY_LANGS.map((lang) => `<span class="language-label">${lang.toUpperCase()}</span>`).join(''),
@@ -685,20 +730,23 @@ function subsetFont(
   outputPath: string,
   textFilePath: string,
   layoutFeatures: string,
-  extraArgs: string[] = [],
+  subsetOptions: SubsetOptions,
 ): void {
   const resolvedLayoutFeatures = layoutFeatures.trim();
   ensureDir(path.dirname(outputPath));
-  run(pyftsubset, [
+  const args = [
     inputPath,
     `--output-file=${outputPath}`,
     '--flavor=woff2',
     `--text-file=${textFilePath}`,
     `--layout-features=${resolvedLayoutFeatures}`,
-    '--ignore-missing-unicodes',
-    '--no-hinting',
-    ...extraArgs,
-  ]);
+    '--no-subset-tables+=FFTM',
+    subsetOptions.ignoreMissingUnicodes === false ? '--no-ignore-missing-unicodes' : '--ignore-missing-unicodes',
+    subsetOptions.hinting === false ? '--no-hinting' : '--hinting',
+    subsetOptions.desubroutinize === true ? '--desubroutinize' : '--no-desubroutinize',
+  ];
+
+  run(pyftsubset, args);
 }
 
 function cleanGeneratedFonts(): void {
@@ -742,7 +790,7 @@ async function main(): Promise<void> {
         job.outputPath,
         charsetPath,
         layoutFeatures,
-        job.extraArgs ?? [],
+        job.subsetOptions,
       );
 
       const includedText = inspectSubsetText(job.outputPath);
