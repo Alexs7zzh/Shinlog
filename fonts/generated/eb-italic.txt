@@ -1,5 +1,5 @@
 # output: src/fonts/eb-garamond/eb-garamond-italic.woff2
-# output_bytes: 14096
+# output_bytes: 13400
 # requested_chars: 58
 # included_chars: 58
 # auto_kept_required_features: (none)

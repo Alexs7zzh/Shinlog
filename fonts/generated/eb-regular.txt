@@ -1,5 +1,5 @@
 # output: src/fonts/eb-garamond/eb-garamond-regular.woff2
-# output_bytes: 28952
+# output_bytes: 27432
 # requested_chars: 113
 # included_chars: 112
 # auto_kept_required_features: (none)
