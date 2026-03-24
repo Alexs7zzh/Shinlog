@@ -1,16 +1,19 @@
 ---
 import { SITE_TITLE } from '../consts';
+import { toUppercaseDisplayText } from '../lib/display-text';
 
 const pathname = Astro.url.pathname;
 const navItems = [
   ['Contents', '/'],
   ['Interludes', '/interludes/'],
-];
+] as const;
+const displaySiteTitle = toUppercaseDisplayText(SITE_TITLE, 'en');
+const displayNavItems = navItems.map(([label, href]) => [toUppercaseDisplayText(label, 'en'), href] as const);
 ---
 
-<h1 class="site-title"><a href="/" data-astro-prefetch>{SITE_TITLE}</a></h1>
+<h1 class="site-title"><a href="/" data-astro-prefetch>{displaySiteTitle}</a></h1>
 <nav>
-  {navItems.map(([label, href]) => (
+  {displayNavItems.map(([label, href]) => (
     <a
       class:list={['nav-item', { 'nav-item-active': href === pathname }]}
       href={href}
@@ -32,7 +35,6 @@ const navItems = [
 
     a {
       text-decoration: none;
-      text-transform: uppercase;
       color: var(--color-default);
     }
 
@@ -58,7 +60,6 @@ const navItems = [
   }
 
   .nav-item {
-    text-transform: uppercase;
     letter-spacing: 1px;
     margin-right: var(--spacing-half);
     position: relative;

@@ -5,6 +5,7 @@ import PodcastPlayer from '../components/PodcastPlayer.astro';
 import SidenoteContainer from '../components/SidenoteContainer.astro';
 import { SITE_DESCRIPTION } from '../consts';
 import { formatHtmlDate, formatReadableDate } from '../lib/date';
+import { toUppercaseDisplayText } from '../lib/display-text';
 import type { AlternativeLink, EntryLang } from '../lib/types';
 
 interface PostLayoutEntry {
@@ -21,6 +22,7 @@ interface PostLayoutEntry {
 const { entry } = Astro.props as {
   entry: PostLayoutEntry;
 };
+const displayTitle = toUppercaseDisplayText(entry.title, entry.lang);
 ---
 
 <BaseLayout title={entry.title} description={entry.metaDescription ?? SITE_DESCRIPTION} htmlLang={entry.lang}>
@@ -30,7 +32,7 @@ const { entry } = Astro.props as {
     afterElements=".info"
   >
     <section class="info">
-      <h1>{entry.title}</h1>
+      <h1>{displayTitle}</h1>
       <LanguageSwitcher currentLang={entry.lang} items={entry.alternative} />
       {entry.date && <time datetime={formatHtmlDate(entry.date)}>{formatReadableDate(entry.date)}</time>}
       {entry.descriptionHtml && <div class="description" set:html={entry.descriptionHtml} />}
@@ -54,7 +56,6 @@ const { entry } = Astro.props as {
 
   :global(.post h1) {
     margin: 0;
-    text-transform: uppercase;
     font-size: var(--font);
     line-height: var(--line-height);
 
