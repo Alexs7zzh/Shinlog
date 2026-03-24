@@ -140,6 +140,7 @@ hr {
 .post:not(.noend) > .end-mark:is(ol, ul) > li:last-child::after {
   content: '❧';
   margin-left: 0.2em;
+  -webkit-user-select: none;
   user-select: none;
   color: var(--color-accent-default);
 }
@@ -189,6 +190,7 @@ sup {
     color: var(--color-accent-default);
     text-decoration: none;
     position: relative;
+    -webkit-user-select: none;
     user-select: none;
 
     &::before {
@@ -300,6 +302,7 @@ sup {
 
 .footnote-backref,
 [data-footnote-backref] {
+  -webkit-user-select: none;
   user-select: none;
   margin-left: 0.3em;
   text-decoration: none;
