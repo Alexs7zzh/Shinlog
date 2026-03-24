@@ -59,6 +59,10 @@ const displayTitle = toUppercaseDisplayText(entry.title, entry.lang);
     font-size: var(--font);
     line-height: var(--line-height);
 
+    &:lang(en) {
+      font-feature-settings: var(--features-latin-bold);
+    }
+
     &:lang(zh),
     &:lang(ja) {
       font-size: var(--font);
