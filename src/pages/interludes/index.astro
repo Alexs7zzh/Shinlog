@@ -184,9 +184,9 @@ const renderedInterludeGroups = await Promise.all(
               >
                 <header class="interlude-header">
                   <div class="interlude-meta">
-                    <time class="interlude-date" datetime={formatHtmlDate(post.date)}>
-                      {formatReadableDate(post.date)}
-                    </time>
+                    <time class="interlude-date" datetime={formatHtmlDate(post.date)}
+                      >{formatReadableDate(post.date)}</time
+                    >
                     <LanguageSwitcher currentLang={post.lang} items={group.alternative} />
                   </div>
                   {post.headnoteHtml && <aside class="interlude-headnote" set:html={post.headnoteHtml} />}

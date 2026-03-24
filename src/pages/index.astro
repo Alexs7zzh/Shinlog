@@ -72,9 +72,9 @@ const series = Array.from(postsBySeries.entries())
             <div class="postlist-date">
               <time datetime={formatHtmlDate(item.post.data.date)}>{formatReadableDate(item.post.data.date)}</time>
             </div>
-            <a href={item.url} class="postlist-link" lang={getPostLang(item.post)} data-astro-prefetch>
-              {item.post.data.title}
-            </a>
+            <a href={item.url} class="postlist-link" lang={getPostLang(item.post)} data-astro-prefetch
+              >{item.post.data.title}</a
+            >
           </li>
         ))}
       </ol>
