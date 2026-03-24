@@ -100,12 +100,14 @@ const { entry } = Astro.props as {
     margin-top: var(--spacing-half);
     display: inline-block;
     font-family: var(--mono-font);
+    font-feature-settings: var(--features-mono);
     font-size: var(--font-s);
     line-height: var(--line-height);
   }
 
   :global(.info .description) {
     font-family: var(--mono-font);
+    font-feature-settings: var(--features-mono);
     font-size: var(--font-s);
     hyphens: none;
 

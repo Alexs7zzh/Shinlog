@@ -13,6 +13,14 @@
   --body-cjk-ja: 'Source Han Serif JP', 'Hiragino Mincho ProN', 'YuMincho', 'Yu Mincho', 'MS PMincho', serif;
   --meta-cjk-ja: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'Osaka', 'メイリオ', 'Meiryo', 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;
 
+  --features-latin-regular: 'ccmp', 'kern', 'liga', 'onum', 'calt', 'dlig', 'cv02', 'cv82', 'cv90', 'locl';
+  --features-latin-italic: 'ccmp', 'clig', 'kern', 'liga', 'onum', 'calt', 'dlig', 'cv02', 'cv82', 'locl', 'swsh';
+  --features-latin-bold: 'kern', 'liga', 'onum', 'dlig', 'locl', 'swsh';
+  --features-cjk: 'ccmp', 'locl';
+  --features-cjk-palt: 'ccmp', 'locl', 'palt';
+  --features-sups: 'sups' 1;
+  --features-mono: normal;
+
   --font-xxs: 0.23rem;
   --font-xs: 0.35rem;
   --font-s: 0.75rem;
@@ -48,7 +56,6 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  font-feature-settings: 'kern', 'liga', 'onum', 'calt', 'dlig', 'cv02', 'hlig', 'swsh';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -104,6 +111,7 @@ body {
   background-color: var(--color-bg);
   color: var(--color-default);
   font-family: var(--body-font);
+  font-feature-settings: var(--features-latin-regular);
   line-height: var(--line-height);
 
   hyphens: auto;
@@ -120,11 +128,13 @@ body {
 body :lang(zh) {
   font-family: var(--body-font-zh), var(--body-cjk-zh);
   font-size: calc(var(--font) * var(--cjk-font));
+  font-feature-settings: var(--features-cjk);
   line-break: strict;
 }
 body :lang(ja) {
   font-family: var(--body-font-ja), var(--body-cjk-ja);
   font-size: calc(var(--font) * var(--cjk-font));
+  font-feature-settings: var(--features-cjk);
   line-break: strict;
 }
 
@@ -142,7 +152,9 @@ body :lang(ja) {
   }
 }
 
-em:lang(en) {
+em:lang(en),
+i:lang(en) {
+  font-feature-settings: var(--features-latin-italic);
   font-style: italic;
   text-emphasis: none;
 }

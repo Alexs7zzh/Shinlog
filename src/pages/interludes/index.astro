@@ -328,6 +328,7 @@ const renderedInterludeGroups = await Promise.all(
     padding: calc(var(--line-height) * 0.25) var(--spacing-half);
     line-height: var(--aside-line-height);
     font-family: var(--mono-font);
+    font-feature-settings: var(--features-mono);
     font-size: var(--font-s);
     color: var(--color-accent-dim);
   }
@@ -366,6 +367,7 @@ const renderedInterludeGroups = await Promise.all(
   .interlude-list :global(.interlude-date) {
     display: block;
     font-family: var(--mono-font);
+    font-feature-settings: var(--features-mono);
     font-size: var(--font-s);
     -webkit-user-select: none;
     user-select: none;

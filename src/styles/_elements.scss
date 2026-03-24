@@ -56,6 +56,7 @@ figure {
   figcaption {
     text-align: center;
     font-family: var(--mono-font);
+    font-feature-settings: var(--features-mono);
     font-size: var(--font-s);
   }
 }
@@ -106,6 +107,7 @@ hr {
   margin: var(--spacing-half) 0;
   padding: calc(var(--line-height) * 0.25) var(--spacing-half);
   font-family: var(--mono-font);
+  font-feature-settings: var(--features-mono);
   font-size: var(--font-s);
   line-height: var(--aside-line-height);
 
@@ -131,6 +133,7 @@ hr {
 }
 
 .init {
+  font-feature-settings: var(--features-latin-bold);
   font-variant: small-caps;
   font-weight: bold;
   letter-spacing: 0.5px;
@@ -168,12 +171,12 @@ hr {
 }
 
 .halfwidth {
-  font-feature-settings: 'palt';
+  font-feature-settings: var(--features-cjk-palt);
 }
 
 .halfwidth:is(:lang(zh), :lang(ja)),
 .halfwidth :is(:lang(zh), :lang(ja)) {
-  font-feature-settings: 'ccmp', 'locl', 'palt';
+  font-feature-settings: var(--features-cjk-palt);
 }
 
 sup {
@@ -185,7 +188,7 @@ sup {
   }
 
   a {
-    font-feature-settings: "sups" 1;
+    font-feature-settings: var(--features-sups);
     font-family: var(--body-font)!important;
     color: var(--color-accent-default);
     text-decoration: none;
@@ -219,6 +222,7 @@ sup {
 .footnotes {
   margin: var(--spacing-half) 0;
   font-family: var(--mono-font);
+  font-feature-settings: var(--features-mono);
   font-size: var(--font-s);
   color: var(--color-accent-dim);
 
