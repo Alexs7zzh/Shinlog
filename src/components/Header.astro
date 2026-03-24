@@ -8,16 +8,15 @@ const navItems = [
 ];
 ---
 
-<h1 class="site-title" lang="en"><a href="/" data-astro-prefetch>{SITE_TITLE}</a></h1>
-<nav lang="en">
+<h1 class="site-title"><a href="/" data-astro-prefetch>{SITE_TITLE}</a></h1>
+<nav>
   {navItems.map(([label, href]) => (
     <a
       class:list={['nav-item', { 'nav-item-active': href === pathname }]}
       href={href}
       data-astro-prefetch
+      >{label}</a
     >
-      {label}
-    </a>
   ))}
 </nav>
 
@@ -43,9 +42,6 @@ const navItems = [
 
   nav {
     grid-area: nav;
-    --nav-gap: var(--spacing-half);
-    display: flex;
-    gap: var(--nav-gap);
     list-style: none;
     padding-left: 0;
     line-height: 1.2; // tricky line height to match site title
@@ -63,6 +59,7 @@ const navItems = [
   .nav-item {
     text-transform: uppercase;
     letter-spacing: 1px;
+    margin-right: var(--spacing-half);
     position: relative;
     line-height: 1;
     text-decoration: none;
@@ -75,11 +72,10 @@ const navItems = [
     &::after {
       content: '\A';
       position: absolute;
-      top: 50%;
-      inset-inline-end: calc((var(--nav-gap) + var(--font-xxs)) / -2);
+      top: calc(50% - var(--font-xxs));
+      right: calc(0em - (var(--spacing-half) + var(--font-xxs)) / 2);
       width: var(--font-xxs);
       height: var(--font-xxs);
-      transform: translateY(-50%);
       border-radius: 50%;
       background: var(--color-accent-default);
       opacity: 0.7;
