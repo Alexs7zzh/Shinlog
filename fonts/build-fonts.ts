@@ -453,7 +453,7 @@ async function loadContentEntries(): Promise<ContentEntryRecord[]> {
     entries.push({
       filePath,
       relativePath,
-      collection: relativePath.split(path.sep)[1] ?? '',
+      collection: relativePath.split(path.sep)[2] ?? '',
       lang: inferLang(filePath, data.lang),
       title,
       description,
@@ -500,7 +500,7 @@ function buildSelectorDocuments(entries: ContentEntryRecord[]): SelectorDocument
   for (const entry of entries) {
     if (entry.collection === 'posts') {
       const segments = entry.relativePath.split(path.sep);
-      const seriesSegment = segments[2];
+      const seriesSegment = segments[3];
       if (seriesSegment) {
         seriesTitles.add(seriesSegment.replace(/^\d+-/, ''));
       }
@@ -568,7 +568,7 @@ function extractSelectedRenderedText(html: string, selectors: string[]): string 
 
   for (const selector of selectors) {
     for (const node of root.querySelectorAll(selector)) {
-      texts.push(node.innerText);
+      texts.push(node.text);
     }
   }
 
