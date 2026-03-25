@@ -1,6 +1,6 @@
 # output: src/fonts/SourceHanSerifCN/source-han-serif-cn-regular.woff2
 # output_bytes: 125820
-# requested_chars: 748
+# requested_chars: 747
 # included_chars: 747
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt

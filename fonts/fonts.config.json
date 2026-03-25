@@ -49,6 +49,7 @@
       "outputPath": "src/fonts/ia-duo/ia-writer-duo-regular.woff2",
       "features": [],
       "charsetSource": {
+        "lang": "en",
         "alwaysIncludeChars": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\\\]^_`abcdefghijklmnopqrstuvwxyz{|}~—",
         "selectors": ["time", ".language-label", ".podcast-player-title", ".description", ".interlude-headnote", "code", "pre", "figcaption", ".note", ".footnotes", ".footnote-backref", "[data-footnote-backref]"]
       }
@@ -60,6 +61,7 @@
       "outputPath": "src/fonts/ia-duo/ia-writer-duo-italic.woff2",
       "features": [],
       "charsetSource": {
+        "lang": "en",
         "selectors": ["em", "i", "code em", "code i", "pre em", "pre i", "figcaption em", "figcaption i", ".note em", ".note i", ".footnotes em", ".footnotes i"]
       }
     },

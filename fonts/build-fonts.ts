@@ -181,11 +181,7 @@ function parseFrontmatter(text: string): { data: Record<string, string>; body: s
   return { data, body };
 }
 
-function inferLang(filePath: string, explicit?: string): EntryLang {
-  if (explicit === 'zh' || explicit === 'ja' || explicit === 'en') {
-    return explicit;
-  }
-
+function inferLangFromSuffix(filePath: string): EntryLang | undefined {
   if (filePath.endsWith('-zh.md')) {
     return 'zh';
   }
@@ -194,11 +190,30 @@ function inferLang(filePath: string, explicit?: string): EntryLang {
     return 'ja';
   }
 
+  return undefined;
+}
+
+function resolveEntryLang(filePath: string, explicit?: string): EntryLang {
+  const suffixLang = inferLangFromSuffix(filePath);
+
+  if (explicit === 'zh' || explicit === 'ja' || explicit === 'en') {
+    if (suffixLang && suffixLang !== explicit) {
+      throw new Error(`Language mismatch for ${path.relative(repoRoot, filePath)}: frontmatter lang is "${explicit}" but filename suffix implies "${suffixLang}".`);
+    }
+
+    return explicit;
+  }
+
+  if (suffixLang) {
+    return suffixLang;
+  }
+
   return 'en';
 }
 
 function uniqueChars(text: string): string {
-  return Array.from(new Set([...text])).sort((left, right) => left.codePointAt(0)! - right.codePointAt(0)!).join('');
+  const withoutControls = [...text].filter((char) => !/\p{Cc}/u.test(char));
+  return Array.from(new Set(withoutControls)).sort((left, right) => left.codePointAt(0)! - right.codePointAt(0)!).join('');
 }
 
 function ensureDir(dirPath: string): void {
@@ -454,7 +469,7 @@ async function loadContentEntries(): Promise<ContentEntryRecord[]> {
       filePath,
       relativePath,
       collection: relativePath.split(path.sep)[2] ?? '',
-      lang: inferLang(filePath, data.lang),
+      lang: resolveEntryLang(filePath, data.lang),
       title,
       description,
       headnote,
