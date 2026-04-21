@@ -64,7 +64,7 @@ const series = Array.from(postsBySeries.entries())
 <BaseLayout description={SITE_DESCRIPTION} htmlLang="en">
   {series.map((seriesItem) => (
     <section class="series">
-      <h2>{seriesItem.title}</h2>
+      {seriesItem.title && <h2>{seriesItem.title}</h2>}
 
       <ol class="postlist">
         {seriesItem.children.map((item) => (

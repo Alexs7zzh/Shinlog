@@ -61,7 +61,7 @@ figure {
   }
 }
 
-.quote {
+blockquote, .quote {
   margin: var(--spacing-half) 0;
   margin-left: calc(0em - var(--spacing-half));
   padding-left: calc(var(--spacing-half) - 3px);
@@ -75,7 +75,7 @@ figure {
   p:first-child:lang(en) {
     text-indent: -0.8ch
   }
-  
+
   figcaption {
     text-align: right;
     // font-style: normal;
@@ -221,9 +221,10 @@ sup {
 
 .footnotes {
   margin: var(--spacing-half) 0;
-  font-family: var(--mono-font);
-  font-feature-settings: var(--features-mono);
-  font-size: var(--font-s);
+  font-family: var(--ui-font);
+  font-feature-settings: normal;
+  font-size: calc(var(--font-s) * 0.95);
+  line-height: var(--aside-line-height);
   color: var(--color-accent-dim);
 
   &::before {
@@ -258,7 +259,7 @@ sup {
   }
 
   li {
-    line-height: var(--aside-line-height);
+    line-height: inherit;
     counter-increment: footnote;
 
     &:target {
@@ -295,13 +296,32 @@ sup {
     }
   }
 
-  li:lang(zh) {
-    font-family: var(--mono-font), var(--meta-cjk-zh);
+  :lang(zh) {
+    font-family: var(--ui-font), var(--meta-cjk-zh);
+    font-size: inherit;
+    font-feature-settings: var(--features-cjk);
+    line-height: inherit;
   }
 
-  li:lang(ja) {
-    font-family: var(--mono-font), var(--meta-cjk-ja);
+  :lang(ja) {
+    font-family: var(--ui-font), var(--meta-cjk-ja);
+    font-size: inherit;
+    font-feature-settings: var(--features-cjk);
+    line-height: inherit;
   }
+
+  :lang(en) {
+    font-family: var(--mono-font);
+    font-size: inherit;
+    font-feature-settings: var(--features-mono);
+    line-height: inherit;
+  }
+}
+
+.footnotes:lang(zh),
+.footnotes:lang(ja) {
+  font-size: 0.95em;
+  font-weight: 300;
 }
 
 .footnote-backref,
@@ -311,6 +331,8 @@ sup {
   margin-left: 0.3em;
   text-decoration: none;
   color: var(--color-accent-default);
+  font-family: inherit;
+  font-size: inherit;
 
   @media (--viewport-m) {
     display: none;

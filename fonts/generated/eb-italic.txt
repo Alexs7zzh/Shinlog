@@ -1,7 +1,7 @@
 # output: src/fonts/eb-garamond/eb-garamond-italic.woff2
-# output_bytes: 13400
-# requested_chars: 58
-# included_chars: 58
+# output_bytes: 13896
+# requested_chars: 74
+# included_chars: 63
 # auto_kept_required_features: (none)
 # kept_features: ccmp, clig, kern, liga, onum, calt, dlig, cv02, cv82, locl, swsh
 # excluded_features: (none)
@@ -11,6 +11,11 @@ U+0020	SPACE
 U+002C	,
 U+002D	-
 U+002E	.
+U+0030	0
+U+0031	1
+U+0032	2
+U+0034	4
+U+0038	8
 U+003A	:
 U+0041	A
 U+0042	B

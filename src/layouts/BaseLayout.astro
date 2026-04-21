@@ -62,12 +62,12 @@ const fontPreloads = [
     @media (--viewport-s) {
       --body-max-width: calc(600px + (#{config.$body-max-width} - 600) * (100vw - 600px) / (#{config.$breakpoint-l} - 600));
       max-width: var(--body-max-width);
-      padding-top: calc(var(--spacing) + var(--spacing-2) * (var(--width) - #{config.$breakpoint-s}) / (#{config.$breakpoint-l} - #{config.$breakpoint-s}));
+      padding-top: calc(var(--spacing) + var(--spacing-2) * ((100vw - #{config.$breakpoint-s}px) / #{config.$breakpoint-l - config.$breakpoint-s}px));
     }
 
     @media (--viewport-m) {
       display: grid;
-      --body-padding: calc(var(--body-max-width) * (#{config.$aside-percentage-min} + (var(--width) - #{config.$breakpoint-m}) / (#{config.$breakpoint-l} - #{config.$breakpoint-m}) * (#{config.$aside-percentage-max} - #{config.$aside-percentage-min})));
+      --body-padding: calc(var(--body-max-width) * (#{config.$aside-percentage-min} + ((100vw - #{config.$breakpoint-m}px) / #{config.$breakpoint-l - config.$breakpoint-m}px) * (#{config.$aside-percentage-max} - #{config.$aside-percentage-min})));
 
       grid-template:
         'title   nav' var(--font-l)
