@@ -160,6 +160,11 @@ hr {
   text-indent: 0!important;
 }
 
+.align-right {
+  text-align: right;
+  text-indent: 0!important;
+}
+
 .nopadding {
   @media (--viewport-s) {
     padding: 0;

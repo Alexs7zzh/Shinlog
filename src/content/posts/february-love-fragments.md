@@ -92,3 +92,4 @@ noEndMark: true
 <br />
 
 Qより
+{.align-right}
