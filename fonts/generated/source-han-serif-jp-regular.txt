@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 226400
-# requested_chars: 1262
-# included_chars: 1260
+# output_bytes: 226248
+# requested_chars: 1261
+# included_chars: 1259
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -466,6 +466,7 @@ U+578B	型
 U+57CB	埋
 U+57DF	域
 U+57FA	基
+U+5815	堕
 U+5831	報
 U+5834	場
 U+584A	塊
@@ -508,7 +509,6 @@ U+5ACC	嫌
 U+5B50	子
 U+5B57	字
 U+5B58	存
-U+5B63	季
 U+5B64	孤
 U+5B66	学
 U+5B85	宅
@@ -845,7 +845,6 @@ U+7121	無
 U+7136	然
 U+713C	焼
 U+7167	照
-U+717D	煽
 U+719F	熟
 U+71B1	熱
 U+71ED	燭
@@ -974,6 +973,7 @@ U+7D42	終
 U+7D44	組
 U+7D4C	経
 U+7D50	結
+U+7D61	絡
 U+7D71	統
 U+7D75	絵
 U+7D76	絶
@@ -1226,7 +1226,6 @@ U+97FF	響
 U+9805	項
 U+9811	頑
 U+9818	領
-U+982C	頬
 U+982D	頭
 U+983B	頻
 U+983C	頼
