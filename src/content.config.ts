@@ -13,6 +13,7 @@ const postSchema = z.object({
   lang: entryLangSchema.optional(),
   classes: z.array(z.string()).default([]),
   podcast: z.string().optional(),
+  noEndMark: z.boolean().optional(),
 }).strict();
 
 const interludeSchema = z.object({

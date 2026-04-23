@@ -16,6 +16,7 @@ interface PostLayoutEntry {
   date?: Date;
   classes?: string[];
   podcast?: string;
+  noEndMark?: boolean;
   alternative?: AlternativeLink[];
 }
 
@@ -27,7 +28,7 @@ const displayTitle = toUppercaseDisplayText(entry.title, entry.lang);
 
 <BaseLayout title={entry.title} description={entry.metaDescription ?? SITE_DESCRIPTION} htmlLang={entry.lang}>
   <SidenoteContainer
-    className={['post', ...(entry.classes ?? []), entry.podcast ? 'noend' : ''].filter(Boolean).join(' ')}
+    className={['post', ...(entry.classes ?? []), entry.podcast || entry.noEndMark ? 'noend' : ''].filter(Boolean).join(' ')}
     lang={entry.lang}
     afterElements=".info"
   >

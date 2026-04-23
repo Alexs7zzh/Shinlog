@@ -3,6 +3,7 @@ title: Cへの手紙
 description: 出走と自己叙述をめぐる探求。
 date: 2018-02-20
 lang: ja
+noEndMark: true
 ---
 
 Cさんへ
