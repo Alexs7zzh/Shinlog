@@ -1,6 +1,6 @@
 # output: src/fonts/ia-duo/ia-writer-duo-regular.woff2
 # output_bytes: 4560
-# requested_chars: 114
+# requested_chars: 108
 # included_chars: 107
 # auto_kept_required_features: (none)
 # kept_features: (none)

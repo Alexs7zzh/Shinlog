@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 226248
-# requested_chars: 1261
-# included_chars: 1259
+# output_bytes: 226188
+# requested_chars: 1253
+# included_chars: 1252
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -10,8 +10,6 @@
 U+0020	SPACE
 U+0022	"
 U+0023	#
-U+0025	%
-U+0026	&
 U+0028	(
 U+0029	)
 U+002A	*
@@ -28,7 +26,6 @@ U+0037	7
 U+0038	8
 U+0039	9
 U+003A	:
-U+003B	;
 U+003C	<
 U+003D	=
 U+003E	>
@@ -64,7 +61,6 @@ U+0067	g
 U+0068	h
 U+0069	i
 U+006A	j
-U+006B	k
 U+006C	l
 U+006D	m
 U+006E	n
@@ -79,7 +75,6 @@ U+0076	v
 U+0077	w
 U+0078	x
 U+0079	y
-U+007A	z
 U+007B	{
 U+007C	|
 U+007D	}
@@ -89,7 +84,6 @@ U+2019	’
 U+201C	“
 U+201D	”
 U+2026	…
-U+2500	─
 U+25CB	○
 U+2E3A	⸺
 U+3000	　
@@ -261,6 +255,7 @@ U+4E16	世
 U+4E21	両
 U+4E26	並
 U+4E2D	中
+U+4E38	丸
 U+4E3B	主
 U+4E4F	乏
 U+4E57	乗
@@ -345,7 +340,6 @@ U+516D	六
 U+5171	共
 U+5177	具
 U+5185	内
-U+5186	円
 U+518A	冊
 U+518D	再
 U+5192	冒
@@ -454,7 +448,6 @@ U+56F2	囲
 U+56F3	図
 U+56FA	固
 U+56FD	国
-U+570F	圏
 U+5712	園
 U+5727	圧
 U+5728	在
@@ -484,7 +477,6 @@ U+591A	多
 U+591C	夜
 U+5922	夢
 U+5927	大
-U+5929	天
 U+592A	太
 U+5931	失
 U+5947	奇
@@ -540,7 +532,6 @@ U+5C11	少
 U+5C31	就
 U+5C40	局
 U+5C45	居
-U+5C4A	届
 U+5C4B	屋
 U+5C55	展
 U+5C5E	属
@@ -610,7 +601,6 @@ U+6012	怒
 U+6016	怖
 U+601D	思
 U+6027	性
-U+602A	怪
 U+604B	恋
 U+6050	恐
 U+6052	恒
@@ -971,6 +961,7 @@ U+7D33	紳
 U+7D39	紹
 U+7D42	終
 U+7D44	組
+U+7D46	絆
 U+7D4C	経
 U+7D50	結
 U+7D61	絡
@@ -1009,6 +1000,7 @@ U+80AF	肯
 U+80B2	育
 U+80C6	胆
 U+80CC	背
+U+80F8	胸
 U+80FD	能
 U+8105	脅
 U+8107	脇
@@ -1134,6 +1126,7 @@ U+8ECA	車
 U+8ECC	軌
 U+8EE2	転
 U+8F29	輩
+U+8F2A	輪
 U+8FBC	込
 U+8FC2	迂
 U+8FCE	迎
@@ -1173,6 +1166,7 @@ U+9084	還
 U+90AA	邪
 U+90CE	郎
 U+90E8	部
+U+90ED	郭
 U+90F7	郷
 U+914D	配
 U+9154	酔
@@ -1239,7 +1233,6 @@ U+98A8	風
 U+98DB	飛
 U+98DF	食
 U+98F2	飲
-U+98FC	飼
 U+98FE	飾
 U+9928	館
 U+9957	饗

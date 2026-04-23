@@ -1,6 +1,6 @@
 # output: src/fonts/eb-garamond/eb-garamond-regular.woff2
 # output_bytes: 27432
-# requested_chars: 664
+# requested_chars: 119
 # included_chars: 112
 # auto_kept_required_features: (none)
 # kept_features: ccmp, kern, liga, onum, calt, dlig, cv02, cv82, cv90, locl, smcp, sups
