@@ -11,8 +11,8 @@ const displaySiteTitle = toUppercaseDisplayText(SITE_TITLE, 'en');
 const displayNavItems = navItems.map(([label, href]) => [toUppercaseDisplayText(label, 'en'), href] as const);
 ---
 
-<h1 class="site-title"><a href="/" data-astro-prefetch>{displaySiteTitle}</a></h1>
-<nav>
+<h1 class="site-title" lang="en"><a href="/" data-astro-prefetch>{displaySiteTitle}</a></h1>
+<nav lang="en">
   {displayNavItems.map(([label, href]) => (
     <a
       class:list={['nav-item', { 'nav-item-active': href === pathname }]}
