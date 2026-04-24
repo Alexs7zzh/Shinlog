@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 226200
-# requested_chars: 1254
-# included_chars: 1253
+# output_bytes: 226184
+# requested_chars: 1255
+# included_chars: 1254
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -434,6 +434,7 @@ U+54C1	品
 U+54F2	哲
 U+552F	唯
 U+554F	問
+U+5553	啓
 U+5584	善
 U+559C	喜
 U+55AA	喪
@@ -682,7 +683,6 @@ U+640D	損
 U+643A	携
 U+6458	摘
 U+6483	撃
-U+64AB	撫
 U+64EC	擬
 U+652A	攪
 U+652F	支
@@ -884,6 +884,7 @@ U+767B	登
 U+767D	白
 U+767E	百
 U+7684	的
+U+7686	皆
 U+76AE	皮
 U+76CA	益
 U+76DB	盛
@@ -956,7 +957,6 @@ U+7D14	純
 U+7D19	紙
 U+7D1A	級
 U+7D20	素
-U+7D22	索
 U+7D30	細
 U+7D33	紳
 U+7D39	紹
@@ -1198,6 +1198,7 @@ U+964D	降
 U+9650	限
 U+9664	除
 U+9665	陥
+U+9676	陶
 U+967A	険
 U+968E	階
 U+968F	随
