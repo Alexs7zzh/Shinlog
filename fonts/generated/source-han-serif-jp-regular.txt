@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 226976
-# requested_chars: 1258
-# included_chars: 1257
+# output_bytes: 226620
+# requested_chars: 1256
+# included_chars: 1255
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -299,7 +299,6 @@ U+4F59	余
 U+4F5C	作
 U+4F7F	使
 U+4F8B	例
-U+4F9B	供
 U+4F9D	依
 U+4FA1	価
 U+4FB5	侵
@@ -346,6 +345,7 @@ U+5192	冒
 U+5197	冗
 U+51B7	冷
 U+51FA	出
+U+5203	刃
 U+5206	分
 U+5207	切
 U+521D	初
@@ -366,7 +366,6 @@ U+5275	創
 U+5287	劇
 U+529B	力
 U+52A0	加
-U+52A3	劣
 U+52A9	助
 U+52AA	努
 U+52B1	励
@@ -465,7 +464,6 @@ U+5815	堕
 U+5831	報
 U+5834	場
 U+584A	塊
-U+585E	塞
 U+5883	境
 U+5897	増
 U+58CA	壊
@@ -526,7 +524,6 @@ U+5BE9	審
 U+5BFE	対
 U+5C02	専
 U+5C06	将
-U+5C0A	尊
 U+5C0B	尋
 U+5C0E	導
 U+5C0F	小
@@ -564,6 +561,7 @@ U+5E7E	幾
 U+5E8F	序
 U+5E9C	府
 U+5EA6	度
+U+5EA7	座
 U+5EAD	庭
 U+5EF6	延
 U+5EFA	建
@@ -576,6 +574,7 @@ U+5F37	強
 U+5F53	当
 U+5F59	彙
 U+5F62	形
+U+5F6B	彫
 U+5F71	影
 U+5F79	役
 U+5F7C	彼
@@ -684,6 +683,7 @@ U+640D	損
 U+643A	携
 U+6458	摘
 U+6483	撃
+U+64C1	擁
 U+64EC	擬
 U+652A	攪
 U+652F	支
@@ -705,7 +705,6 @@ U+65B0	新
 U+65B9	方
 U+65C5	旅
 U+65CF	族
-U+65E2	既
 U+65E5	日
 U+65E9	早
 U+6607	昇
@@ -806,6 +805,7 @@ U+6D1E	洞
 U+6D3B	活
 U+6D3E	派
 U+6D41	流
+U+6D6E	浮
 U+6D74	浴
 U+6D77	海
 U+6D88	消
@@ -931,7 +931,6 @@ U+7A2E	種
 U+7A3C	稼
 U+7A3F	稿
 U+7A4D	積
-U+7A74	穴
 U+7A76	究
 U+7A7A	空
 U+7A81	突
@@ -976,7 +975,6 @@ U+7D99	継
 U+7D9A	続
 U+7DBA	綺
 U+7DBB	綻
-U+7DBF	綿
 U+7DCF	総
 U+7DD2	緒
 U+7DDA	線
@@ -1000,7 +998,6 @@ U+805E	聞
 U+8077	職
 U+8089	肉
 U+808B	肋
-U+80AF	肯
 U+80B2	育
 U+80C6	胆
 U+80CC	背
@@ -1027,7 +1024,6 @@ U+82F1	英
 U+8336	茶
 U+8352	荒
 U+8377	荷
-U+83D3	菓
 U+83EF	華
 U+843D	落
 U+8449	葉
@@ -1049,8 +1045,10 @@ U+885B	衛
 U+885D	衝
 U+8861	衡
 U+8868	表
+U+88AB	被
 U+88C1	裁
 U+88C2	裂
+U+88C5	装
 U+88CF	裏
 U+88DC	補
 U+88F8	裸
