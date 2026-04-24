@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 226188
-# requested_chars: 1253
-# included_chars: 1252
+# output_bytes: 226200
+# requested_chars: 1254
+# included_chars: 1253
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -937,6 +937,7 @@ U+7ACB	立
 U+7AE0	章
 U+7B11	笑
 U+7B2C	第
+U+7B49	等
 U+7B4B	筋
 U+7B54	答
 U+7BC0	節
