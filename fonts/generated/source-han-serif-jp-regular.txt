@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 226184
-# requested_chars: 1255
-# included_chars: 1254
+# output_bytes: 226976
+# requested_chars: 1258
+# included_chars: 1257
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -449,6 +449,7 @@ U+56F2	囲
 U+56F3	図
 U+56FA	固
 U+56FD	国
+U+570F	圏
 U+5712	園
 U+5727	圧
 U+5728	在
@@ -819,6 +820,7 @@ U+6E26	渦
 U+6E2F	港
 U+6E58	湘
 U+6E80	満
+U+6E90	源
 U+6E96	準
 U+6EB6	溶
 U+6EC5	滅
@@ -941,6 +943,7 @@ U+7B2C	第
 U+7B49	等
 U+7B4B	筋
 U+7B54	答
+U+7B87	箇
 U+7BC0	節
 U+7BC4	範
 U+7BC9	築
