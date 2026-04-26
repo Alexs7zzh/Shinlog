@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 226620
-# requested_chars: 1256
-# included_chars: 1255
+# output_bytes: 226456
+# requested_chars: 1255
+# included_chars: 1254
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -460,7 +460,6 @@ U+578B	型
 U+57CB	埋
 U+57DF	域
 U+57FA	基
-U+5815	堕
 U+5831	報
 U+5834	場
 U+584A	塊
