@@ -50,7 +50,7 @@
       "features": [],
       "charsetSource": {
         "lang": "en",
-        "alwaysIncludeChars": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\\\]^_`abcdefghijklmnopqrstuvwxyz{|}~—",
+        "alwaysIncludeChars": " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\\\]^_`abcdefghijklmnopqrstuvwxyz{|}~—↩",
         "selectors": ["time", ".language-label", ".podcast-player-title", ".description", ".interlude-headnote", "code", "pre", "figcaption", ".note", ".footnotes", ".footnote-backref", "[data-footnote-backref]"]
       }
     },

@@ -340,13 +340,13 @@ const renderedInterludeGroups = await Promise.all(
   }
 
   .interlude-list :global(.interlude-item .interlude-headnote *:lang(zh)) {
-    font-family: var(--mono-font), var(--meta-cjk-zh);
+    font-family: var(--mono-font-core), var(--meta-cjk-zh), monospace;
     font-size: var(--font-s);
     line-height: var(--aside-line-height);
   }
 
   .interlude-list :global(.interlude-item .interlude-headnote *:lang(ja)) {
-    font-family: var(--mono-font), var(--meta-cjk-ja);
+    font-family: var(--mono-font-core), var(--meta-cjk-ja), monospace;
     font-size: var(--font-s);
     line-height: var(--aside-line-height);
   }

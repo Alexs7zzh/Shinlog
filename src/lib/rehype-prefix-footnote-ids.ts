@@ -4,7 +4,11 @@ type HastNode = {
   children?: unknown[];
   properties?: Record<string, unknown>;
   tagName?: string;
+  type?: string;
+  value?: string;
 };
+
+const textFootnoteBackref = '↩\uFE0E';
 
 function slugify(value: string): string {
   return value
@@ -59,6 +63,27 @@ function visit(node: HastNode, visitor: (node: HastNode) => void): void {
   }
 }
 
+function getClassNames(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+
+  return value.filter((item): item is string => typeof item === 'string');
+}
+
+function isFootnoteBackref(properties: Record<string, unknown>): boolean {
+  const classNames = getClassNames(properties.className);
+
+  return (
+    classNames.includes('data-footnote-backref') ||
+    classNames.includes('footnote-backref') ||
+    properties.dataFootnoteBackref !== undefined ||
+    properties['data-footnote-backref'] !== undefined
+  );
+}
+
+function forceTextFootnoteBackref(node: HastNode): void {
+  node.children = [{ type: 'text', value: textFootnoteBackref }];
+}
+
 export default function rehypePrefixFootnoteIds(): any {
   return (tree: HastNode, file: { history?: string[]; path?: string }) => {
     const prefix = getPrefix(file);
@@ -80,19 +105,19 @@ export default function rehypePrefixFootnoteIds(): any {
       properties['aria-describedby'] = rewriteDescribedBy(properties['aria-describedby'], prefix);
 
       if (Array.isArray(properties.className)) {
-        const classNames = properties.className.filter(
-          (item): item is string => typeof item === 'string',
-        );
+        const classNames = getClassNames(properties.className);
 
         if (classNames.includes('data-footnote-backref') && !classNames.includes('footnote-backref')) {
           properties.className = [...classNames, 'footnote-backref'];
         }
       }
 
+      if (isFootnoteBackref(properties)) {
+        forceTextFootnoteBackref(node);
+      }
+
       if (node.tagName === 'h2' && properties.id === `footnote-label-${prefix}`) {
-        const classNames = Array.isArray(properties.className)
-          ? properties.className.filter((item): item is string => typeof item === 'string')
-          : [];
+        const classNames = getClassNames(properties.className);
 
         if (!classNames.includes('sr-only')) {
           properties.className = [...classNames, 'sr-only'];

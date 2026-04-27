@@ -36,9 +36,14 @@ ol {
   list-style-type: lower-roman;
 }
 
-ol li:lang(zh) {
+.sidenote-container > ol li:lang(zh) {
   list-style-type: cjk-ideographic;
   list-style-type: simp-chinese-informal;
+}
+
+.sidenote-container > ol li:lang(ja) {
+  list-style-type: cjk-ideographic;
+  list-style-type: japanese-informal;
 }
 
 ul {
@@ -79,9 +84,15 @@ blockquote, .quote {
   figcaption {
     text-align: right;
     // font-style: normal;
-    font-family: var(--body-font);
-    font-size: var(--font);
   }
+}
+
+.quote.nopadding,
+blockquote.nopadding,
+.quote.nopadding > blockquote {
+  margin-left: 0;
+  padding-left: 0;
+  border-left: 0;
 }
 
 hr {
@@ -120,13 +131,13 @@ hr {
   }
 
   *:lang(zh) {
-    font-family: var(--mono-font), var(--meta-cjk-zh);
+    font-family: var(--mono-font-core), var(--meta-cjk-zh), monospace;
     font-size: var(--font-s);
     line-height: var(--aside-line-height);
   }
 
   *:lang(ja) {
-    font-family: var(--mono-font), var(--meta-cjk-ja);
+    font-family: var(--mono-font-core), var(--meta-cjk-ja), monospace;
     font-size: var(--font-s);
     line-height: var(--aside-line-height);
   }
@@ -142,20 +153,14 @@ hr {
 .post:not(.noend) > .end-mark:not(:is(ol, ul))::after,
 .post:not(.noend) > .end-mark:is(ol, ul) > li:last-child::after {
   content: '❧';
-  display: inline;
   position: relative;
-  margin-left: 0.08em;
+  top: -0.24em;
   font-family: var(--body-font);
+  font-size: inherit;
   line-height: 1;
   -webkit-user-select: none;
   user-select: none;
   color: var(--color-accent-default);
-  vertical-align: middle;
-}
-
-.post:lang(ja):not(.noend) > .end-mark:not(:is(ol, ul))::after,
-.post:lang(ja):not(.noend) > .end-mark:is(ol, ul) > li:last-child::after {
-  top: -0.05em;
 }
 
 .noindent p {
@@ -168,9 +173,7 @@ hr {
 }
 
 .nopadding {
-  @media (--viewport-s) {
-    padding: 0;
-  }
+  padding: 0;
 }
 
 .nomargin {
@@ -202,7 +205,7 @@ sup {
     margin-left: .1em;
   }
 
-  a {
+  a[data-footnote-ref] {
     font-feature-settings: var(--features-sups);
     font-family: var(--body-font)!important;
     color: var(--color-accent-default);
@@ -214,9 +217,11 @@ sup {
     &::before {
       content: '';
       position: absolute;
-      top: -.3em;
-      width: 100%;
-      height: 70%;
+      top: -.16em;
+      left: -.06em;
+      right: -.06em;
+      width: auto;
+      height: .6em;
       z-index: -1;
       background: linear-gradient(to right, var(--color-accent-bg), var(--color-accent-bg));
       background-repeat: no-repeat;
@@ -312,14 +317,14 @@ sup {
   }
 
   :lang(zh) {
-    font-family: var(--ui-font), var(--meta-cjk-zh);
+    font-family: var(--ui-font-core), var(--meta-cjk-zh), sans-serif;
     font-size: inherit;
     font-feature-settings: var(--features-cjk);
     line-height: inherit;
   }
 
   :lang(ja) {
-    font-family: var(--ui-font), var(--meta-cjk-ja);
+    font-family: var(--ui-font-core), var(--meta-cjk-ja), sans-serif;
     font-size: inherit;
     font-feature-settings: var(--features-cjk);
     line-height: inherit;
@@ -339,6 +344,8 @@ sup {
   font-weight: 300;
 }
 
+.footnotes .footnote-backref,
+.footnotes [data-footnote-backref],
 .footnote-backref,
 [data-footnote-backref] {
   -webkit-user-select: none;
@@ -346,7 +353,8 @@ sup {
   margin-left: 0.3em;
   text-decoration: none;
   color: var(--color-accent-default);
-  font-family: inherit;
+  font-family: var(--mono-font);
+  font-variant-emoji: text;
   font-size: inherit;
 
   @media (--viewport-m) {

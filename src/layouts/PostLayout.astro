@@ -117,22 +117,22 @@ const displayTitle = toUppercaseDisplayText(entry.title, entry.lang);
 
     &:lang(zh) {
       font-style: normal;
-      font-family: var(--mono-font), var(--meta-cjk-zh);
+      font-family: var(--mono-font-core), var(--meta-cjk-zh), monospace;
     }
 
     &:lang(ja) {
       font-style: normal;
-      font-family: var(--mono-font), var(--meta-cjk-ja);
+      font-family: var(--mono-font-core), var(--meta-cjk-ja), monospace;
     }
   }
 
   :global(.info .description > *:lang(zh)) {
-    font-family: var(--mono-font), var(--meta-cjk-zh);
+    font-family: var(--mono-font-core), var(--meta-cjk-zh), monospace;
     font-size: inherit;
   }
 
   :global(.info .description > *:lang(ja)) {
-    font-family: var(--mono-font), var(--meta-cjk-ja);
+    font-family: var(--mono-font-core), var(--meta-cjk-ja), monospace;
     font-size: inherit;
   }
 
