@@ -217,11 +217,11 @@ sup {
     &::before {
       content: '';
       position: absolute;
-      top: -.16em;
+      top: -.2em;
       left: -.06em;
       right: -.06em;
       width: auto;
-      height: .6em;
+      height: .64em;
       z-index: -1;
       background: linear-gradient(to right, var(--color-accent-bg), var(--color-accent-bg));
       background-repeat: no-repeat;
@@ -350,7 +350,7 @@ sup {
 [data-footnote-backref] {
   -webkit-user-select: none;
   user-select: none;
-  margin-left: 0.3em;
+  // margin-left: 0.3em;
   text-decoration: none;
   color: var(--color-accent-default);
   font-family: var(--mono-font);
