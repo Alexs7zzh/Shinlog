@@ -1,7 +1,9 @@
 ---
 import '../styles/style.scss';
 import ebGaramondRegularHref from '../fonts/eb-garamond/eb-garamond-regular.woff2';
+import ebGaramondItalicHref from '../fonts/eb-garamond/eb-garamond-italic.woff2';
 import ebGaramondSemiboldHref from '../fonts/eb-garamond/eb-garamond-semibold.woff2';
+import iaWriterDuoRegularHref from '../fonts/ia-duo/ia-writer-duo-regular.woff2';
 import sourceHanSerifCnRegularHref from '../fonts/SourceHanSerifCN/source-han-serif-cn-regular.woff2';
 import sourceHanSerifJpRegularHref from '../fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2';
 
@@ -23,7 +25,9 @@ const icon544Href = '/icons/icon-544.2026-03-19.png';
 const icon96Href = '/icons/icon-96.2026-03-19.png';
 const fontPreloads = [
   ebGaramondRegularHref,
+  ebGaramondItalicHref,
   ebGaramondSemiboldHref,
+  iaWriterDuoRegularHref,
   ...(htmlLang === 'ja' ? [sourceHanSerifJpRegularHref] : []),
   ...(htmlLang === 'zh' ? [sourceHanSerifCnRegularHref] : []),
 ];
