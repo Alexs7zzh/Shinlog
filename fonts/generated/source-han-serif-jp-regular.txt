@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 225936
-# requested_chars: 1253
-# included_chars: 1252
+# output_bytes: 224796
+# requested_chars: 1249
+# included_chars: 1248
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -76,6 +76,7 @@ U+0076	v
 U+0077	w
 U+0078	x
 U+0079	y
+U+007A	z
 U+007B	{
 U+007C	|
 U+007D	}
@@ -148,6 +149,7 @@ U+3075	ふ
 U+3076	ぶ
 U+3078	へ
 U+3079	べ
+U+307A	ぺ
 U+307B	ほ
 U+307C	ぼ
 U+307D	ぽ
@@ -312,6 +314,7 @@ U+5012	倒
 U+501F	借
 U+5024	値
 U+502B	倫
+U+5065	健
 U+5074	側
 U+5076	偶
 U+507D	偽
@@ -359,6 +362,7 @@ U+524D	前
 U+5256	剖
 U+5263	剣
 U+5265	剥
+U+526F	副
 U+5270	剰
 U+5272	割
 U+5275	創
@@ -484,9 +488,7 @@ U+596A	奪
 U+596E	奮
 U+5973	女
 U+597D	好
-U+5982	如
 U+5999	妙
-U+59A5	妥
 U+59A8	妨
 U+59CB	始
 U+59D4	委
@@ -563,7 +565,7 @@ U+5EAD	庭
 U+5EF6	延
 U+5EFA	建
 U+5F01	弁
-U+5F0F	式
+U+5F04	弄
 U+5F15	引
 U+5F27	弧
 U+5F35	張
@@ -581,7 +583,6 @@ U+5F8B	律
 U+5F8C	後
 U+5F93	従
 U+5F97	得
-U+5FA1	御
 U+5FA9	復
 U+5FAA	循
 U+5FAE	微
@@ -638,6 +639,7 @@ U+6253	打
 U+6271	扱
 U+6279	批
 U+627F	承
+U+6280	技
 U+6291	抑
 U+6295	投
 U+6297	抗
@@ -658,7 +660,6 @@ U+6307	指
 U+632B	挫
 U+632F	振
 U+6349	捉
-U+634F	捏
 U+6367	捧
 U+6368	捨
 U+636E	据
@@ -669,7 +670,6 @@ U+639B	掛
 U+63A2	探
 U+63A5	接
 U+63AA	措
-U+63B2	掲
 U+63CF	描
 U+63D0	提
 U+63DB	換
@@ -748,7 +748,6 @@ U+683C	格
 U+684E	桎
 U+688F	梏
 U+68B0	械
-U+68C4	棄
 U+68D2	棒
 U+68DA	棚
 U+68F2	棲
@@ -853,7 +852,6 @@ U+731B	猛
 U+7344	獄
 U+7363	獣
 U+7372	獲
-U+7384	玄
 U+738B	王
 U+73FE	現
 U+7406	理
@@ -886,7 +884,6 @@ U+767E	百
 U+7684	的
 U+7686	皆
 U+76AE	皮
-U+76CA	益
 U+76DB	盛
 U+76E4	盤
 U+76EE	目
@@ -935,6 +932,7 @@ U+7A81	突
 U+7A93	窓
 U+7ACB	立
 U+7AE0	章
+U+7AF6	競
 U+7B11	笑
 U+7B2C	第
 U+7B49	等
@@ -971,7 +969,6 @@ U+7D75	絵
 U+7D76	絶
 U+7D99	継
 U+7D9A	続
-U+7DBA	綺
 U+7DBB	綻
 U+7DCF	総
 U+7DD2	緒
@@ -1019,6 +1016,7 @@ U+82BB	芻
 U+82DB	苛
 U+82E6	苦
 U+82F1	英
+U+82FA	苺
 U+8336	茶
 U+8352	荒
 U+8377	荷
@@ -1184,7 +1182,6 @@ U+9332	録
 U+9375	鍵
 U+9396	鎖
 U+9577	長
-U+9580	門
 U+9589	閉
 U+958B	開
 U+9593	間
@@ -1199,7 +1196,6 @@ U+9665	陥
 U+9676	陶
 U+967A	険
 U+968E	階
-U+968F	随
 U+9694	隔
 U+969B	際
 U+969C	障
@@ -1246,9 +1242,9 @@ U+9AEA	髪
 U+9AED	髭
 U+9B42	魂
 U+9CF4	鳴
-U+9E97	麗
 U+9EA6	麦
 U+9ED2	黒
+U+9ED9	黙
 U+9F3B	鼻
 U+9F62	齢
 U+FF01	！

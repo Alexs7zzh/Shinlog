@@ -1,7 +1,7 @@
 # output: src/fonts/ia-duo/ia-writer-duo-regular.woff2
-# output_bytes: 4560
-# requested_chars: 109
-# included_chars: 107
+# output_bytes: 4316
+# requested_chars: 97
+# included_chars: 97
 # auto_kept_required_features: (none)
 # kept_features: (none)
 # excluded_features: (none)
@@ -102,15 +102,5 @@ U+007B	{
 U+007C	|
 U+007D	}
 U+007E	~
-U+00C9	É
-U+00E9	é
-U+017D	Ž
-U+017E	ž
-U+2013	–
 U+2014	—
-U+2018	‘
-U+2019	’
-U+201C	“
-U+201D	”
-U+2026	…
 U+21A9	↩

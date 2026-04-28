@@ -1,7 +1,7 @@
 # output: src/fonts/eb-garamond/eb-garamond-regular.woff2
-# output_bytes: 27432
-# requested_chars: 115
-# included_chars: 112
+# output_bytes: 27020
+# requested_chars: 110
+# included_chars: 107
 # auto_kept_required_features: (none)
 # kept_features: ccmp, kern, liga, onum, calt, dlig, cv02, cv82, cv90, locl, smcp, sups
 # excluded_features: (none)
@@ -103,12 +103,7 @@ U+007C	|
 U+007D	}
 U+007E	~
 U+00A7	§
-U+00AD	­
 U+00B7	·
-U+00C9	É
-U+00E9	é
-U+017D	Ž
-U+017E	ž
 U+2013	–
 U+2014	—
 U+2018	‘
