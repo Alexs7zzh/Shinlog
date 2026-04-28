@@ -42,7 +42,10 @@ const { currentLang, items = [] } = Astro.props as {
       padding-right: 0.4em;
       margin-left: 0.1em;
       margin-right: 0.1em;
-      transition: all 0.5s ease-out;
+      transition:
+        background-color 0.5s ease-out,
+        border-radius 0.5s ease-out,
+        color 0.5s ease-out;
       background: linear-gradient(to right, var(--color-accent-bg), var(--color-accent-bg));
       background-size: 100% 40%;
       background-repeat: no-repeat;
