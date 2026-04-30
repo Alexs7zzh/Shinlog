@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 224796
-# requested_chars: 1249
-# included_chars: 1248
+# output_bytes: 225360
+# requested_chars: 1251
+# included_chars: 1250
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -31,6 +31,7 @@ U+003C	<
 U+003D	=
 U+003E	>
 U+0041	A
+U+0042	B
 U+0043	C
 U+0044	D
 U+0045	E
@@ -62,6 +63,7 @@ U+0067	g
 U+0068	h
 U+0069	i
 U+006A	j
+U+006B	k
 U+006C	l
 U+006D	m
 U+006E	n
@@ -303,6 +305,7 @@ U+4F8B	例
 U+4F9D	依
 U+4FA1	価
 U+4FB5	侵
+U+4FBF	便
 U+4FC2	係
 U+4FC3	促
 U+4FD7	俗
@@ -343,7 +346,6 @@ U+5177	具
 U+5185	内
 U+518A	冊
 U+518D	再
-U+5192	冒
 U+5197	冗
 U+51B7	冷
 U+51FA	出
@@ -356,6 +358,7 @@ U+5225	別
 U+5229	利
 U+5230	到
 U+5236	制
+U+523A	刺
 U+523B	刻
 U+5247	則
 U+524D	前
@@ -565,7 +568,6 @@ U+5EAD	庭
 U+5EF6	延
 U+5EFA	建
 U+5F01	弁
-U+5F04	弄
 U+5F15	引
 U+5F27	弧
 U+5F35	張
@@ -718,6 +720,7 @@ U+6669	晩
 U+666E	普
 U+666F	景
 U+6697	暗
+U+66A6	暦
 U+66AE	暮
 U+66B4	暴
 U+66F8	書
@@ -828,6 +831,7 @@ U+6FC0	激
 U+7015	瀕
 U+706B	火
 U+706F	灯
+U+707D	災
 U+70B9	点
 U+70BA	為
 U+7121	無
@@ -848,9 +852,7 @@ U+72B6	状
 U+72C2	狂
 U+72EC	独
 U+72ED	狭
-U+731B	猛
 U+7344	獄
-U+7363	獣
 U+7372	獲
 U+738B	王
 U+73FE	現
