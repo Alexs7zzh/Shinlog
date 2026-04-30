@@ -120,7 +120,7 @@ hr {
   background-color: var(--color-accent-bg);
   margin: var(--spacing-half) 0;
   padding: calc(var(--line-height) * 0.25) var(--spacing-half);
-  font-family: var(--mono-font);
+  font-family: var(--meta-font);
   font-feature-settings: var(--features-mono);
   font-size: var(--font-s);
   line-height: var(--aside-line-height);
@@ -134,15 +134,20 @@ hr {
   }
 
   *:lang(zh) {
-    font-family: var(--mono-font-core), var(--meta-cjk-zh), monospace;
+    font-family: var(--meta-font-zh);
     font-size: var(--font-s);
     line-height: var(--aside-line-height);
   }
 
   *:lang(ja) {
-    font-family: var(--mono-font-core), var(--meta-cjk-ja), monospace;
+    font-family: var(--meta-font-ja);
     font-size: var(--font-s);
     line-height: var(--aside-line-height);
+  }
+
+  *:lang(en) {
+    font-family: var(--meta-font);
+    font-feature-settings: var(--features-mono);
   }
 }
 
@@ -244,7 +249,7 @@ sup {
 
 .footnotes {
   margin: var(--spacing-half) 0;
-  font-family: var(--ui-font);
+  font-family: var(--meta-font);
   font-feature-settings: normal;
   font-size: calc(var(--font-s) * 0.95);
   line-height: var(--aside-line-height);
@@ -292,7 +297,7 @@ sup {
     &::before {
       content: counter(footnote) ".";
       color: var(--color-accent-default);
-      margin-right: .5em;
+      // margin-right: .5em;
     }
   }
 
@@ -320,14 +325,14 @@ sup {
   }
 
   :lang(zh) {
-    font-family: var(--ui-font-core), var(--meta-cjk-zh), sans-serif;
+    font-family: var(--meta-font-zh);
     font-size: inherit;
     font-feature-settings: var(--features-cjk);
     line-height: inherit;
   }
 
   :lang(ja) {
-    font-family: var(--ui-font-core), var(--meta-cjk-ja), sans-serif;
+    font-family: var(--meta-font-ja);
     font-size: inherit;
     font-feature-settings: var(--features-cjk);
     line-height: inherit;
@@ -343,8 +348,10 @@ sup {
 
 .footnotes:lang(zh),
 .footnotes:lang(ja) {
-  font-size: 0.95em;
-  font-weight: 300;
+  font-family: var(--meta-font);
+  font-feature-settings: normal;
+  font-size: calc(var(--font-s) * 0.95);
+  font-weight: normal;
 }
 
 .footnotes .footnote-backref,

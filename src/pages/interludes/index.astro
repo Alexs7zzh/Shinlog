@@ -327,7 +327,7 @@ const renderedInterludeGroups = await Promise.all(
     margin: 0;
     padding: calc(var(--line-height) * 0.25) var(--spacing-half);
     line-height: var(--aside-line-height);
-    font-family: var(--mono-font);
+    font-family: var(--meta-font);
     font-feature-settings: var(--features-mono);
     font-size: var(--font-s);
     color: var(--color-accent-dim);
@@ -340,15 +340,20 @@ const renderedInterludeGroups = await Promise.all(
   }
 
   .interlude-list :global(.interlude-item .interlude-headnote *:lang(zh)) {
-    font-family: var(--mono-font-core), var(--meta-cjk-zh), monospace;
+    font-family: var(--meta-font-zh);
     font-size: var(--font-s);
     line-height: var(--aside-line-height);
   }
 
   .interlude-list :global(.interlude-item .interlude-headnote *:lang(ja)) {
-    font-family: var(--mono-font-core), var(--meta-cjk-ja), monospace;
+    font-family: var(--meta-font-ja);
     font-size: var(--font-s);
     line-height: var(--aside-line-height);
+  }
+
+  .interlude-list :global(.interlude-item .interlude-headnote *:lang(en)) {
+    font-family: var(--meta-font);
+    font-feature-settings: var(--features-mono);
   }
 
   @media (--viewport-m) {

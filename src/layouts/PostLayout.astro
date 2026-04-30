@@ -103,42 +103,48 @@ const displayTitle = toUppercaseDisplayText(entry.title, entry.lang);
   :global(.info time) {
     margin-top: var(--spacing-half);
     display: inline-block;
-    font-family: var(--mono-font);
+    font-family: var(--meta-font);
     font-feature-settings: var(--features-mono);
     font-size: var(--font-s);
     line-height: var(--line-height);
   }
 
   :global(.info .description) {
-    font-family: var(--mono-font);
+    font-family: var(--meta-font);
     font-feature-settings: var(--features-mono);
     font-size: var(--font-s);
     hyphens: none;
 
     &:lang(zh) {
       font-style: normal;
-      font-family: var(--mono-font-core), var(--meta-cjk-zh), monospace;
+      font-family: var(--meta-font-zh);
     }
 
     &:lang(ja) {
       font-style: normal;
-      font-family: var(--mono-font-core), var(--meta-cjk-ja), monospace;
+      font-family: var(--meta-font-ja);
     }
   }
 
   :global(.info .description > *:lang(zh)) {
-    font-family: var(--mono-font-core), var(--meta-cjk-zh), monospace;
+    font-family: var(--meta-font-zh);
     font-size: inherit;
   }
 
   :global(.info .description > *:lang(ja)) {
-    font-family: var(--mono-font-core), var(--meta-cjk-ja), monospace;
+    font-family: var(--meta-font-ja);
     font-size: inherit;
   }
 
   :global(.info .description > * :lang(zh)),
   :global(.info .description > * :lang(ja)) {
     font-family: inherit;
+    font-size: inherit;
+  }
+
+  :global(.info .description :lang(en)) {
+    font-family: var(--meta-font);
+    font-feature-settings: var(--features-mono);
     font-size: inherit;
   }
 </style>

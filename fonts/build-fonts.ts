@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { parse } from 'node-html-parser';
+import { parse, type HTMLElement as ParsedElement } from 'node-html-parser';
 import rehypeRaw from 'rehype-raw';
 import rehypeStringify from 'rehype-stringify';
 import remarkDirective from 'remark-directive';
@@ -573,7 +573,43 @@ function buildSelectorDocuments(entries: ContentEntryRecord[]): SelectorDocument
   return documents;
 }
 
-function extractSelectedRenderedText(html: string, selectors: string[]): string {
+function getNodeAttribute(node: unknown, name: string): string | undefined {
+  if (!node || typeof node !== 'object' || typeof (node as { getAttribute?: unknown }).getAttribute !== 'function') {
+    return undefined;
+  }
+
+  const value = (node as { getAttribute(name: string): unknown }).getAttribute(name);
+  return typeof value === 'string' && value.length > 0 ? value : undefined;
+}
+
+function getResolvedNodeLang(node: unknown, documentLang?: EntryLang): EntryLang | undefined {
+  let current: unknown = node;
+
+  while (current && typeof current === 'object') {
+    const lang = getNodeAttribute(current, 'lang');
+    if (lang === 'en' || lang === 'zh' || lang === 'ja') {
+      return lang;
+    }
+
+    current = (current as { parentNode?: unknown }).parentNode;
+  }
+
+  return documentLang;
+}
+
+function extractNodeTextForLang(node: ParsedElement, lang?: EntryLang, documentLang?: EntryLang): string {
+  if (!lang || getResolvedNodeLang(node, documentLang) === lang) {
+    return node.text;
+  }
+
+  return node
+    .querySelectorAll(`[lang="${lang}"]`)
+    .filter((child: unknown) => getResolvedNodeLang(child, documentLang) === lang)
+    .map((child: { text: string }) => child.text)
+    .join('');
+}
+
+function extractSelectedRenderedText(html: string, selectors: string[], lang?: EntryLang, documentLang?: EntryLang): string {
   if (!html || selectors.length === 0) {
     return '';
   }
@@ -583,7 +619,7 @@ function extractSelectedRenderedText(html: string, selectors: string[]): string 
 
   for (const selector of selectors) {
     for (const node of root.querySelectorAll(selector)) {
-      texts.push(node.text);
+      texts.push(extractNodeTextForLang(node, lang, documentLang));
     }
   }
 
@@ -603,15 +639,7 @@ function collectCharsetText(entries: ContentEntryRecord[], selectorDocuments: Se
 
   if (source.selectors && source.selectors.length > 0) {
     for (const document of selectorDocuments) {
-      if (source.lang && document.lang && document.lang !== source.lang) {
-        continue;
-      }
-
-      if (source.lang && !document.lang) {
-        continue;
-      }
-
-      text += extractSelectedRenderedText(document.html, source.selectors);
+      text += extractSelectedRenderedText(document.html, source.selectors, source.lang, document.lang);
     }
   }
 

@@ -9,6 +9,7 @@ import sourceHanSerifJpRegularHref from '../fonts/SourceHanSerifJP/source-han-se
 
 import { SITE_AUTHOR, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Header from '../components/Header.astro';
+import FontDebugOverlay from '../components/FontDebugOverlay.astro';
 
 const {
   title = null,
@@ -51,7 +52,7 @@ const fontPreloads = [
     <link rel="icon" type="image/png" href={icon544Href} sizes="544x544" />
     <link rel="apple-touch-icon" href={icon180Href} sizes="180x180" />
   </head>
-  <body><Header /><main><slot /></main></body>
+  <body><Header /><main><slot /></main>{import.meta.env.DEV && <FontDebugOverlay />}</body>
 </html>
 
 <style lang="scss">

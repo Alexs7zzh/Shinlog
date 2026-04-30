@@ -8,12 +8,15 @@
   --ui-font: var(--ui-font-core), sans-serif;
   --mono-font-core: 'mono-font', 'Menlo', 'Courier New';
   --mono-font: var(--mono-font-core), monospace;
+  --meta-font: var(--mono-font);
 
   --body-cjk-zh: 'Source Han Serif CN', 'Nimbus Roman No9 L', 'Songti SC', 'Noto Serif CJK SC', STSong, NSimSun, SimSun, PMingLiU, MingLiU, serif;
   --meta-cjk-zh: 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Source Han Sans CN', 'Source Han Sans', 'Microsoft YaHei', 'Wenquanyi Micro Hei', 'WenQuanYi Zen Hei', 'ST Heiti', SimHei, sans-serif;
 
   --body-cjk-ja: 'Source Han Serif JP', 'Hiragino Mincho ProN', 'YuMincho', 'Yu Mincho', 'MS PMincho', serif;
   --meta-cjk-ja: 'Hiragino Sans W2', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'YuGothic', 'メイリオ', 'Meiryo', 'ＭＳ Ｐゴシック', 'MS PGothic';
+  --meta-font-zh: var(--meta-cjk-zh), var(--mono-font-core), monospace;
+  --meta-font-ja: var(--meta-cjk-ja), var(--mono-font-core), monospace;
 
   --features-latin-regular: 'ccmp', 'kern', 'liga', 'onum', 'calt', 'dlig', 'cv02', 'cv82', 'cv90', 'locl';
   --features-latin-italic: 'ccmp', 'clig', 'kern', 'liga', 'onum', 'calt', 'dlig', 'cv02', 'cv82', 'locl', 'swsh';

@@ -1,0 +1,267 @@
+<script is:inline>
+  (() => {
+    const params = new URLSearchParams(window.location.search);
+    const hasEnableParam = params.has('font-debug') || params.has('fonts');
+    const hasDisableParam = params.get('font-debug') === 'off' || params.get('fonts') === 'off';
+
+    if (hasDisableParam) {
+      sessionStorage.removeItem('shinlog-font-debug');
+      return;
+    }
+
+    if (hasEnableParam) {
+      sessionStorage.setItem('shinlog-font-debug', '1');
+    }
+
+    if (sessionStorage.getItem('shinlog-font-debug') !== '1') {
+      return;
+    }
+
+    const ignoredTags = new Set(['HTML', 'HEAD', 'BODY', 'SCRIPT', 'STYLE', 'LINK', 'META', 'TITLE']);
+    const palette = [
+      'hsla(359, 90%, 64%, 0.18)',
+      'hsla(34, 95%, 54%, 0.2)',
+      'hsla(51, 95%, 48%, 0.2)',
+      'hsla(139, 56%, 46%, 0.18)',
+      'hsla(190, 78%, 48%, 0.18)',
+      'hsla(217, 86%, 62%, 0.18)',
+      'hsla(274, 70%, 62%, 0.18)',
+      'hsla(326, 78%, 58%, 0.18)',
+    ];
+    const familyColors = new Map();
+    const labels = [];
+    let hideLabels = false;
+    let activeElement = null;
+    let panel = null;
+    let legend = null;
+    let labelLayer = null;
+
+    const getFamilyKey = (fontFamily) => fontFamily.split(',')[0]?.replaceAll('"', '').trim() || 'unknown';
+
+    const getColor = (fontFamily) => {
+      const key = getFamilyKey(fontFamily);
+      if (!familyColors.has(key)) {
+        familyColors.set(key, palette[familyColors.size % palette.length]);
+      }
+
+      return familyColors.get(key);
+    };
+
+    const getLang = (element) =>
+      element.getAttribute('lang') || element.closest('[lang]')?.getAttribute('lang') || document.documentElement.lang || '';
+
+    const getFontInfo = (element) => {
+      const styles = getComputedStyle(element);
+      return {
+        family: styles.fontFamily,
+        features: styles.fontFeatureSettings,
+        size: styles.fontSize,
+        style: styles.fontStyle,
+        tag: element.tagName.toLowerCase(),
+        weight: styles.fontWeight,
+      };
+    };
+
+    const getDebugElements = () =>
+      [...document.body.querySelectorAll('*')].filter(
+        (element) => !ignoredTags.has(element.tagName) && !element.closest('[data-font-debug-ui]'),
+      );
+
+    const formatLabel = (element, info) => {
+      const className = typeof element.className === 'string' && element.className ? `.${element.className.split(/\s+/)[0]}` : '';
+      return `${info.tag}${className} | ${getLang(element)} | ${getFamilyKey(info.family)} ${info.weight}/${info.style}`;
+    };
+
+    const updatePanel = (element) => {
+      if (!panel || !element) return;
+
+      const info = getFontInfo(element);
+      panel.innerHTML = `
+        <strong>${formatLabel(element, info)}</strong>
+        <span>${info.family}</span>
+        <span>${info.size}, weight ${info.weight}, ${info.style}</span>
+        <span>features: ${info.features}</span>
+      `;
+    };
+
+    const createUi = () => {
+      const style = document.createElement('style');
+      style.dataset.fontDebugUi = 'true';
+      style.textContent = `
+        [data-font-debug-active] {
+          outline: 1px solid hsla(0, 0%, 0%, 0.22) !important;
+          outline-offset: -1px !important;
+          box-shadow: inset 0 0 0 1px hsla(0, 0%, 100%, 0.2) !important;
+        }
+
+        [data-font-debug-hover] {
+          outline: 2px solid hsla(360, 100%, 60%, 0.9) !important;
+          outline-offset: 1px !important;
+        }
+
+        .font-debug-panel,
+        .font-debug-legend,
+        .font-debug-label-layer {
+          font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+          pointer-events: none;
+          position: fixed;
+          z-index: 2147483647;
+        }
+
+        .font-debug-panel {
+          background: hsla(0, 0%, 5%, 0.92);
+          color: white;
+          display: grid;
+          gap: 3px;
+          left: 10px;
+          max-width: min(520px, calc(100vw - 20px));
+          padding: 8px 10px;
+          top: 10px;
+          font-size: 11px;
+          line-height: 1.35;
+        }
+
+        .font-debug-panel strong {
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        .font-debug-panel span {
+          overflow-wrap: anywhere;
+        }
+
+        .font-debug-legend {
+          background: hsla(60, 100%, 99%, 0.94);
+          border: 1px solid hsla(0, 0%, 0%, 0.18);
+          bottom: 10px;
+          color: hsla(240, 4%, 5%, 1);
+          display: grid;
+          gap: 4px;
+          left: 10px;
+          max-width: min(360px, calc(100vw - 20px));
+          padding: 8px 10px;
+          font-size: 11px;
+          line-height: 1.3;
+        }
+
+        .font-debug-legend-item {
+          align-items: center;
+          display: grid;
+          gap: 6px;
+          grid-template-columns: 14px 1fr;
+        }
+
+        .font-debug-swatch {
+          border: 1px solid hsla(0, 0%, 0%, 0.22);
+          height: 14px;
+          width: 14px;
+        }
+
+        .font-debug-label-layer {
+          inset: 0;
+          overflow: hidden;
+        }
+
+        .font-debug-label {
+          background: hsla(0, 0%, 5%, 0.84);
+          color: white;
+          font-size: 9px;
+          line-height: 1;
+          max-width: 220px;
+          overflow: hidden;
+          padding: 2px 3px;
+          position: absolute;
+          text-overflow: ellipsis;
+          transform: translateY(-100%);
+          white-space: nowrap;
+        }
+      `;
+
+      panel = document.createElement('div');
+      panel.className = 'font-debug-panel';
+      panel.dataset.fontDebugUi = 'true';
+      panel.textContent = 'Font debug active. Hover elements for computed font info. Press F to toggle labels.';
+
+      legend = document.createElement('div');
+      legend.className = 'font-debug-legend';
+      legend.dataset.fontDebugUi = 'true';
+
+      labelLayer = document.createElement('div');
+      labelLayer.className = 'font-debug-label-layer';
+      labelLayer.dataset.fontDebugUi = 'true';
+
+      document.head.append(style);
+      document.body.append(panel, legend, labelLayer);
+    };
+
+    const paintElements = () => {
+      for (const label of labels) {
+        label.remove();
+      }
+      labels.length = 0;
+
+      for (const element of getDebugElements()) {
+        const info = getFontInfo(element);
+        element.dataset.fontDebugActive = 'true';
+        element.style.backgroundColor = getColor(info.family);
+        element.title = formatLabel(element, info);
+
+        if (!hideLabels) {
+          const rect = element.getBoundingClientRect();
+          if (rect.width >= 18 && rect.height >= 10 && rect.bottom >= 0 && rect.top <= window.innerHeight) {
+            const label = document.createElement('div');
+            label.className = 'font-debug-label';
+            label.textContent = `${info.tag} ${getFamilyKey(info.family)}`;
+            label.style.left = `${Math.max(0, Math.round(rect.left))}px`;
+            label.style.top = `${Math.max(10, Math.round(rect.top))}px`;
+            labelLayer.append(label);
+            labels.push(label);
+          }
+        }
+      }
+
+      legend.innerHTML = [
+        '<strong>Font debug</strong>',
+        ...[...familyColors.entries()].map(
+          ([family, color]) =>
+            `<span class="font-debug-legend-item"><span class="font-debug-swatch" style="background:${color}"></span><span>${family}</span></span>`,
+        ),
+      ].join('');
+    };
+
+    const schedulePaint = () => {
+      requestAnimationFrame(paintElements);
+    };
+
+    const init = async () => {
+      createUi();
+      await document.fonts?.ready;
+      paintElements();
+
+      document.addEventListener('mouseover', (event) => {
+        const element = event.target instanceof Element ? event.target.closest('[data-font-debug-active]') : null;
+        if (!element || element.closest('[data-font-debug-ui]')) return;
+
+        activeElement?.removeAttribute('data-font-debug-hover');
+        activeElement = element;
+        activeElement.dataset.fontDebugHover = 'true';
+        updatePanel(activeElement);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key.toLowerCase() !== 'f') return;
+        hideLabels = !hideLabels;
+        schedulePaint();
+      });
+
+      window.addEventListener('resize', schedulePaint);
+      window.addEventListener('scroll', schedulePaint, { passive: true });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init, { once: true });
+    } else {
+      init();
+    }
+  })();
+</script>
