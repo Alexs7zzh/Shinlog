@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 227832
-# requested_chars: 1266
-# included_chars: 1265
+# output_bytes: 228976
+# requested_chars: 1271
+# included_chars: 1270
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -522,6 +522,7 @@ U+5BB3	害
 U+5BB4	宴
 U+5BB6	家
 U+5BB9	容
+U+5BC2	寂
 U+5BC4	寄
 U+5BC6	密
 U+5BD2	寒
@@ -557,6 +558,7 @@ U+5E2B	師
 U+5E2F	帯
 U+5E30	帰
 U+5E38	常
+U+5E72	干
 U+5E73	平
 U+5E74	年
 U+5E78	幸
@@ -824,6 +826,7 @@ U+6DF1	深
 U+6DF7	混
 U+6DFB	添
 U+6E08	済
+U+6E09	渉
 U+6E1B	減
 U+6E21	渡
 U+6E26	渦
@@ -1068,6 +1071,7 @@ U+8986	覆
 U+898B	見
 U+898F	規
 U+8996	視
+U+8997	覗
 U+899A	覚
 U+89AA	親
 U+89B3	観
@@ -1207,6 +1211,7 @@ U+9632	防
 U+963F	阿
 U+964D	降
 U+9650	限
+U+9662	院
 U+9664	除
 U+9665	陥
 U+9676	陶
