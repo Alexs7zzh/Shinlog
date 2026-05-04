@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 228200
-# requested_chars: 1267
-# included_chars: 1266
+# output_bytes: 227832
+# requested_chars: 1266
+# included_chars: 1265
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -889,7 +889,6 @@ U+75C5	病
 U+75C7	症
 U+75D5	痕
 U+75DB	痛
-U+7656	癖
 U+767A	発
 U+767B	登
 U+767D	白
@@ -984,6 +983,7 @@ U+7D76	絶
 U+7D99	継
 U+7D9A	続
 U+7DBB	綻
+U+7DCA	緊
 U+7DCF	総
 U+7DD2	緒
 U+7DDA	線
@@ -1223,7 +1223,6 @@ U+96E3	難
 U+96F2	雲
 U+96F6	零
 U+96FB	電
-U+9732	露
 U+9752	青
 U+9759	静
 U+975E	非
