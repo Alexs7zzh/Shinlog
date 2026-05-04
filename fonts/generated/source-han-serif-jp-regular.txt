@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 228380
-# requested_chars: 1268
-# included_chars: 1267
+# output_bytes: 228200
+# requested_chars: 1267
+# included_chars: 1266
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -219,7 +219,6 @@ U+30D0	バ
 U+30D1	パ
 U+30D2	ヒ
 U+30D3	ビ
-U+30D4	ピ
 U+30D5	フ
 U+30D6	ブ
 U+30D7	プ
