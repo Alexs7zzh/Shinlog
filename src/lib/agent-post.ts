@@ -12,6 +12,7 @@ import {
   getPostSlug,
   getPostTextUrl,
   getPostUrl,
+  usesDefaultPostPath,
   validatePostLocales,
   type PostSource,
 } from './post-paths';
@@ -52,7 +53,7 @@ export async function getRootAgentPostStaticPaths() {
   validatePostLocales(posts);
 
   return posts
-    .filter((post) => getPostLang(post) === 'en')
+    .filter((post) => usesDefaultPostPath(getPostLang(post)))
     .map((post) => ({
       params: { slug: getPostSlug(post) },
       props: { url: getPostUrl(post) },
@@ -65,7 +66,7 @@ export async function getLocalizedAgentPostStaticPaths() {
   validatePostLocales(posts);
 
   return posts
-    .filter((post) => getPostLang(post) !== 'en')
+    .filter((post) => !usesDefaultPostPath(getPostLang(post)))
     .map((post) => ({
       params: { slug: getPostSlug(post), lang: getPostLang(post) },
       props: { url: getPostUrl(post) },

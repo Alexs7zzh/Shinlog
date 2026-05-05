@@ -37,25 +37,29 @@ export function getPostLang(post: Pick<PostSource, 'id' | 'data'>): EntryLang {
   return getEntryLang(post);
 }
 
+export function usesDefaultPostPath(lang: EntryLang): boolean {
+  return lang === 'en' || lang === 'ja';
+}
+
 export function getPostUrl(post: Pick<PostSource, 'id' | 'data'>): string {
   const slug = getPostSlug(post);
   const lang = getPostLang(post);
 
-  return lang === 'en' ? `/${slug}/` : `/${slug}/${lang}/`;
+  return usesDefaultPostPath(lang) ? `/${slug}/` : `/${slug}/${lang}/`;
 }
 
 export function getPostMarkdownUrl(post: Pick<PostSource, 'id' | 'data'>): string {
   const slug = getPostSlug(post);
   const lang = getPostLang(post);
 
-  return lang === 'en' ? `/${slug}.md` : `/${slug}/${lang}.md`;
+  return usesDefaultPostPath(lang) ? `/${slug}.md` : `/${slug}/${lang}.md`;
 }
 
 export function getPostTextUrl(post: Pick<PostSource, 'id' | 'data'>): string {
   const slug = getPostSlug(post);
   const lang = getPostLang(post);
 
-  return lang === 'en' ? `/${slug}.txt` : `/${slug}/${lang}.txt`;
+  return usesDefaultPostPath(lang) ? `/${slug}.txt` : `/${slug}/${lang}.txt`;
 }
 
 export function getPostAlternativeLinks(posts: PostSource[], slug: string) {

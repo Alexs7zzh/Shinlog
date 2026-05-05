@@ -2,12 +2,12 @@
 import { getCollection, render } from 'astro:content';
 import PostLayout from '../../../layouts/PostLayout.astro';
 import {
-  getPostAlternativeLinks,
   getPostLang,
   getPostMarkdownUrl,
   getPostSlug,
   getPostTextUrl,
   getPostUrl,
+  usesDefaultPostPath,
   validatePostLocales,
 } from '../../../lib/post-paths';
 import { renderMarkdownFragment, stripHtml } from '../../../lib/render-markdown-fragment';
@@ -23,7 +23,7 @@ export async function getStaticPaths() {
     return {
       params: {
         slug: getPostSlug(post),
-        lang: lang === 'en' ? undefined : lang,
+        lang: usesDefaultPostPath(lang) ? undefined : lang,
       },
       props: { url: getPostUrl(post) },
     };
@@ -44,7 +44,6 @@ if (!post) {
   throw new Error(`Cannot find entry for url: ${url}`);
 }
 
-const slug = getPostSlug(post);
 const descriptionHtml = post.data.description ? await renderMarkdownFragment(post.data.description) : undefined;
 const entry = {
   title: post.data.title,
@@ -55,7 +54,6 @@ const entry = {
   classes: post.data.classes,
   podcast: post.data.podcast,
   noEndMark: post.data.noEndMark,
-  alternative: getPostAlternativeLinks(posts, slug),
   markdownUrl: getPostMarkdownUrl(post),
   textUrl: getPostTextUrl(post),
 };

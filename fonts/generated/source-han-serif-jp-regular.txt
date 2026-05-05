@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 228976
-# requested_chars: 1271
-# included_chars: 1270
+# output_bytes: 228756
+# requested_chars: 1270
+# included_chars: 1269
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -62,7 +62,6 @@ U+0066	f
 U+0067	g
 U+0068	h
 U+0069	i
-U+006A	j
 U+006B	k
 U+006C	l
 U+006D	m
