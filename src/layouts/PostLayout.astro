@@ -18,6 +18,8 @@ interface PostLayoutEntry {
   podcast?: string;
   noEndMark?: boolean;
   alternative?: AlternativeLink[];
+  markdownUrl?: string;
+  textUrl?: string;
 }
 
 const { entry } = Astro.props as {
@@ -26,7 +28,15 @@ const { entry } = Astro.props as {
 const displayTitle = toUppercaseDisplayText(entry.title, entry.lang);
 ---
 
-<BaseLayout title={entry.title} description={entry.metaDescription ?? SITE_DESCRIPTION} htmlLang={entry.lang}>
+<BaseLayout
+  title={entry.title}
+  description={entry.metaDescription ?? SITE_DESCRIPTION}
+  htmlLang={entry.lang}
+  alternateLinks={[
+    ...(entry.markdownUrl ? [{ href: entry.markdownUrl, type: 'text/markdown; charset=utf-8', title: 'Markdown' }] : []),
+    ...(entry.textUrl ? [{ href: entry.textUrl, type: 'text/plain; charset=utf-8', title: 'Plain text' }] : []),
+  ]}
+>
   <SidenoteContainer
     className={['post', ...(entry.classes ?? []), entry.podcast || entry.noEndMark ? 'noend' : ''].filter(Boolean).join(' ')}
     lang={entry.lang}

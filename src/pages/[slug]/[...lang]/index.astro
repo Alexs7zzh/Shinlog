@@ -4,7 +4,9 @@ import PostLayout from '../../../layouts/PostLayout.astro';
 import {
   getPostAlternativeLinks,
   getPostLang,
+  getPostMarkdownUrl,
   getPostSlug,
+  getPostTextUrl,
   getPostUrl,
   validatePostLocales,
 } from '../../../lib/post-paths';
@@ -54,6 +56,8 @@ const entry = {
   podcast: post.data.podcast,
   noEndMark: post.data.noEndMark,
   alternative: getPostAlternativeLinks(posts, slug),
+  markdownUrl: getPostMarkdownUrl(post),
+  textUrl: getPostTextUrl(post),
 };
 
 const { Content } = await render(post);

@@ -4,99 +4,20 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LanguageSwitcher from '../../components/LanguageSwitcher.astro';
 import SidenoteContainer from '../../components/SidenoteContainer.astro';
-import { ENTRY_LANGS } from '../../consts';
 import { formatHtmlDate, formatReadableDate, formatShortDate } from '../../lib/date';
 import {
   getEntryAlternativeLinks,
   getEntryLang,
-  getEntryRawSlug,
-  stripLanguageSuffix,
-  validateEntryLocales,
 } from '../../lib/entry-locales';
+import {
+  getInterludeAnchor,
+  getInterludeGroups,
+  getInterludeSlug,
+} from '../../lib/interludes';
 import { renderMarkdownFragmentWithPrefix } from '../../lib/render-markdown-fragment';
-import type { CollectionEntry } from 'astro:content';
-
-type InterludeSource = CollectionEntry<'interludes'>;
-
-function getInterludeSlug(interlude: Pick<InterludeSource, 'id'>): string {
-  return stripLanguageSuffix(getEntryRawSlug(interlude));
-}
-
-function getCanonicalInterlude(interludes: InterludeSource[]): InterludeSource {
-  const baseVariant = interludes.find((interlude) => getEntryRawSlug(interlude) === getInterludeSlug(interlude));
-  if (baseVariant) {
-    return baseVariant;
-  }
-
-  for (const lang of ENTRY_LANGS) {
-    const variant = interludes.find((interlude) => getEntryLang(interlude) === lang);
-    if (variant) {
-      return variant;
-    }
-  }
-
-  return interludes[0];
-}
-
-function sortInterludeVariants(interludes: InterludeSource[], canonical: InterludeSource): InterludeSource[] {
-  return [...interludes].sort((left, right) => {
-    if (left.id === canonical.id) return -1;
-    if (right.id === canonical.id) return 1;
-
-    return ENTRY_LANGS.indexOf(getEntryLang(left)) - ENTRY_LANGS.indexOf(getEntryLang(right));
-  });
-}
-
-function validateInterludeDates(interludes: InterludeSource[]): void {
-  const datesBySlug = new Map<string, string>();
-
-  for (const interlude of interludes) {
-    const slug = getInterludeSlug(interlude);
-    const date = formatHtmlDate(interlude.data.date);
-    const previous = datesBySlug.get(slug);
-
-    if (previous && previous !== date) {
-      throw new Error(
-        `Interlude locale group "${slug}" must share one date, but found "${previous}" and "${date}" (entry "${interlude.id}").`,
-      );
-    }
-
-    datesBySlug.set(slug, date);
-  }
-}
-
-function getInterludeAnchor(interlude: InterludeSource, canonical: InterludeSource): string {
-  const date = formatHtmlDate(interlude.data.date);
-
-  return interlude.id === canonical.id ? date : `${date}-${getEntryLang(interlude)}`;
-}
 
 const interludes = await getCollection('interludes');
-
-validateEntryLocales(interludes, getInterludeSlug, 'interlude');
-validateInterludeDates(interludes);
-
-const interludeGroups = Array.from(
-  interludes.reduce((groups, interlude) => {
-    const slug = getInterludeSlug(interlude);
-    const group = groups.get(slug) ?? [];
-    group.push(interlude);
-    groups.set(slug, group);
-    return groups;
-  }, new Map<string, InterludeSource[]>()),
-)
-  .map(([, variants]) => {
-    const canonical = getCanonicalInterlude(variants);
-    const entries = sortInterludeVariants(variants, canonical);
-
-    return {
-      canonical,
-      canonicalAnchor: getInterludeAnchor(canonical, canonical),
-      date: canonical.data.date,
-      entries,
-    };
-  })
-  .sort((left, right) => left.date.getTime() - right.date.getTime());
+const interludeGroups = getInterludeGroups(interludes);
 
 const interludesByYear = Array.from(
   interludeGroups.reduce((groups, group) => {
@@ -147,7 +68,14 @@ const renderedInterludeGroups = await Promise.all(
 );
 ---
 
-<BaseLayout title="Interludes" htmlLang="en">
+<BaseLayout
+  title="Interludes"
+  htmlLang="en"
+  alternateLinks={[
+    { href: '/interludes.md', type: 'text/markdown; charset=utf-8', title: 'Markdown' },
+    { href: '/interludes.txt', type: 'text/plain; charset=utf-8', title: 'Plain text' },
+  ]}
+>
   <div class="interlude-index">
     <h2>Index</h2>
     <ol>

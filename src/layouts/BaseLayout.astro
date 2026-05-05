@@ -15,6 +15,7 @@ const {
   title = null,
   description = SITE_DESCRIPTION,
   htmlLang = 'en',
+  alternateLinks = [],
 } = Astro.props;
 
 const currentTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
@@ -44,6 +45,11 @@ const fontPreloads = [
     <meta name="author" content={SITE_AUTHOR} />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" href={new URL('/sitemap-index.xml', Astro.site).toString()} />
+    {
+      alternateLinks.map((link: { href: string; type: string; title?: string }) => (
+        <link rel="alternate" href={new URL(link.href, Astro.site).toString()} type={link.type} title={link.title} />
+      ))
+    }
     {fontPreloads.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
     <meta name="theme-color" content="#fffff9" />
     <link rel="icon" type="image/png" href={icon32Href} sizes="32x32" />
