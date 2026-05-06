@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 231436
-# requested_chars: 1282
-# included_chars: 1281
+# output_bytes: 232108
+# requested_chars: 1288
+# included_chars: 1287
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -37,6 +37,7 @@ U+0044	D
 U+0045	E
 U+0046	F
 U+0047	G
+U+0048	H
 U+0049	I
 U+004C	L
 U+004D	M
@@ -81,6 +82,7 @@ U+007A	z
 U+007B	{
 U+007C	|
 U+007D	}
+U+00E8	è
 U+00E9	é
 U+2014	—
 U+2019	’
@@ -200,6 +202,7 @@ U+30BA	ズ
 U+30BB	セ
 U+30BC	ゼ
 U+30BD	ソ
+U+30BE	ゾ
 U+30BF	タ
 U+30C0	ダ
 U+30C1	チ
@@ -234,6 +237,7 @@ U+30E1	メ
 U+30E2	モ
 U+30E3	ャ
 U+30E5	ュ
+U+30E6	ユ
 U+30E7	ョ
 U+30E9	ラ
 U+30EA	リ
@@ -406,6 +410,7 @@ U+5371	危
 U+5374	却
 U+5384	厄
 U+539F	原
+U+53B3	厳
 U+53BB	去
 U+53C2	参
 U+53CA	及
@@ -1027,6 +1032,7 @@ U+80F8	胸
 U+80FD	能
 U+8105	脅
 U+8107	脇
+U+8108	脈
 U+8131	脱
 U+8155	腕
 U+8179	腹
