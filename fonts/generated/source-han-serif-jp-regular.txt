@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 232108
-# requested_chars: 1288
-# included_chars: 1287
+# output_bytes: 231708
+# requested_chars: 1285
+# included_chars: 1284
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -355,7 +355,6 @@ U+518A	冊
 U+518D	再
 U+5197	冗
 U+51B7	冷
-U+51DD	凝
 U+51FA	出
 U+5203	刃
 U+5206	分
@@ -624,7 +623,6 @@ U+604B	恋
 U+6050	恐
 U+6052	恒
 U+6065	恥
-U+6075	恵
 U+609F	悟
 U+60A3	患
 U+60AA	悪
@@ -931,7 +929,6 @@ U+7802	砂
 U+7814	研
 U+7815	砕
 U+7834	破
-U+786C	硬
 U+78BA	確
 U+790E	礎
 U+793A	示
@@ -1007,7 +1004,6 @@ U+7DDA	線
 U+7DF4	練
 U+7E01	縁
 U+7E1B	縛
-U+7E2E	縮
 U+7E41	繁
 U+7E70	繰
 U+7F6E	置
@@ -1018,6 +1014,7 @@ U+7F9E	羞
 U+7FA8	羨
 U+7FA9	義
 U+7FD2	習
+U+8001	老
 U+8003	考
 U+8005	者
 U+8010	耐
@@ -1132,7 +1129,6 @@ U+8C61	象
 U+8C6A	豪
 U+8C79	豹
 U+8CA1	財
-U+8CA8	貨
 U+8CAB	貫
 U+8CAC	責
 U+8CB6	貶
@@ -1140,6 +1136,7 @@ U+8CB7	買
 U+8CBB	費
 U+8CBC	貼
 U+8CC7	資
+U+8CE2	賢
 U+8CEA	質
 U+8CED	賭
 U+8D08	贈
