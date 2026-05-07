@@ -91,11 +91,25 @@ blockquote, .quote {
 }
 
 .quote.nopadding,
-blockquote.nopadding,
-.quote.nopadding > blockquote {
-  margin-left: 0;
-  padding-left: 0;
-  border-left: 0;
+blockquote.nopadding {
+  margin-left: calc(0em - var(--spacing-half));
+  padding-left: calc(var(--spacing-half) - 3px);
+  border-left: 3px solid var(--color-accent-light);
+}
+
+@media (--viewport-s) {
+  .quote.nopadding,
+  blockquote.nopadding {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .quote.nopadding > blockquote {
+    margin-left: 0;
+    padding-left: 0;
+    border-left: 0;
+  }
 }
 
 hr {
