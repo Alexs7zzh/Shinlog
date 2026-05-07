@@ -50,6 +50,11 @@ const {
     return Number.parseFloat(container.dataset.sidenoteBottomPadding ?? '0') || 0;
   };
 
+  const getAfterElementGap = (container: HTMLElement): number => {
+    const lineHeight = Number.parseFloat(getComputedStyle(container).lineHeight);
+    return Number.isFinite(lineHeight) ? lineHeight / 2 : MINIMUM_SIDENOTE_BOTTOM_GAP;
+  };
+
   const setDynamicBottomPadding = (container: HTMLElement, padding: number): void => {
     container.dataset.sidenoteBottomPadding = `${padding}`;
     container.style.setProperty('--sidenote-bottom-padding', `${padding}px`);
@@ -75,6 +80,7 @@ const {
     const refs = [...container.querySelectorAll<HTMLElement>('[data-footnote-ref]')];
     const footnotes = [...container.querySelectorAll<HTMLElement>('.footnotes li')];
     const afterElements = container.dataset.afterElements ?? '';
+    const afterElementGap = getAfterElementGap(container);
     const containerTop = container.getBoundingClientRect().top;
 
     for (const element of footnotes) {
@@ -106,7 +112,7 @@ const {
           .map((item) => item.getBoundingClientRect().bottom);
 
         if (bottoms.length > 0) {
-          const startPos = Math.max(...bottoms);
+          const startPos = Math.max(...bottoms) + afterElementGap;
           if (top < startPos - containerTop) {
             top = Math.round(startPos - containerTop);
           }
