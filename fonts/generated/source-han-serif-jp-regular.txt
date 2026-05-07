@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 231708
-# requested_chars: 1285
-# included_chars: 1284
+# output_bytes: 231736
+# requested_chars: 1288
+# included_chars: 1287
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -45,7 +45,6 @@ U+004E	N
 U+004F	O
 U+0050	P
 U+0051	Q
-U+0052	R
 U+0053	S
 U+0054	T
 U+0056	V
@@ -85,6 +84,7 @@ U+007D	}
 U+00E8	è
 U+00E9	é
 U+2014	—
+U+2015	―
 U+2019	’
 U+201C	“
 U+201D	”
@@ -281,6 +281,7 @@ U+4EAC	京
 U+4EBA	人
 U+4ECA	今
 U+4ECB	介
+U+4ECF	仏
 U+4ED5	仕
 U+4ED6	他
 U+4ED8	付
@@ -445,6 +446,7 @@ U+547D	命
 U+548C	和
 U+54C0	哀
 U+54C1	品
+U+54C9	哉
 U+54F2	哲
 U+552F	唯
 U+554F	問
@@ -738,6 +740,7 @@ U+6642	時
 U+6669	晩
 U+666E	普
 U+666F	景
+U+6674	晴
 U+6697	暗
 U+66A6	暦
 U+66AE	暮
