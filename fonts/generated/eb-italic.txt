@@ -1,7 +1,7 @@
 # output: src/fonts/eb-garamond/eb-garamond-italic.woff2
-# output_bytes: 8424
-# requested_chars: 39
-# included_chars: 36
+# output_bytes: 8108
+# requested_chars: 37
+# included_chars: 34
 # auto_kept_required_features: (none)
 # kept_features: ccmp, clig, kern, liga, onum, calt, dlig, cv02, cv82, locl, swsh
 # excluded_features: (none)
@@ -33,7 +33,6 @@ U+006C	l
 U+006D	m
 U+006E	n
 U+006F	o
-U+0070	p
 U+0072	r
 U+0073	s
 U+0074	t
@@ -42,4 +41,3 @@ U+0076	v
 U+0077	w
 U+0078	x
 U+0079	y
-U+00E9	é
