@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 234936
-# requested_chars: 1304
-# included_chars: 1303
+# output_bytes: 233796
+# requested_chars: 1300
+# included_chars: 1299
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -738,7 +738,6 @@ U+6613	易
 U+661F	星
 U+6620	映
 U+6625	春
-U+6627	昧
 U+6628	昨
 U+663C	昼
 U+6642	時
@@ -750,7 +749,6 @@ U+6697	暗
 U+66A6	暦
 U+66AE	暮
 U+66B4	暴
-U+66D6	曖
 U+66F8	書
 U+66FF	替
 U+6700	最
@@ -778,7 +776,6 @@ U+6821	校
 U+6838	核
 U+6839	根
 U+683C	格
-U+6848	案
 U+684E	桎
 U+688F	梏
 U+68B0	械
@@ -1166,7 +1163,6 @@ U+8DE1	跡
 U+8DEF	路
 U+8DF5	践
 U+8E0F	踏
-U+8E8D	躍
 U+8EAB	身
 U+8ECA	車
 U+8ECC	軌
