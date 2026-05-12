@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 239200
-# requested_chars: 1321
-# included_chars: 1320
+# output_bytes: 237696
+# requested_chars: 1318
+# included_chars: 1317
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -447,7 +447,6 @@ U+547D	命
 U+548C	和
 U+54C0	哀
 U+54C1	品
-U+54E1	員
 U+54F2	哲
 U+552F	唯
 U+554F	問
@@ -531,7 +530,6 @@ U+5B89	安
 U+5B8C	完
 U+5B97	宗
 U+5B9A	定
-U+5B9B	宛
 U+5B9F	実
 U+5BA2	客
 U+5BA4	室
@@ -744,9 +742,11 @@ U+65E9	早
 U+6607	昇
 U+660E	明
 U+6613	易
+U+6614	昔
 U+661F	星
 U+6620	映
 U+6625	春
+U+6627	昧
 U+6628	昨
 U+663C	昼
 U+6642	時
@@ -758,6 +758,7 @@ U+66A6	暦
 U+66AB	暫
 U+66AE	暮
 U+66B4	暴
+U+66D6	曖
 U+66F8	書
 U+66FF	替
 U+6700	最
@@ -1143,12 +1144,10 @@ U+8ABF	調
 U+8AC7	談
 U+8AD6	論
 U+8AE6	諦
-U+8B19	謙
 U+8B1D	謝
 U+8B58	識
 U+8B70	議
 U+8B77	護
-U+8B90	讐
 U+8C46	豆
 U+8C4A	豊
 U+8C61	象
@@ -1216,7 +1215,6 @@ U+904E	過
 U+9053	道
 U+9054	達
 U+9055	違
-U+905C	遜
 U+9060	遠
 U+9061	遡
 U+9069	適
@@ -1311,7 +1309,6 @@ U+9AA8	骨
 U+9AD8	高
 U+9AEA	髪
 U+9AED	髭
-U+9B31	鬱
 U+9B42	魂
 U+9CF4	鳴
 U+9EA6	麦
