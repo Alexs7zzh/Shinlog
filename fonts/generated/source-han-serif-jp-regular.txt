@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 237696
-# requested_chars: 1318
-# included_chars: 1317
+# output_bytes: 238292
+# requested_chars: 1319
+# included_chars: 1318
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt
 # excluded_features: vert, vkrn, vrt2
@@ -356,6 +356,7 @@ U+518A	冊
 U+518D	再
 U+5197	冗
 U+51B7	冷
+U+51E6	処
 U+51FA	出
 U+5203	刃
 U+5206	分
@@ -824,7 +825,6 @@ U+6BB5	段
 U+6BBA	殺
 U+6BCD	母
 U+6BCE	毎
-U+6BD4	比
 U+6C0F	氏
 U+6C11	民
 U+6C17	気
@@ -1117,6 +1117,7 @@ U+89D2	角
 U+89E3	解
 U+89E6	触
 U+8A00	言
+U+8A17	託
 U+8A18	記
 U+8A1D	訝
 U+8A2A	訪
@@ -1181,7 +1182,6 @@ U+8ECA	車
 U+8ECC	軌
 U+8EE2	転
 U+8EFD	軽
-U+8F03	較
 U+8F29	輩
 U+8F2A	輪
 U+8F9E	辞
@@ -1238,6 +1238,7 @@ U+91CD	重
 U+91CE	野
 U+91CF	量
 U+91D1	金
+U+92ED	鋭
 U+932F	錯
 U+9332	録
 U+9375	鍵
