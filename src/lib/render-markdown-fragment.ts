@@ -1,52 +1,54 @@
-import { unified } from 'unified';
-import remarkDirective from 'remark-directive';
-import remarkGfm from 'remark-gfm';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
-import remarkSmartypants from 'remark-smartypants';
-import rehypeRaw from 'rehype-raw';
-import rehypeStringify from 'rehype-stringify';
+import { pathToFileURL } from 'node:url';
+import { markdownToHtml } from 'satteri';
 
-import rehypeAttributeLists from './rehype-attribute-lists';
-import rehypeFigureImages from './rehype-figure-images';
-import rehypeMarkEndElement from './rehype-mark-end-element';
-import rehypePrefixFootnoteIds from './rehype-prefix-footnote-ids';
-import rehypeQuoteDirectives from './rehype-quote-directives';
-import rehypeTypography from './rehype-typography';
-import remarkAttributeLists from './remark-attribute-lists';
-import remarkDirectives from './remark-directives';
-import remarkTypography from './remark-typography';
+import {
+  satteriRehypeAttributeLists,
+  satteriRehypeFigureImages,
+  satteriRehypeMarkEndElement,
+  satteriRehypePrefixFootnoteIds,
+  satteriRehypeQuoteDirectives,
+  satteriRehypeTypography,
+  satteriRemarkAttributeLists,
+  satteriRemarkDirectives,
+  satteriRemarkMarkEndElement,
+  satteriRemarkTypography,
+} from './markdown-processor.ts';
 
-const markdownFragmentProcessor = unified()
-  .use(remarkParse)
-  .use(remarkGfm)
-  .use(remarkSmartypants)
-  .use(remarkDirective)
-  .use(remarkDirectives)
-  .use(remarkAttributeLists)
-  .use(remarkTypography)
-  .use(remarkRehype, { allowDangerousHtml: true })
-  .use(rehypeRaw)
-  .use(rehypePrefixFootnoteIds)
-  .use(rehypeQuoteDirectives)
-  .use(rehypeAttributeLists)
-  .use(rehypeTypography)
-  .use(rehypeFigureImages)
-  .use(rehypeMarkEndElement)
-  .use(rehypeStringify, { allowDangerousHtml: true })
-  .freeze();
+function renderMarkdown(markdown: string, filePath?: string): string {
+  return markdownToHtml(markdown, {
+    fileURL: filePath ? pathToFileURL(filePath) : undefined,
+    features: {
+      directive: true,
+      gfm: true,
+      smartPunctuation: true,
+    },
+    mdastPlugins: [
+      satteriRemarkDirectives,
+      satteriRemarkAttributeLists,
+      satteriRemarkTypography,
+      satteriRemarkMarkEndElement,
+    ],
+    hastPlugins: [
+      satteriRehypePrefixFootnoteIds,
+      satteriRehypeQuoteDirectives,
+      satteriRehypeAttributeLists,
+      satteriRehypeTypography,
+      satteriRehypeFigureImages,
+      satteriRehypeMarkEndElement,
+    ],
+  }).html;
+}
 
 export async function renderMarkdownFragment(markdown: string): Promise<string> {
-  return String(await markdownFragmentProcessor.process(markdown));
+  return renderMarkdown(markdown);
+}
+
+export async function renderMarkdownFragmentWithPath(markdown: string, filePath: string): Promise<string> {
+  return renderMarkdown(markdown, filePath);
 }
 
 export async function renderMarkdownFragmentWithPrefix(markdown: string, prefix: string): Promise<string> {
-  return String(
-    await markdownFragmentProcessor.process({
-      path: `${prefix}.md`,
-      value: markdown,
-    }),
-  );
+  return renderMarkdown(markdown, `${prefix}.md`);
 }
 
 export function stripHtml(html: string): string {

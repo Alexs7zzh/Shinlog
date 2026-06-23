@@ -4,7 +4,7 @@ import remarkParse from 'remark-parse';
 import remarkStringify from 'remark-stringify';
 import { unified } from 'unified';
 
-import remarkAttributeLists from './remark-attribute-lists';
+import remarkAttributeLists from './agent-markdown-attribute-lists';
 
 type MarkdownNode = {
   type: string;

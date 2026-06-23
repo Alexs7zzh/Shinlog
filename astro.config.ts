@@ -1,17 +1,19 @@
 import { defineConfig } from 'astro/config';
-import { unified } from '@astrojs/markdown-remark';
+import { satteri } from '@astrojs/markdown-satteri';
 import sitemap from '@astrojs/sitemap';
-import remarkDirective from 'remark-directive';
 
-import remarkAttributeLists from './src/lib/remark-attribute-lists';
-import remarkDirectives from './src/lib/remark-directives';
-import remarkTypography from './src/lib/remark-typography';
-import rehypeFigureImages from './src/lib/rehype-figure-images';
-import rehypeMarkEndElement from './src/lib/rehype-mark-end-element';
-import rehypeAttributeLists from './src/lib/rehype-attribute-lists';
-import rehypePrefixFootnoteIds from './src/lib/rehype-prefix-footnote-ids';
-import rehypeQuoteDirectives from './src/lib/rehype-quote-directives';
-import rehypeTypography from './src/lib/rehype-typography';
+import {
+  satteriRehypeAttributeLists,
+  satteriRehypeFigureImages,
+  satteriRehypeMarkEndElement,
+  satteriRehypePrefixFootnoteIds,
+  satteriRehypeQuoteDirectives,
+  satteriRehypeTypography,
+  satteriRemarkAttributeLists,
+  satteriRemarkDirectives,
+  satteriRemarkMarkEndElement,
+  satteriRemarkTypography,
+} from './src/lib/markdown-processor.ts';
 
 export default defineConfig({
   site: 'https://shinlog.vercel.app',
@@ -28,17 +30,25 @@ export default defineConfig({
     responsiveStyles: true,
   },
   markdown: {
-    processor: unified({
-      gfm: true,
-      smartypants: true,
-      remarkPlugins: [remarkDirective, remarkDirectives, remarkAttributeLists, remarkTypography],
-      rehypePlugins: [
-        rehypePrefixFootnoteIds,
-        rehypeQuoteDirectives,
-        rehypeAttributeLists,
-        rehypeTypography,
-        rehypeFigureImages,
-        rehypeMarkEndElement,
+    processor: satteri({
+      features: {
+        directive: true,
+        gfm: true,
+        smartPunctuation: true,
+      },
+      mdastPlugins: [
+        satteriRemarkDirectives,
+        satteriRemarkAttributeLists,
+        satteriRemarkTypography,
+        satteriRemarkMarkEndElement,
+      ],
+      hastPlugins: [
+        satteriRehypePrefixFootnoteIds,
+        satteriRehypeQuoteDirectives,
+        satteriRehypeAttributeLists,
+        satteriRehypeTypography,
+        satteriRehypeFigureImages,
+        satteriRehypeMarkEndElement,
       ],
     }),
   },

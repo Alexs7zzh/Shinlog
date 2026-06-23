@@ -4,27 +4,11 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse, type HTMLElement as ParsedElement } from 'node-html-parser';
-import rehypeRaw from 'rehype-raw';
-import rehypeStringify from 'rehype-stringify';
-import remarkDirective from 'remark-directive';
-import remarkGfm from 'remark-gfm';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
-import remarkSmartypants from 'remark-smartypants';
-import { unified } from 'unified';
 
 import { ENTRY_LANGS, SITE_TITLE } from '../src/consts.ts';
 import { formatReadableDate } from '../src/lib/date.ts';
 import { toUppercaseDisplayText } from '../src/lib/display-text.ts';
-import rehypeAttributeLists from '../src/lib/rehype-attribute-lists.ts';
-import rehypeFigureImages from '../src/lib/rehype-figure-images.ts';
-import rehypeMarkEndElement from '../src/lib/rehype-mark-end-element.ts';
-import rehypePrefixFootnoteIds from '../src/lib/rehype-prefix-footnote-ids.ts';
-import rehypeQuoteDirectives from '../src/lib/rehype-quote-directives.ts';
-import rehypeTypography from '../src/lib/rehype-typography.ts';
-import remarkAttributeLists from '../src/lib/remark-attribute-lists.ts';
-import remarkDirectives from '../src/lib/remark-directives.ts';
-import remarkTypography from '../src/lib/remark-typography.ts';
+import { renderMarkdownFragmentWithPath } from '../src/lib/render-markdown-fragment.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
@@ -34,25 +18,6 @@ const generatedFontRoot = path.join(repoRoot, 'src', 'fonts');
 const legacyPublicRoot = path.join(repoRoot, 'public', 'fonts');
 const venvRoot = path.join(repoRoot, 'fonts', '.venv');
 const configPath = path.join(repoRoot, 'fonts', 'fonts.config.json');
-
-const markdownFragmentProcessor = unified()
-  .use(remarkParse)
-  .use(remarkGfm)
-  .use(remarkSmartypants)
-  .use(remarkDirective)
-  .use(remarkDirectives)
-  .use(remarkAttributeLists)
-  .use(remarkTypography)
-  .use(remarkRehype, { allowDangerousHtml: true })
-  .use(rehypeRaw)
-  .use(rehypePrefixFootnoteIds)
-  .use(rehypeQuoteDirectives)
-  .use(rehypeAttributeLists)
-  .use(rehypeTypography)
-  .use(rehypeFigureImages)
-  .use(rehypeMarkEndElement)
-  .use(rehypeStringify, { allowDangerousHtml: true })
-  .freeze();
 
 type EntryLang = 'en' | 'zh' | 'ja';
 
@@ -444,15 +409,6 @@ function parseDate(value?: string): Date | undefined {
   return Number.isNaN(date.getTime()) ? undefined : date;
 }
 
-async function renderMarkdownFragment(markdown: string, filePath: string): Promise<string> {
-  return String(
-    await markdownFragmentProcessor.process({
-      path: filePath,
-      value: markdown,
-    }),
-  );
-}
-
 async function loadContentEntries(): Promise<ContentEntryRecord[]> {
   const files = listMarkdownFiles(contentRoot);
   const entries: ContentEntryRecord[] = [];
@@ -476,9 +432,9 @@ async function loadContentEntries(): Promise<ContentEntryRecord[]> {
       body,
       date: parseDate(data.date),
       rendered: {
-        description: description ? await renderMarkdownFragment(description, `${relativePath}#description`) : '',
-        headnote: headnote ? await renderMarkdownFragment(headnote, `${relativePath}#headnote`) : '',
-        body: body ? await renderMarkdownFragment(body, relativePath) : '',
+        description: description ? await renderMarkdownFragmentWithPath(description, `${relativePath}#description`) : '',
+        headnote: headnote ? await renderMarkdownFragmentWithPath(headnote, `${relativePath}#headnote`) : '',
+        body: body ? await renderMarkdownFragmentWithPath(body, relativePath) : '',
       },
     });
   }
