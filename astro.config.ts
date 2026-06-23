@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { unified } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
 import remarkDirective from 'remark-directive';
 
@@ -27,10 +28,19 @@ export default defineConfig({
     responsiveStyles: true,
   },
   markdown: {
-    gfm: true,
-    smartypants: true,
-    remarkPlugins: [remarkDirective, remarkDirectives, remarkAttributeLists, remarkTypography],
-    rehypePlugins: [rehypePrefixFootnoteIds, rehypeQuoteDirectives, rehypeAttributeLists, rehypeTypography, rehypeFigureImages, rehypeMarkEndElement],
+    processor: unified({
+      gfm: true,
+      smartypants: true,
+      remarkPlugins: [remarkDirective, remarkDirectives, remarkAttributeLists, remarkTypography],
+      rehypePlugins: [
+        rehypePrefixFootnoteIds,
+        rehypeQuoteDirectives,
+        rehypeAttributeLists,
+        rehypeTypography,
+        rehypeFigureImages,
+        rehypeMarkEndElement,
+      ],
+    }),
   },
   integrations: [sitemap()],
 });
