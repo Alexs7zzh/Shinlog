@@ -1,10 +1,8 @@
-import remarkDirective from 'remark-directive';
-import remarkGfm from 'remark-gfm';
-import remarkParse from 'remark-parse';
-import remarkStringify from 'remark-stringify';
-import { unified } from 'unified';
+import { gfmToMarkdown } from 'mdast-util-gfm';
+import { toMarkdown } from 'mdast-util-to-markdown';
+import { markdownToMdast } from 'satteri';
 
-import remarkAttributeLists from './agent-markdown-attribute-lists';
+import { applyAgentMarkdownAttributes } from './agent-markdown-attributes';
 
 type MarkdownNode = {
   type: string;
@@ -125,26 +123,27 @@ function normalizeNode(node: MarkdownNode, parent?: MarkdownNode): MarkdownNode[
   return [node];
 }
 
-function portableMarkdown() {
-  return function transformer(tree: MarkdownNode) {
-    if (!tree.children) return;
+function applyPortableMarkdown(tree: MarkdownNode): void {
+  if (!tree.children) return;
 
-    tree.children = tree.children.flatMap((child) => normalizeNode(child, tree));
-  };
+  tree.children = tree.children.flatMap((child) => normalizeNode(child, tree));
 }
 
-const processor = unified()
-  .use(remarkParse)
-  .use(remarkGfm)
-  .use(remarkDirective)
-  .use(remarkAttributeLists)
-  .use(portableMarkdown)
-  .use(remarkStringify, {
+export async function renderAgentMarkdown(markdown: string): Promise<string> {
+  const tree = markdownToMdast(markdown, {
+    features: {
+      directive: true,
+      gfm: true,
+    },
+  }) as MarkdownNode;
+
+  applyAgentMarkdownAttributes(tree);
+  applyPortableMarkdown(tree);
+
+  return toMarkdown(tree as Parameters<typeof toMarkdown>[0], {
     bullet: '-',
+    extensions: [gfmToMarkdown()],
     fences: true,
     rule: '-',
-  });
-
-export async function renderAgentMarkdown(markdown: string): Promise<string> {
-  return String(await processor.process(markdown)).trimEnd();
+  }).trimEnd();
 }

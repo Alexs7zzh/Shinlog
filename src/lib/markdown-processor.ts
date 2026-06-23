@@ -1,6 +1,6 @@
-export { satteriRehypeAttributeLists, satteriRemarkAttributeLists } from './markdown-attribute-lists.ts';
-export { satteriRemarkDirectives } from './markdown-directives.ts';
-export { satteriRehypeMarkEndElement, satteriRemarkMarkEndElement } from './markdown-end-mark.ts';
-export { satteriRehypeFigureImages, satteriRehypeQuoteDirectives } from './markdown-figures.ts';
-export { satteriRehypePrefixFootnoteIds } from './markdown-footnotes.ts';
-export { satteriRehypeTypography, satteriRemarkTypography } from './markdown-typography.ts';
+export { markdownHastAttributeLists, markdownMdastAttributeLists } from './markdown-attribute-lists.ts';
+export { markdownMdastDirectives } from './markdown-directives.ts';
+export { markdownHastMarkEndElement, markdownMdastMarkEndElement } from './markdown-end-mark.ts';
+export { markdownHastFigureImages, markdownHastQuoteDirectives } from './markdown-figures.ts';
+export { markdownHastPrefixFootnoteIds } from './markdown-footnotes.ts';
+export { markdownHastTypography, markdownMdastTypography } from './markdown-typography.ts';

@@ -163,8 +163,8 @@ function applyHastTypography(node: AnyHastNode): AnyHastNode | undefined {
   };
 }
 
-export const satteriRemarkTypography = defineMdastPlugin({
-  name: 'shinlog-remark-typography',
+export const markdownMdastTypography = defineMdastPlugin({
+  name: 'shinlog-mdast-typography',
   html(node, ctx) {
     ctx.setProperty(node, 'value', transformHtmlBlock(node.value));
   },
@@ -173,8 +173,8 @@ export const satteriRemarkTypography = defineMdastPlugin({
   },
 });
 
-export const satteriRehypeTypography = defineHastPlugin({
-  name: 'shinlog-rehype-typography',
+export const markdownHastTypography = defineHastPlugin({
+  name: 'shinlog-hast-typography',
   element: {
     filter: [],
     visit(node) {

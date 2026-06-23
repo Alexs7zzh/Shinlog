@@ -104,8 +104,8 @@ function applyFootnotePrefix(node: AnyHastNode, ctx: HastContext): AnyHastNode {
   };
 }
 
-export const satteriRehypePrefixFootnoteIds = defineHastPlugin({
-  name: 'shinlog-rehype-prefix-footnote-ids',
+export const markdownHastPrefixFootnoteIds = defineHastPlugin({
+  name: 'shinlog-hast-prefix-footnote-ids',
   element: {
     filter: [],
     visit(node, ctx) {

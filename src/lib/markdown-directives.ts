@@ -114,8 +114,8 @@ function applyDirectiveData(node: AnyMdastNode): AnyMdastNode {
   };
 }
 
-export const satteriRemarkDirectives = defineMdastPlugin({
-  name: 'shinlog-remark-directives',
+export const markdownMdastDirectives = defineMdastPlugin({
+  name: 'shinlog-mdast-directives',
   containerDirective(node) {
     return applyDirectiveData(node as AnyMdastNode) as MdastNode;
   },

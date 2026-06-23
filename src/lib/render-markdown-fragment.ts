@@ -2,16 +2,16 @@ import { pathToFileURL } from 'node:url';
 import { markdownToHtml } from 'satteri';
 
 import {
-  satteriRehypeAttributeLists,
-  satteriRehypeFigureImages,
-  satteriRehypeMarkEndElement,
-  satteriRehypePrefixFootnoteIds,
-  satteriRehypeQuoteDirectives,
-  satteriRehypeTypography,
-  satteriRemarkAttributeLists,
-  satteriRemarkDirectives,
-  satteriRemarkMarkEndElement,
-  satteriRemarkTypography,
+  markdownHastAttributeLists,
+  markdownHastFigureImages,
+  markdownHastMarkEndElement,
+  markdownHastPrefixFootnoteIds,
+  markdownHastQuoteDirectives,
+  markdownHastTypography,
+  markdownMdastAttributeLists,
+  markdownMdastDirectives,
+  markdownMdastMarkEndElement,
+  markdownMdastTypography,
 } from './markdown-processor.ts';
 
 function renderMarkdown(markdown: string, filePath?: string): string {
@@ -23,18 +23,18 @@ function renderMarkdown(markdown: string, filePath?: string): string {
       smartPunctuation: true,
     },
     mdastPlugins: [
-      satteriRemarkDirectives,
-      satteriRemarkAttributeLists,
-      satteriRemarkTypography,
-      satteriRemarkMarkEndElement,
+      markdownMdastDirectives,
+      markdownMdastAttributeLists,
+      markdownMdastTypography,
+      markdownMdastMarkEndElement,
     ],
     hastPlugins: [
-      satteriRehypePrefixFootnoteIds,
-      satteriRehypeQuoteDirectives,
-      satteriRehypeAttributeLists,
-      satteriRehypeTypography,
-      satteriRehypeFigureImages,
-      satteriRehypeMarkEndElement,
+      markdownHastPrefixFootnoteIds,
+      markdownHastQuoteDirectives,
+      markdownHastAttributeLists,
+      markdownHastTypography,
+      markdownHastFigureImages,
+      markdownHastMarkEndElement,
     ],
   }).html;
 }

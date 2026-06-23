@@ -192,8 +192,8 @@ function transformStandaloneImageParagraph(node: AnyHastNode): AnyHastNode {
   };
 }
 
-export const satteriRehypeQuoteDirectives = defineHastPlugin({
-  name: 'shinlog-rehype-quote-directives',
+export const markdownHastQuoteDirectives = defineHastPlugin({
+  name: 'shinlog-hast-quote-directives',
   element: {
     filter: [],
     visit(node) {
@@ -203,8 +203,8 @@ export const satteriRehypeQuoteDirectives = defineHastPlugin({
   },
 });
 
-export const satteriRehypeFigureImages = defineHastPlugin({
-  name: 'shinlog-rehype-figure-images',
+export const markdownHastFigureImages = defineHastPlugin({
+  name: 'shinlog-hast-figure-images',
   element: {
     filter: ['p'],
     visit(node) {

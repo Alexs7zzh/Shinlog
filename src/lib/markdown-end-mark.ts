@@ -89,8 +89,8 @@ function markEndElementForParent(node: AnyHastNode, ctx: HastContext): AnyHastNo
   return undefined;
 }
 
-export const satteriRemarkMarkEndElement = defineMdastPlugin({
-  name: 'shinlog-remark-mark-end-element',
+export const markdownMdastMarkEndElement = defineMdastPlugin({
+  name: 'shinlog-mdast-mark-end-element',
   blockquote(node, ctx) {
     return markMdastEndElement(node as AnyMdastNode, ctx as MdastContext) as MdastNode | undefined;
   },
@@ -105,8 +105,8 @@ export const satteriRemarkMarkEndElement = defineMdastPlugin({
   },
 });
 
-export const satteriRehypeMarkEndElement = defineHastPlugin({
-  name: 'shinlog-rehype-mark-end-element',
+export const markdownHastMarkEndElement = defineHastPlugin({
+  name: 'shinlog-hast-mark-end-element',
   element: {
     filter: [],
     visit(node, ctx) {

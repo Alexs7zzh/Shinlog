@@ -511,8 +511,8 @@ function applyHastAttributeLists(node: AnyHastNode, ctx: HastContext): AnyHastNo
   return next;
 }
 
-export const satteriRemarkAttributeLists = defineMdastPlugin({
-  name: 'shinlog-remark-attribute-lists',
+export const markdownMdastAttributeLists = defineMdastPlugin({
+  name: 'shinlog-mdast-attribute-lists',
   blockquote(node, ctx) {
     return applyMdastAttributeLists(node as AnyMdastNode, ctx as MdastContext) as MdastNode;
   },
@@ -545,8 +545,8 @@ export const satteriRemarkAttributeLists = defineMdastPlugin({
   },
 });
 
-export const satteriRehypeAttributeLists = defineHastPlugin({
-  name: 'shinlog-rehype-attribute-lists',
+export const markdownHastAttributeLists = defineHastPlugin({
+  name: 'shinlog-hast-attribute-lists',
   element: {
     filter: [],
     visit(node, ctx) {
