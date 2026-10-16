@@ -70,7 +70,7 @@
       "kind": "cjk",
       "inputPath": "fonts/source/source-han-serif-cn/SourceHanSerifCN-Regular.otf",
       "outputPath": "src/fonts/SourceHanSerifCN/source-han-serif-cn-regular.woff2",
-      "features": ["ccmp", "locl", "palt"],
+      "features": ["ccmp", "locl", "palt", "halt"],
       "excludeFeatures": ["vert", "vrt2", "vkrn"],
       "charsetSource": {
         "alwaysIncludeChars": "⸺〇零一二三四五六七八九十百千万、",
@@ -82,7 +82,7 @@
       "kind": "cjk",
       "inputPath": "fonts/source/source-han-serif-jp/SourceHanSerifJP-Regular.otf",
       "outputPath": "src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2",
-      "features": ["ccmp", "locl", "palt"],
+      "features": ["ccmp", "locl", "palt", "halt"],
       "excludeFeatures": ["vert", "vrt2", "vkrn"],
       "charsetSource": {
         "alwaysIncludeChars": "⸺〇零一二三四五六七八九十百千万、",
