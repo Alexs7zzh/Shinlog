@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 273332
-# requested_chars: 1496
-# included_chars: 1495
+# output_bytes: 273520
+# requested_chars: 1497
+# included_chars: 1496
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt, halt
 # excluded_features: vert, vkrn, vrt2
@@ -503,7 +503,6 @@ U+56FA	固
 U+56FD	国
 U+570F	圏
 U+5712	園
-U+571F	土
 U+5727	圧
 U+5728	在
 U+5730	地
@@ -636,7 +635,6 @@ U+5E72	干
 U+5E73	平
 U+5E74	年
 U+5E78	幸
-U+5E79	幹
 U+5E7B	幻
 U+5E7C	幼
 U+5E7D	幽
@@ -921,6 +919,7 @@ U+6C34	水
 U+6C37	氷
 U+6C38	永
 U+6C42	求
+U+6C57	汗
 U+6C70	汰
 U+6C7A	決
 U+6C88	沈
@@ -949,6 +948,7 @@ U+6DE1	淡
 U+6DF1	深
 U+6DF7	混
 U+6DFB	添
+U+6E07	渇
 U+6E08	済
 U+6E1B	減
 U+6E21	渡
@@ -1318,6 +1318,7 @@ U+8CE2	賢
 U+8CEA	質
 U+8CED	賭
 U+8D08	贈
+U+8D64	赤
 U+8D66	赦
 U+8D70	走
 U+8D77	起
