@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 273592
-# requested_chars: 1498
-# included_chars: 1497
+# output_bytes: 273024
+# requested_chars: 1497
+# included_chars: 1496
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt, halt
 # excluded_features: vert, vkrn, vrt2
@@ -1002,7 +1002,6 @@ U+7372	獲
 U+7387	率
 U+738B	王
 U+73FE	現
-U+7403	球
 U+7406	理
 U+74A7	璧
 U+74B0	環
