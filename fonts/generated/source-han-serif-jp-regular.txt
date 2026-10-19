@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 273932
-# requested_chars: 1500
-# included_chars: 1499
+# output_bytes: 273608
+# requested_chars: 1499
+# included_chars: 1498
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt, halt
 # excluded_features: vert, vkrn, vrt2
@@ -434,7 +434,6 @@ U+5373	即
 U+5374	却
 U+5384	厄
 U+539F	原
-U+53AD	厭
 U+53B3	厳
 U+53BB	去
 U+53C2	参
@@ -549,7 +548,6 @@ U+597D	好
 U+5982	如
 U+5999	妙
 U+59A8	妨
-U+59AC	妬
 U+59B9	妹
 U+59CB	始
 U+59D1	姑
@@ -561,7 +559,6 @@ U+5A18	娘
 U+5A5A	婚
 U+5A66	婦
 U+5A92	媒
-U+5AC9	嫉
 U+5ACB	嫋
 U+5ACC	嫌
 U+5B22	嬢
@@ -709,6 +706,7 @@ U+60B2	悲
 U+60C5	情
 U+60D1	惑
 U+60DA	惚
+U+60DC	惜
 U+60E8	惨
 U+60F3	想
 U+60F9	惹
@@ -1052,6 +1050,7 @@ U+7740	着
 U+7761	睡
 U+77AC	瞬
 U+77DB	矛
+U+77DC	矜
 U+77E5	知
 U+77E9	矩
 U+77ED	短
