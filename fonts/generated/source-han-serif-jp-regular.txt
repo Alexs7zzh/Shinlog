@@ -1,5 +1,5 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 273608
+# output_bytes: 273516
 # requested_chars: 1499
 # included_chars: 1498
 # auto_kept_required_features: (none)
@@ -146,6 +146,7 @@ U+306D	ね
 U+306E	の
 U+306F	は
 U+3070	ば
+U+3071	ぱ
 U+3072	ひ
 U+3073	び
 U+3075	ふ
@@ -706,7 +707,6 @@ U+60B2	悲
 U+60C5	情
 U+60D1	惑
 U+60DA	惚
-U+60DC	惜
 U+60E8	惨
 U+60F3	想
 U+60F9	惹
@@ -1050,7 +1050,6 @@ U+7740	着
 U+7761	睡
 U+77AC	瞬
 U+77DB	矛
-U+77DC	矜
 U+77E5	知
 U+77E9	矩
 U+77ED	短
@@ -1174,6 +1173,7 @@ U+8074	聴
 U+8077	職
 U+8089	肉
 U+808B	肋
+U+809D	肝
 U+80A9	肩
 U+80B2	育
 U+80BA	肺
