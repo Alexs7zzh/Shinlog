@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 273740
-# requested_chars: 1499
-# included_chars: 1498
+# output_bytes: 273932
+# requested_chars: 1500
+# included_chars: 1499
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt, halt
 # excluded_features: vert, vkrn, vrt2
@@ -901,6 +901,7 @@ U+6B62	止
 U+6B63	正
 U+6B69	歩
 U+6B6A	歪
+U+6B6F	歯
 U+6B73	歳
 U+6B74	歴
 U+6B7B	死
