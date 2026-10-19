@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 273024
-# requested_chars: 1497
-# included_chars: 1496
+# output_bytes: 273740
+# requested_chars: 1499
+# included_chars: 1498
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt, halt
 # excluded_features: vert, vkrn, vrt2
@@ -1306,6 +1306,7 @@ U+8C61	象
 U+8C6A	豪
 U+8C79	豹
 U+8CA1	財
+U+8CA7	貧
 U+8CAB	貫
 U+8CAC	責
 U+8CB6	貶
@@ -1315,6 +1316,7 @@ U+8CBB	費
 U+8CBC	貼
 U+8CC7	資
 U+8CE2	賢
+U+8CE6	賦
 U+8CEA	質
 U+8CED	賭
 U+8D08	贈
