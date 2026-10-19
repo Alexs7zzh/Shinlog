@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 273516
-# requested_chars: 1499
-# included_chars: 1498
+# output_bytes: 273036
+# requested_chars: 1497
+# included_chars: 1496
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt, halt
 # excluded_features: vert, vkrn, vrt2
@@ -146,7 +146,6 @@ U+306D	ね
 U+306E	の
 U+306F	は
 U+3070	ば
-U+3071	ぱ
 U+3072	ひ
 U+3073	び
 U+3075	ふ
@@ -1087,7 +1086,6 @@ U+7A4D	積
 U+7A76	究
 U+7A7A	空
 U+7A81	突
-U+7A93	窓
 U+7ACB	立
 U+7ADF	竟
 U+7AE0	章
