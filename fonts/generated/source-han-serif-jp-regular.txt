@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 272408
-# requested_chars: 1495
-# included_chars: 1494
+# output_bytes: 272568
+# requested_chars: 1492
+# included_chars: 1491
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt, halt
 # excluded_features: vert, vkrn, vrt2
@@ -539,7 +539,6 @@ U+5931	失
 U+5947	奇
 U+5948	奈
 U+5949	奉
-U+5965	奥
 U+596A	奪
 U+596E	奮
 U+5973	女
@@ -601,6 +600,7 @@ U+5C0E	導
 U+5C0F	小
 U+5C11	少
 U+5C31	就
+U+5C3D	尽
 U+5C3E	尾
 U+5C40	局
 U+5C45	居
@@ -627,7 +627,6 @@ U+5E2F	帯
 U+5E30	帰
 U+5E38	常
 U+5E45	幅
-U+5E72	干
 U+5E73	平
 U+5E74	年
 U+5E78	幸
@@ -636,7 +635,6 @@ U+5E7C	幼
 U+5E7D	幽
 U+5E7E	幾
 U+5E8F	序
-U+5E95	底
 U+5E97	店
 U+5E9C	府
 U+5EA6	度
@@ -814,6 +812,7 @@ U+65B0	新
 U+65B9	方
 U+65C5	旅
 U+65CF	族
+U+65E2	既
 U+65E5	日
 U+65E9	早
 U+65EC	旬
@@ -951,6 +950,7 @@ U+6E08	済
 U+6E1B	減
 U+6E21	渡
 U+6E26	渦
+U+6E29	温
 U+6E2F	港
 U+6E58	湘
 U+6E80	満
@@ -1169,7 +1169,6 @@ U+8074	聴
 U+8077	職
 U+8089	肉
 U+808B	肋
-U+809D	肝
 U+80A9	肩
 U+80B2	育
 U+80BA	肺
@@ -1224,7 +1223,6 @@ U+865A	虚
 U+866B	虫
 U+86D9	蛙
 U+874B	蝋
-U+878D	融
 U+8840	血
 U+8846	衆
 U+884C	行
@@ -1275,7 +1273,6 @@ U+8A70	詰
 U+8A71	話
 U+8A87	誇
 U+8A8D	認
-U+8A93	誓
 U+8A95	誕
 U+8A98	誘
 U+8A9E	語
