@@ -189,6 +189,14 @@ hr {
   text-indent: 0!important;
 }
 
+.post.japanese-prose:lang(ja) > p {
+  text-indent: 1em;
+
+  &.starts-with-quote {
+    text-indent: 0;
+  }
+}
+
 .align-right {
   text-align: right;
   text-indent: 0!important;

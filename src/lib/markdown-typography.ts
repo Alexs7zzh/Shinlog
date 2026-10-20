@@ -1,5 +1,6 @@
 import { defineHastPlugin, defineMdastPlugin } from 'satteri';
 
+import { mergeHastAttributes } from './markdown-attribute-lists.ts';
 import type { AnyHastNode, HastNode } from './markdown-types.ts';
 
 const CJK_DASH_PUNCTUATION = new Set(['「', '」', '『', '』', '（', '）', '《', '》', '〈', '〉', '【', '】', '“', '”']);
@@ -177,8 +178,14 @@ export const markdownHastTypography = defineHastPlugin({
   name: 'shinlog-hast-typography',
   element: {
     filter: [],
-    visit(node) {
-      return applyHastTypography(node as AnyHastNode) as HastNode | undefined;
+    visit(node, ctx) {
+      const formatted = applyHastTypography(node as AnyHastNode);
+
+      if (node.tagName === 'p' && /^[「『]/u.test(ctx.textContent(node).trimStart())) {
+        return mergeHastAttributes(formatted ?? node, { className: ['starts-with-quote'] }) as HastNode;
+      }
+
+      return formatted as HastNode | undefined;
     },
   },
 });
