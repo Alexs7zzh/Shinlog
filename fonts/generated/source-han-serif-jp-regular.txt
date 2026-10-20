@@ -1,5 +1,5 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 272568
+# output_bytes: 272344
 # requested_chars: 1492
 # included_chars: 1491
 # auto_kept_required_features: (none)
@@ -812,7 +812,6 @@ U+65B0	新
 U+65B9	方
 U+65C5	旅
 U+65CF	族
-U+65E2	既
 U+65E5	日
 U+65E9	早
 U+65EC	旬
@@ -1273,6 +1272,7 @@ U+8A70	詰
 U+8A71	話
 U+8A87	誇
 U+8A8D	認
+U+8A93	誓
 U+8A95	誕
 U+8A98	誘
 U+8A9E	語
