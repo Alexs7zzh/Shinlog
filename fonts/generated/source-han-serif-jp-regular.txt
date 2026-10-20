@@ -1,7 +1,7 @@
 # output: src/fonts/SourceHanSerifJP/source-han-serif-jp-regular.woff2
-# output_bytes: 273012
-# requested_chars: 1496
-# included_chars: 1495
+# output_bytes: 272408
+# requested_chars: 1495
+# included_chars: 1494
 # auto_kept_required_features: (none)
 # kept_features: ccmp, locl, palt, halt
 # excluded_features: vert, vkrn, vrt2
@@ -306,7 +306,6 @@ U+4F34	伴
 U+4F38	伸
 U+4F3C	似
 U+4F4D	位
-U+4F4E	低
 U+4F4F	住
 U+4F53	体
 U+4F55	何
